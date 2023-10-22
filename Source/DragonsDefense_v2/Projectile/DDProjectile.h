@@ -34,4 +34,8 @@ protected:
 	//VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite);
 	float ProjectileDamage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite);
+	float easyModifier = 0.5f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite);
+	float hardModifier = 2.0f;
 };
