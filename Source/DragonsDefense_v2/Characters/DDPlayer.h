@@ -24,15 +24,21 @@ protected:
 
 	// COMPONENTS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UStaticMeshComponent* Mesh;
+	UStaticMeshComponent* Mesh; //TODO - Later down the line change to SkeletalMeshComponent
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
+
 	// VARIABLES
-	UPROPERTY(EditAnywhere, BlueprintReadWrite);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MovementSpeed = 20.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ShootCooldown = 0.6f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float AreaLimit = 50.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector ProjectileOffset = FVector(0, 0, 0); //Where the projectile is spawned relative to the player
 
 public:	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 };

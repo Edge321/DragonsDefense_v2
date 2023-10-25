@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "DDGameModeBase.generated.h"
 
+// TODO - Add an enum class for difficulties
+
 /**
  * 
  */

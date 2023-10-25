@@ -3,6 +3,7 @@
 #include "DDPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "../Projectile/DDProjectile.h"
 
 // Sets default values
 ADDPlayer::ADDPlayer()
@@ -14,6 +15,8 @@ ADDPlayer::ADDPlayer()
 	FloatingPawnMovement = CreateDefaultSubobject <UFloatingPawnMovement> ("FloatPawnMove");
 
 	RootComponent = Mesh;
+
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 // Called when the game starts or when spawned
@@ -29,4 +32,3 @@ void ADDPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-

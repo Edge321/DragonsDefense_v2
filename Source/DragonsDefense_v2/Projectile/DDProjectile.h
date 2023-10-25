@@ -9,6 +9,8 @@
 class UStaticMeshComponent;
 class UBoxComponent;
 class UProjectileMovementComponent;
+class UAudioComponent;
+class UNiagaraComponent;
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDProjectile : public AActor
@@ -30,12 +32,25 @@ protected:
 	UBoxComponent* Collider;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UProjectileMovementComponent* ProjectileMovement;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UAudioComponent* ShootSound;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UAudioComponent* ImpactSound;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UNiagaraComponent* ProjectileEffects;
 
 	//VARIABLES
-	UPROPERTY(EditAnywhere, BlueprintReadWrite);
-	float ProjectileDamage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite);
-	float easyModifier = 0.5f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite);
-	float hardModifier = 2.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage");
+	float ProjectileDamage = 1.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier");
+	float EasyModifier = 0.5f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier");
+	float HardModifier = 2.0f;
+
+private:
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+		bool bFromSweep, const FHitResult& SweepResult);
+	
+	void ApplyModifiers();
 };
