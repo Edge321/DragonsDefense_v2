@@ -32,8 +32,6 @@ protected:
 	UBoxComponent* Collider;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UProjectileMovementComponent* ProjectileMovement;
-	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UAudioComponent* ShootSound;*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAudioComponent* ImpactSound;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -41,7 +39,7 @@ protected:
 
 	//VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage");
-	float ProjectileDamage = 1.0f;
+	float ProjectileDamage = -1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier");
 	float EasyModifier = 0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier");

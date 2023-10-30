@@ -10,7 +10,7 @@ ALivingActor::ALivingActor()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
 
-	Collider = CreateDefaultSubobject<UBoxComponent>("BoxCollider");
+	//Collider = CreateDefaultSubobject<UBoxComponent>("BoxCollider");
 }
 
 // Called when the game starts or when spawned
@@ -36,7 +36,9 @@ void ALivingActor::SetHealth(float HealthModifier)
 {
 	Health += HealthModifier;
 
-	if (Health <= 0) 
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Health: %f"), Health));
+
+	if (Health <= 0)
 	{
 		OnDeath();
 	}

@@ -36,24 +36,22 @@ protected:
 	UAudioComponent* ShootSound;
 
 	//VARIABLES
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement");
+	float MovementSpeed = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile");
 	FVector ProjectileOffset;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
-	float DistanceToAttack;
+	float DistanceToAttack = 5.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
-	float ShootCooldown;
+	float ShootCooldown = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float EasyMovementSpeedMod;
+	float EasyMovementSpeedMod = 0.9f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float HardMovementSpeedMod;
+	float HardMovementSpeedMod = 1.1f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float EasyShootCooldownMod;
+	float EasyShootCooldownMod = 1.2f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float HardShootCooldownMod;
-
-	//FUNCTIONS
-	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
-		bool bFromSweep, const FHitResult& SweepResult) override;
+	float HardShootCooldownMod = 0.8f;
 	
 private:
 	// Called every frame
@@ -62,4 +60,6 @@ private:
 	FVector CheckDistance();
 	void ApplyModifiers() override;
 	void OnDeath() override;
+
+	float TempShootCooldown;
 };

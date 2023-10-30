@@ -4,6 +4,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/BoxComponent.h"
 #include "../Game/DDGameModeBase.h" //TODO - Access difficulty mode to apply to damage modifier
+#include "../Characters/LivingActor.h"
 #include "NiagaraComponent.h"
 
 // Sets default values
@@ -22,6 +23,8 @@ ADDProjectile::ADDProjectile()
 	ProjectileEffects->SetupAttachment(Mesh);
 
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDProjectile::OverlapBegin);
+
+	ProjectileMovement->Velocity = FVector(800.0f, 0, 0); //Default velocity of projectile 
 }
 
 // Called when the game starts or when spawned
@@ -36,9 +39,12 @@ void ADDProjectile::BeginPlay()
 void ADDProjectile::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("We hit something boss!"))
-	// TODO - Account for damage of whoever was hit, either the player or the enemy by casting to their respective class
-	// Do like a switch statement
+	ALivingActor* Living = Cast<ALivingActor>(OtherActor);
+
+	if (Living) {
+		Destroy(); //TODO - Implement bellow
+		Living->SetHealth(ProjectileDamage);
+	}
 }
 
 void ADDProjectile::ApplyModifiers()

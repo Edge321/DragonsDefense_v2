@@ -15,7 +15,10 @@ AEnemy::AEnemy()
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>("FloatingPawnMovement");
 
 	RootComponent = Mesh;
-	Collider->SetupAttachment(Mesh);
+	//Collider->SetupAttachment(Mesh);
+	
+
+	Health = 10.0f;
 }
 
 void AEnemy::BeginPlay()
@@ -32,12 +35,6 @@ void AEnemy::Tick(float DeltaTime)
 	CheckDistance();
 }
 
-void AEnemy::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
-	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	//Note: Might not need this since projectile handles the overlapping
-}
-
 FVector AEnemy::CheckDistance()
 {
 	//TODO - implementing checking the distance
@@ -51,5 +48,5 @@ void AEnemy::ApplyModifiers()
 
 void AEnemy::OnDeath()
 {
-	this->Destroy();
+	Destroy();
 }
