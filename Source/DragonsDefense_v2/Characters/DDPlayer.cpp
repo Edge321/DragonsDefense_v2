@@ -12,7 +12,7 @@ ADDPlayer::ADDPlayer()
 	PrimaryActorTick.bCanEverTick = false;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
-	FloatingPawnMovement = CreateDefaultSubobject <UFloatingPawnMovement> ("FloatPawnMove");
+	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>("FloatPawnMove");
 
 	RootComponent = Mesh;
 

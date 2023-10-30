@@ -32,8 +32,8 @@ protected:
 	UBoxComponent* Collider;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UProjectileMovementComponent* ProjectileMovement;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UAudioComponent* ShootSound;
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UAudioComponent* ShootSound;*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAudioComponent* ImpactSound;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
