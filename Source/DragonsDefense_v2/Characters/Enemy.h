@@ -53,10 +53,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float HardShootCooldownMod = 0.8f;
 	
-private:
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
 	FVector CheckDistance();
 	void ApplyModifiers() override;
 	void OnDeath() override;

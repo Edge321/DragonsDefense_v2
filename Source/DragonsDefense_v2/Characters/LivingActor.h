@@ -18,20 +18,13 @@ public:
 	// Sets default values for this pawn's properties
 	ALivingActor();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	float GetHealth();
-	void SetHealth(float HealthModifier);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	//COMPONENTS
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	//UBoxComponent* Collider;
-	///Needing colliders is a lie apparently?! only need the mesh i suppose...
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent* Collider;
 
 	//VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health");
@@ -44,4 +37,11 @@ protected:
 	//VIRTUAL FUNCTIONS
 	virtual void ApplyModifiers() {}
 	virtual void OnDeath() {}
+
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	float GetHealth();
+	void SetHealth(float HealthModifier);
 };
