@@ -34,16 +34,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	float SpawnTimeReducer;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
-	TArray<AEnemy*> EnemiesToSpawn;
+	TArray<TSubclassOf<AEnemy>> EnemiesToSpawn;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void StartSpawn();
+	void StopSpawn();
+
 private:
 	void SpawnEnemy();
-	void StartSpawnTimer();
-	void ClearSpawnTimer();
 
 	FTimerHandle SpawnTimerHandle;
 };

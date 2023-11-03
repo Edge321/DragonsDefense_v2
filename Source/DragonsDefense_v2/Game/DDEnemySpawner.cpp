@@ -20,8 +20,7 @@ void ADDEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//GetWorld()->GetTimerManager().SetTimer(SpawnTimerHandle, this, &ADDEnemySpawner::SpawnEnemy, SpawnInterval, true);
-	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &ADDEnemySpawner::StartSpawnTimer, SpawnInterval, true);
+	StartSpawn();	
 }
 
 // Called every frame
@@ -34,16 +33,28 @@ void ADDEnemySpawner::Tick(float DeltaTime)
 void ADDEnemySpawner::SpawnEnemy()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Spawned an enemy!"));
-	//GetWorld()->SpawnActor(Enemy, GetActorLocation());
+
+	if (EnemiesToSpawn.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("Error: EnemiesToSpawn array is empty!"))
+	}
+
+	int32 EnemyIndex = FMath::RandRange(0, EnemiesToSpawn.Num() - 1);
+
+	TSubclassOf<AEnemy> Enemy = EnemiesToSpawn[EnemyIndex];
+	GetWorld()->SpawnActor<AEnemy>(Enemy, GetActorLocation(), GetActorRotation());
+
+	if (Enemy) {
+		//TODO - Figure out what to do with the returned pointer. Add to enemy pool perhaps?
+	}
 }
 
-void ADDEnemySpawner::StartSpawnTimer()
+void ADDEnemySpawner::StartSpawn()
 {
-
+	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &ADDEnemySpawner::SpawnEnemy, SpawnInterval, true);
 }
 
-void ADDEnemySpawner::ClearSpawnTimer()
+void ADDEnemySpawner::StopSpawn()
 {
-
+	GetWorldTimerManager().ClearTimer(SpawnTimerHandle);
 }
 
