@@ -30,7 +30,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	float SpawnInterval = 3.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
-	float SpawnArea;
+	float SpawnAreaY = 1500.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	float SpawnTimeReducer;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")

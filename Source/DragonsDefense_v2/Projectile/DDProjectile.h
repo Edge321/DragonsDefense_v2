@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "DDProjectile.generated.h"
 
-class UStaticMeshComponent;
 class UBoxComponent;
 class UProjectileMovementComponent;
 class UAudioComponent;
@@ -44,6 +43,8 @@ protected:
 	float EasyModifier = 0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier");
 	float HardModifier = 2.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lifetime");
+	float ProjectileLifetime = 10.0f;
 
 private:
 	UFUNCTION()
@@ -51,4 +52,8 @@ private:
 		bool bFromSweep, const FHitResult& SweepResult);
 	
 	void ApplyModifiers();
+	void DestroySelf();
+
+	FTimerHandle ProjectileTimer;
+
 };

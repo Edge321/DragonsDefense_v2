@@ -41,7 +41,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile");
 	FVector ProjectileOffset;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
-	float DistanceToAttack = 5.0f;
+	float DistanceToAttack = 100.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
 	float ShootCooldown = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
@@ -52,15 +52,18 @@ protected:
 	float EasyShootCooldownMod = 1.2f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float HardShootCooldownMod = 0.8f;
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Castle");
+	AActor* Castle; //TODO - Figure out how to initialize this in Blueprints
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	FVector CheckDistance();
+	void CheckDistance();
 	void ApplyModifiers() override;
 	void OnDeath() override;
+	void Shoot();
 
 	float TempShootCooldown;
 };

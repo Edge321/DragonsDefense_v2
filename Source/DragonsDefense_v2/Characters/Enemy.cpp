@@ -2,6 +2,7 @@
 
 
 #include "Enemy.h"
+#include "../Projectile/DDProjectile.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/BoxComponent.h"
 
@@ -16,6 +17,8 @@ AEnemy::AEnemy()
 
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
+
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	Health = 10.0f;
 }
@@ -34,15 +37,25 @@ void AEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	FVector ActualMovement = FVector(DeltaTime * MovementSpeed * -1.0, 0, 0);
-	AddMovementInput(ActualMovement);
+	FloatingPawnMovement->AddInputVector(ActualMovement);
 
 	CheckDistance();
 }
 //Checks distance between the enemy and the castle
-FVector AEnemy::CheckDistance()
+void AEnemy::CheckDistance()
 {
+	FVector SelfLocation = GetActorLocation();
+	FVector CastleLocation = Castle->GetActorLocation();
+	FVector2D SelfLocation2D = FVector2D(SelfLocation.X, SelfLocation.Y);
+	FVector2D CastleLocation2D = FVector2D(CastleLocation.X, CastleLocation.Y);
+	
+	float Distance = FVector2D::Distance(SelfLocation2D, CastleLocation2D);
+
+	UE_LOG(LogTemp, Log, TEXT("Distance: %f"), Distance)
+	if (DistanceToAttack < Distance) {
+		Shoot();
+	}
 	//TODO - implementing checking the distance
-	return FVector();
 }
 
 void AEnemy::ApplyModifiers()
@@ -53,4 +66,12 @@ void AEnemy::ApplyModifiers()
 void AEnemy::OnDeath()
 {
 	Destroy();
+}
+
+void AEnemy::Shoot()
+{
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Shoot Now!"));
+	}
+	FloatingPawnMovement->MaxSpeed = 0;
 }

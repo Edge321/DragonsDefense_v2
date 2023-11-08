@@ -20,7 +20,8 @@ void ADDEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	StartSpawn();	
+	//StartSpawn();
+	SpawnEnemy();
 }
 
 // Called every frame
@@ -28,23 +29,27 @@ void ADDEnemySpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
 }
 
 void ADDEnemySpawner::SpawnEnemy()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Spawned an enemy!"));
-
 	if (EnemiesToSpawn.IsEmpty()) {
 		UE_LOG(LogTemp, Error, TEXT("Error: EnemiesToSpawn array is empty!"))
 	}
 
 	int32 EnemyIndex = FMath::RandRange(0, EnemiesToSpawn.Num() - 1);
+	float RandomAreaY = FMath::RandRange(-SpawnAreaY, SpawnAreaY);
+
+	FVector RandomLocation = FVector(GetActorLocation().X, RandomAreaY, GetActorLocation().Z);
 
 	TSubclassOf<AEnemy> Enemy = EnemiesToSpawn[EnemyIndex];
-	GetWorld()->SpawnActor<AEnemy>(Enemy, GetActorLocation(), GetActorRotation());
+	AEnemy* ActualEnemy = GetWorld()->SpawnActor<AEnemy>(Enemy, RandomLocation, GetActorRotation());
 
-	if (Enemy) {
+	if (ActualEnemy) {
 		//TODO - Figure out what to do with the returned pointer. Add to enemy pool perhaps?
+		ActualEnemy->SpawnDefaultController();
+		ActualEnemy->AutoPossessAI = EAutoPossessAI::Spawned;
 	}
 }
 

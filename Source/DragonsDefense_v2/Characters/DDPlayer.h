@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class UFloatingPawnMovement;
+class ADDProjectile;
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlayer : public APawn
@@ -28,7 +29,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
 
+	// FUNCTION
+	//UFUNCTION()
+	//void Cooldown();
+
 	// VARIABLES
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	TSubclassOf<ADDProjectile> Projectile;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MovementSpeed = 20.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -37,8 +44,14 @@ protected:
 	float AreaLimit = 50.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector ProjectileOffset = FVector(0, 0, 0); //Where the projectile is spawned relative to the player
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool OnCooldown = false;
 
 public:	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+private:
+	void ValidateProjectile();
+	void ResetStats();
 };

@@ -33,7 +33,8 @@ void ADDProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	//TODO - Get the current difficulty
-	
+
+	GetWorldTimerManager().SetTimer(ProjectileTimer, this, &ADDProjectile::DestroySelf, ProjectileLifetime, false);
 }
 
 void ADDProjectile::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
@@ -50,4 +51,9 @@ void ADDProjectile::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 void ADDProjectile::ApplyModifiers()
 {
 	// TODO - Adjust damage of projectile according to difficulty chosen
+}
+
+void ADDProjectile::DestroySelf()
+{
+	Destroy();
 }
