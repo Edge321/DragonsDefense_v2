@@ -9,6 +9,8 @@
 class UStaticMeshComponent;
 class UFloatingPawnMovement;
 class UAudioComponent;
+class ADDCastle;
+class ADDProjectile;
 
 /**
  * 
@@ -38,6 +40,8 @@ protected:
 	//VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement");
 	float MovementSpeed = 1.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Projectile");
+	TSubclassOf<ADDProjectile> Projectile;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile");
 	FVector ProjectileOffset;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
@@ -52,8 +56,12 @@ protected:
 	float EasyShootCooldownMod = 1.2f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float HardShootCooldownMod = 0.8f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Castle");
-	AActor* Castle; //TODO - Figure out how to initialize this in Blueprints
+
+
+	//FUNCTIONS
+	//UFUNCTION(BlueprintImplement)
+	//void FireProjectile();
+	
 
 public:
 	// Called every frame
@@ -63,7 +71,14 @@ private:
 	void CheckDistance();
 	void ApplyModifiers() override;
 	void OnDeath() override;
+	void StartShooting();
+	void StopShooting();
 	void Shoot();
+	void ValidateProjectile();
+	
+	void FindCastle();
 
+	ADDCastle* Castle;
+	FTimerHandle ShootHandle;
 	float TempShootCooldown;
 };

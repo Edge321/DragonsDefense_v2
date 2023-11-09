@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-11-06T23:42:56.692Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="wBa2hV655I5YsjsiSwHt" version="22.0.3" type="device">
+<mxfile host="Electron" modified="2023-11-08T06:20:06.433Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="zjhw5PY8u2EC3uZecwF-" version="22.0.3" type="device">
   <diagram name="Page-1" id="EKH4ouBMmT7rw-T47lvT">
-    <mxGraphModel dx="988" dy="573" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="819" dy="482" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -84,7 +84,7 @@
           <mxGeometry x="290" y="320" width="100" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0NiOdx1bSxAbVccs_nox-5" value="Enemy" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="540" y="390" width="290" height="302" as="geometry" />
+          <mxGeometry x="540" y="390" width="290" height="312" as="geometry" />
         </mxCell>
         <mxCell id="0NiOdx1bSxAbVccs_nox-6" value="AIMovement : AIComponent&lt;br&gt;Mesh : SkeletalMeshComponent&lt;br&gt;FloatingPawnMovement : FloatingPawnMovement&lt;br&gt;DistanceToAttack : float&lt;br&gt;ShootSound : AudioComponent&lt;br&gt;ShootCooldown: float&lt;br&gt;EasyMovementSpeedMod : float&lt;br&gt;HardMovementSpeedMod : float&lt;br&gt;EasyShootCooldownMod : float&lt;br&gt;HardShootCooldownMod : float&lt;br&gt;ProjectileOffset : FVector" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="0NiOdx1bSxAbVccs_nox-5" vertex="1">
           <mxGeometry y="26" width="290" height="164" as="geometry" />
@@ -92,14 +92,14 @@
         <mxCell id="0NiOdx1bSxAbVccs_nox-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="0NiOdx1bSxAbVccs_nox-5" vertex="1">
           <mxGeometry y="190" width="290" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="0NiOdx1bSxAbVccs_nox-8" value="Enemy()&lt;br&gt;FVector : CheckDistance()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="0NiOdx1bSxAbVccs_nox-5" vertex="1">
-          <mxGeometry y="198" width="290" height="42" as="geometry" />
+        <mxCell id="0NiOdx1bSxAbVccs_nox-8" value="Enemy()&lt;br&gt;FVector : CheckDistance()&lt;br&gt;Shoot()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="0NiOdx1bSxAbVccs_nox-5" vertex="1">
+          <mxGeometry y="198" width="290" height="52" as="geometry" />
         </mxCell>
         <mxCell id="0NiOdx1bSxAbVccs_nox-9" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="0NiOdx1bSxAbVccs_nox-5" vertex="1">
-          <mxGeometry y="240" width="290" height="8" as="geometry" />
+          <mxGeometry y="250" width="290" height="8" as="geometry" />
         </mxCell>
         <mxCell id="0NiOdx1bSxAbVccs_nox-10" value="&lt;b&gt;Blueprint Implementation&lt;/b&gt;&lt;br&gt;Adding specific projectile when shooting&lt;br&gt;Display health in-game" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="0NiOdx1bSxAbVccs_nox-5" vertex="1">
-          <mxGeometry y="248" width="290" height="54" as="geometry" />
+          <mxGeometry y="258" width="290" height="54" as="geometry" />
         </mxCell>
         <mxCell id="ufSyC9iTuEUAAOwYjkHh-1" value="This is for when enemies start to moving zigzag and such.&lt;br&gt;Possible to not need this" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=default;strokeColor=#6666FF;" parent="1" vertex="1">
           <mxGeometry x="400" y="418" width="100" height="120" as="geometry" />

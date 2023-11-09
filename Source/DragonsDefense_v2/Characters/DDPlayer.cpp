@@ -36,9 +36,7 @@ void ADDPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ADDPlayer::ValidateProjectile()
 {
-	if (Projectile == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Projectile not set on %s"), *GetName())
-	}
+	check(Projectile != nullptr);
 }
 
 void ADDPlayer::ResetStats()

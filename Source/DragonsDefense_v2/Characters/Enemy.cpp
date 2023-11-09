@@ -2,7 +2,9 @@
 
 
 #include "Enemy.h"
+#include "Kismet/GameplayStatics.h"
 #include "../Projectile/DDProjectile.h"
+#include "../Characters/DDCastle.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/BoxComponent.h"
 
@@ -29,6 +31,9 @@ void AEnemy::BeginPlay()
 
 	//Prevents enemy from accelerating like crazy at the beginning
 	FloatingPawnMovement->MaxSpeed = MovementSpeed;
+
+	ValidateProjectile();
+	FindCastle();
 }
 
 // Called every frame
@@ -44,18 +49,12 @@ void AEnemy::Tick(float DeltaTime)
 //Checks distance between the enemy and the castle
 void AEnemy::CheckDistance()
 {
-	FVector SelfLocation = GetActorLocation();
-	FVector CastleLocation = Castle->GetActorLocation();
-	FVector2D SelfLocation2D = FVector2D(SelfLocation.X, SelfLocation.Y);
-	FVector2D CastleLocation2D = FVector2D(CastleLocation.X, CastleLocation.Y);
-	
-	float Distance = FVector2D::Distance(SelfLocation2D, CastleLocation2D);
+	float Distance = FMath::Abs(GetActorLocation().X - Castle->GetActorLocation().X);
 
-	UE_LOG(LogTemp, Log, TEXT("Distance: %f"), Distance)
-	if (DistanceToAttack < Distance) {
+	if (Distance < DistanceToAttack) {
+		FloatingPawnMovement->MaxSpeed = 0;
 		Shoot();
 	}
-	//TODO - implementing checking the distance
 }
 
 void AEnemy::ApplyModifiers()
@@ -68,10 +67,57 @@ void AEnemy::OnDeath()
 	Destroy();
 }
 
-void AEnemy::Shoot()
+void AEnemy::StartShooting()
 {
-	if (GEngine) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, TEXT("Shoot Now!"));
+	GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemy::Shoot, ShootCooldown, true);
+}
+
+void AEnemy::StopShooting()
+{
+	GetWorldTimerManager().ClearTimer(ShootHandle);
+}
+
+void AEnemy::Shoot()
+{	
+	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation(), GetActorRotation());
+	
+	if (Proj) {
+		//FCollisionQueryParams Params;
+		//Params.AddIgnoredActor(GetUniqueID());
+		
+		Proj->SetProjectileOwner(GetUniqueID());
+		FVector Velocity = Proj->GetVelocity();
+		Proj->SetVelocity(Velocity * -1);
 	}
-	FloatingPawnMovement->MaxSpeed = 0;
+	else {
+		UE_LOG(LogTemp, Error, TEXT("ERROR: Enemy projectile unable to spawn"))
+	}
+}
+
+void AEnemy::ValidateProjectile()
+{
+	check(Projectile != nullptr);
+}
+
+void AEnemy::FindCastle()
+{
+	TArray<AActor*> CastlesToFind;
+	if (UWorld* World = GetWorld()) {
+		UGameplayStatics::GetAllActorsOfClass(World, ADDCastle::StaticClass(), CastlesToFind);
+
+		if (CastlesToFind.Num() > 1) {
+			UE_LOG(LogTemp, Warning, TEXT("More than one castle exists in the level"))
+		}
+		check(!CastlesToFind.IsEmpty());
+
+		for (AActor* CastleActor : CastlesToFind) {
+			ADDCastle* SomeCastle = Cast<ADDCastle>(CastleActor);
+			if (SomeCastle) {
+				Castle = SomeCastle;
+				UE_LOG(LogTemp, Log, TEXT("Found castle!"))
+				break;
+			}
+		}
+	}
+
 }

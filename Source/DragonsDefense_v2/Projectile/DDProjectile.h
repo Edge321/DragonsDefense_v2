@@ -46,14 +46,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lifetime");
 	float ProjectileLifetime = 10.0f;
 
+public:
+	void SetVelocity(FVector Velocity);
+	/*FVector GetVelocity();*/
+	void SetProjectileOwner(uint32 ActorID);
+
 private:
 	UFUNCTION()
 	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
 	
 	void ApplyModifiers();
+	void EnableCollision();
 	void DestroySelf();
 
 	FTimerHandle ProjectileTimer;
-
+	uint32 OwnerID;
 };

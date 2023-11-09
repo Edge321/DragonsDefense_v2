@@ -20,8 +20,8 @@ void ADDEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//StartSpawn();
-	SpawnEnemy();
+	StartSpawn();
+	//SpawnEnemy();
 }
 
 // Called every frame
