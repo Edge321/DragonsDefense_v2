@@ -3,6 +3,7 @@
 
 #include "DDEnemySpawner.h"
 #include "Components/BillboardComponent.h"
+#include "../Game/DDGameModeBase.h"
 
 // Sets default values
 ADDEnemySpawner::ADDEnemySpawner()
@@ -21,15 +22,14 @@ void ADDEnemySpawner::BeginPlay()
 	Super::BeginPlay();
 
 	StartSpawn();
-	//SpawnEnemy();
-}
 
-// Called every frame
-void ADDEnemySpawner::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		//GameMode->OnGameOver.AddLambda([this]() {
+			//this->GameOverEventFunction();
+			//});
+		GameMode->OnGameOver.AddDynamic(this, &ADDEnemySpawner::GameOverEventFunction);
+	}
 }
 
 void ADDEnemySpawner::SpawnEnemy()
@@ -51,6 +51,11 @@ void ADDEnemySpawner::SpawnEnemy()
 		ActualEnemy->SpawnDefaultController();
 		ActualEnemy->AutoPossessAI = EAutoPossessAI::Spawned;
 	}
+}
+
+void ADDEnemySpawner::GameOverEventFunction()
+{
+	StopSpawn();
 }
 
 void ADDEnemySpawner::StartSpawn()

@@ -43,7 +43,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Projectile");
 	TSubclassOf<ADDProjectile> Projectile;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile");
-	FVector ProjectileOffset;
+	FVector ProjectileOffset = FVector::Zero();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
 	float DistanceToAttack = 100.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
@@ -56,12 +56,12 @@ protected:
 	float EasyShootCooldownMod = 1.2f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float HardShootCooldownMod = 0.8f;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score");
+	int32 Score = 1;
 
 	//FUNCTIONS
-	//UFUNCTION(BlueprintImplement)
-	//void FireProjectile();
-	
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDeath() override;
 
 public:
 	// Called every frame
@@ -70,7 +70,6 @@ public:
 private:
 	void CheckDistance();
 	void ApplyModifiers() override;
-	void OnDeath() override;
 	void StartShooting();
 	void StopShooting();
 	void Shoot();
@@ -81,4 +80,5 @@ private:
 	ADDCastle* Castle;
 	FTimerHandle ShootHandle;
 	float TempShootCooldown;
+	bool IsShooting = false;
 };

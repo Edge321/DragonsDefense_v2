@@ -29,10 +29,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
 
-	// FUNCTION
-	//UFUNCTION()
-	//void Cooldown();
-
 	// VARIABLES
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	TSubclassOf<ADDProjectile> Projectile;
@@ -54,4 +50,7 @@ public:
 private:
 	void ValidateProjectile();
 	void ResetStats();
+
+	UFUNCTION()
+	void GameOverEventFunction();
 };

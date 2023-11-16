@@ -29,14 +29,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float ArmorHealth = 0;
 
-public:	
-	// Called every frame
-	//virtual void Tick(float DeltaTime) override;
-
 private:
 	void ResetStats();
 	void ApplyModifiers() override;
 	void OnDeath() override;
+	void GameOverEventFunction();
 
 	float TempHealth;
 	float MaxHealth;

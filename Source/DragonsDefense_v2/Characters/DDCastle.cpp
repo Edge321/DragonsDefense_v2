@@ -3,6 +3,7 @@
 
 #include "DDCastle.h"
 #include "Components/BoxComponent.h"
+#include "../Characters/DDCastle.h"
 
 // Sets default values
 ADDCastle::ADDCastle()
@@ -26,13 +27,6 @@ void ADDCastle::BeginPlay()
 	
 }
 
-// Called every frame
-//void ADDCastle::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//}
-
 void ADDCastle::ResetStats()
 {
 
@@ -45,6 +39,15 @@ void ADDCastle::ApplyModifiers()
 
 void ADDCastle::OnDeath()
 {
-	//TODO - Add game over function. Prob gonna come from gamemode class
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->GameOver();
+	}
+	GameOverEventFunction();
+}
+
+void ADDCastle::GameOverEventFunction()
+{
+	ResetStats();
 }
 

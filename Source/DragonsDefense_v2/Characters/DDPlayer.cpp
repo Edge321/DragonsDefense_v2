@@ -2,6 +2,7 @@
 
 #include "DDPlayer.h"
 #include "../Projectile/DDProjectile.h"
+#include "../Game/DDGameModeBase.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 
@@ -25,6 +26,14 @@ void ADDPlayer::BeginPlay()
 	Super::BeginPlay();
 	
 	ValidateProjectile();
+
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		//GameMode->OnGameOver.AddLambda([this]() {
+			//this->GameOverEventFunction();
+			//});
+		GameMode->OnGameOver.AddDynamic(this, &ADDPlayer::GameOverEventFunction);
+	}
 }
 
 // Called to bind functionality to input
@@ -42,4 +51,11 @@ void ADDPlayer::ValidateProjectile()
 void ADDPlayer::ResetStats()
 {
 
+}
+
+void ADDPlayer::GameOverEventFunction()
+{
+	UE_LOG(LogTemp, Log, TEXT("Game Over called, pack it up boys"))
+	ResetStats();
+	DisableInput(GetLocalViewingPlayerController());
 }

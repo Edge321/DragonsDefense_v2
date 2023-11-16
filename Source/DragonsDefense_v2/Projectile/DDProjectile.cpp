@@ -7,6 +7,8 @@
 #include "../Characters/LivingActor.h"
 #include "NiagaraComponent.h"
 
+#define ECC_EnemyChannel ECC_GameTraceChannel1
+
 // Sets default values
 ADDProjectile::ADDProjectile()
 {
@@ -34,9 +36,15 @@ void ADDProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//Prevents collider from colliding if spawned inside its owner (heehee)
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	//TODO - Get the current difficulty
+
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->AddToActorPool(this);
+	}
 
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &ADDProjectile::EnableCollision, 0.1f, false);
@@ -53,10 +61,10 @@ void ADDProjectile::SetProjectileOwner(uint32 ActorID)
 	OwnerID = ActorID;
 }
 
-//FVector ADDProjectile::GetVelocity()
-//{
-//	return ProjectileMovement->Velocity;
-//}
+void ADDProjectile::SetCollisionChannelToIgnore(ECollisionChannel Channel)
+{
+	Collider->SetCollisionResponseToChannel(Channel, ECR_Ignore);
+}
 
 void ADDProjectile::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -66,8 +74,6 @@ void ADDProjectile::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	if (Living && (Living->GetUniqueID() != OwnerID)) {
 		Destroy();
 		Living->SetHealth(ProjectileDamage);
-		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, FString::Printf(TEXT("Health: %f"), Living->GetHealth()));
 	}
 }
 
@@ -79,11 +85,13 @@ void ADDProjectile::ApplyModifiers()
 void ADDProjectile::EnableCollision()
 {
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	Collider->SetCollisionResponseToAllChannels(ECR_Overlap);
-	UE_LOG(LogTemp, Log, TEXT("Re-enabled collision!"))
 }
 
 void ADDProjectile::DestroySelf()
 {
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->RemoveActorFromPool(this);
+	}
 	Destroy();
 }

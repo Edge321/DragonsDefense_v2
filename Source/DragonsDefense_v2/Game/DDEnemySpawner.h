@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "../Characters/Enemy.h"
+#include "../Game/DDGameModeBase.h"
 #include "DDEnemySpawner.generated.h"
 
 class UBillboardComponent;
@@ -36,15 +37,15 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	TArray<TSubclassOf<AEnemy>> EnemiesToSpawn;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+private:
 	void StartSpawn();
 	void StopSpawn();
-
-private:
 	void SpawnEnemy();
 
+	UFUNCTION()
+	void GameOverEventFunction();
+
 	FTimerHandle SpawnTimerHandle;
+
+	//TODO - Consider having a Pool for the spawner to avoid coupling (Enemy - GameMode)
 };

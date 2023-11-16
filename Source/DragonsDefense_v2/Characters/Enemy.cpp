@@ -5,8 +5,11 @@
 #include "Kismet/GameplayStatics.h"
 #include "../Projectile/DDProjectile.h"
 #include "../Characters/DDCastle.h"
+#include "../Game/DDGameModeBase.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/BoxComponent.h"
+
+#define ECC_EnemyChannel ECC_GameTraceChannel1
 
 // Sets default values
 AEnemy::AEnemy()
@@ -21,6 +24,7 @@ AEnemy::AEnemy()
 	Collider->SetupAttachment(Mesh);
 
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Collider->SetCollisionObjectType(ECC_EnemyChannel);
 
 	Health = 10.0f;
 }
@@ -28,6 +32,11 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->AddToActorPool(this);
+	}
 
 	//Prevents enemy from accelerating like crazy at the beginning
 	FloatingPawnMovement->MaxSpeed = MovementSpeed;
@@ -53,7 +62,7 @@ void AEnemy::CheckDistance()
 
 	if (Distance < DistanceToAttack) {
 		FloatingPawnMovement->MaxSpeed = 0;
-		Shoot();
+		StartShooting();
 	}
 }
 
@@ -62,32 +71,43 @@ void AEnemy::ApplyModifiers()
 	//TODO - Apply modifiers to health, speed, shoot cooldown, and any others
 }
 
-void AEnemy::OnDeath()
+void AEnemy::OnDeath_Implementation()
 {
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->AddScore(Score);
+		GameMode->RemoveActorFromPool(this);
+	}
+
 	Destroy();
 }
 
 void AEnemy::StartShooting()
-{
-	GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemy::Shoot, ShootCooldown, true);
+{	
+	//Prevents the Timer Handle for shooting from reseting
+	if (!IsShooting) { 
+		IsShooting = true;
+		GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemy::Shoot, ShootCooldown, true);
+	}
 }
 
 void AEnemy::StopShooting()
 {
-	GetWorldTimerManager().ClearTimer(ShootHandle);
+	if (IsShooting) {
+		IsShooting = false;
+		GetWorldTimerManager().ClearTimer(ShootHandle);
+	}
 }
 
 void AEnemy::Shoot()
 {	
-	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation(), GetActorRotation());
+	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation() + ProjectileOffset, GetActorRotation());
 	
 	if (Proj) {
-		//FCollisionQueryParams Params;
-		//Params.AddIgnoredActor(GetUniqueID());
-		
 		Proj->SetProjectileOwner(GetUniqueID());
 		FVector Velocity = Proj->GetVelocity();
 		Proj->SetVelocity(Velocity * -1);
+		Proj->SetCollisionChannelToIgnore(ECC_EnemyChannel);
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("ERROR: Enemy projectile unable to spawn"))
@@ -114,7 +134,6 @@ void AEnemy::FindCastle()
 			ADDCastle* SomeCastle = Cast<ADDCastle>(CastleActor);
 			if (SomeCastle) {
 				Castle = SomeCastle;
-				UE_LOG(LogTemp, Log, TEXT("Found castle!"))
 				break;
 			}
 		}

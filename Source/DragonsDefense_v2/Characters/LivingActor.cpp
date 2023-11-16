@@ -33,7 +33,7 @@ void ALivingActor::SetHealth(float HealthModifier)
 {
 	Health += HealthModifier;
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Health: %f"), Health));
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("%s's Health: %f"), *GetName(), Health));
 
 	if (Health <= 0)
 	{
