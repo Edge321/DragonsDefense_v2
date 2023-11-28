@@ -4,11 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "../Characters/Enemy.h"
-#include "../Game/DDGameModeBase.h"
 #include "DDEnemySpawner.generated.h"
 
 class UBillboardComponent;
+class AEnemy;
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDEnemySpawner : public AActor
@@ -41,11 +40,19 @@ private:
 	void StartSpawn();
 	void StopSpawn();
 	void SpawnEnemy();
+	void AddEnemyToPool(AEnemy* Enemy);
+	void RemoveEnemyFromPool(AEnemy* Enemy);
+	void CleanPool();
+
+	void EnemyDeathEventFunction(AEnemy* Enemy);
 
 	UFUNCTION()
 	void GameOverEventFunction();
+	UFUNCTION()
+	void GameStartEventFunction();
 
 	FTimerHandle SpawnTimerHandle;
+	TArray<AEnemy*> EnemyPool;
 
 	//TODO - Consider having a Pool for the spawner to avoid coupling (Enemy - GameMode)
 };

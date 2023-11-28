@@ -29,10 +29,8 @@ void ADDPlayer::BeginPlay()
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
-		//GameMode->OnGameOver.AddLambda([this]() {
-			//this->GameOverEventFunction();
-			//});
 		GameMode->OnGameOver.AddDynamic(this, &ADDPlayer::GameOverEventFunction);
+		GameMode->OnGameStart.AddDynamic(this, &ADDPlayer::GameStartEventFunction);
 	}
 }
 
@@ -55,7 +53,17 @@ void ADDPlayer::ResetStats()
 
 void ADDPlayer::GameOverEventFunction()
 {
-	UE_LOG(LogTemp, Log, TEXT("Game Over called, pack it up boys"))
 	ResetStats();
-	DisableInput(GetLocalViewingPlayerController());
+	APlayerController* PlayController = GetController<APlayerController>();
+	DisableInput(PlayController);
+	PlayController->bShowMouseCursor = true;
+	PlayController->SetInputMode(FInputModeGameAndUI());
+}
+
+void ADDPlayer::GameStartEventFunction()
+{
+	APlayerController* PlayController = GetController<APlayerController>();
+	EnableInput(PlayController);
+	PlayController->bShowMouseCursor = false;
+	PlayController->SetInputMode(FInputModeGameOnly());
 }

@@ -18,9 +18,7 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetScoreText(int32 EnemiesKilled);
-	UFUNCTION(BlueprintCallable)
-	void CallGameOverEvent();
 	UFUNCTION(BlueprintImplementableEvent)
-	void GameOverEventFunction();
-	
+	void ResetScoreText();
+
 };

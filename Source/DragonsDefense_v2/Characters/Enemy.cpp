@@ -3,11 +3,12 @@
 
 #include "Enemy.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/FloatingPawnMovement.h"
+#include "Components/BoxComponent.h"
+//My classes
 #include "../Projectile/DDProjectile.h"
 #include "../Characters/DDCastle.h"
 #include "../Game/DDGameModeBase.h"
-#include "GameFramework/FloatingPawnMovement.h"
-#include "Components/BoxComponent.h"
 
 #define ECC_EnemyChannel ECC_GameTraceChannel1
 
@@ -32,11 +33,6 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
-	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
-	if (GameMode) {
-		GameMode->AddToActorPool(this);
-	}
 
 	//Prevents enemy from accelerating like crazy at the beginning
 	FloatingPawnMovement->MaxSpeed = MovementSpeed;
@@ -63,7 +59,7 @@ void AEnemy::CheckDistance()
 	if (Distance < DistanceToAttack) {
 		FloatingPawnMovement->MaxSpeed = 0;
 		StartShooting();
-	}
+	}	
 }
 
 void AEnemy::ApplyModifiers()
@@ -76,15 +72,14 @@ void AEnemy::OnDeath_Implementation()
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		GameMode->AddScore(Score);
-		GameMode->RemoveActorFromPool(this);
 	}
 
-	Destroy();
+	OnEnemyDeath.ExecuteIfBound(this);
 }
 
 void AEnemy::StartShooting()
 {	
-	//Prevents the Timer Handle for shooting from reseting
+	//Prevents the Timer Handle for shooting reseting every tick
 	if (!IsShooting) { 
 		IsShooting = true;
 		GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemy::Shoot, ShootCooldown, true);
@@ -138,5 +133,4 @@ void AEnemy::FindCastle()
 			}
 		}
 	}
-
 }

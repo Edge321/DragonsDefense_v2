@@ -42,6 +42,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	float GetHealth();
-	void SetHealth(float HealthModifier);
+	virtual const float GetHealth();
+	virtual void UpdateHealth(const float HealthModifier);
 };

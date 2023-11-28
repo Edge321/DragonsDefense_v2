@@ -53,4 +53,6 @@ private:
 
 	UFUNCTION()
 	void GameOverEventFunction();
+	UFUNCTION()
+	void GameStartEventFunction();
 };

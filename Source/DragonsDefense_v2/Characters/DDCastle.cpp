@@ -15,26 +15,54 @@ ADDCastle::ADDCastle()
 
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
-
-	TempHealth = Health;
-	MaxHealth = Health;
 }
 
 // Called when the game starts or when spawned
 void ADDCastle::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	TempHealth = Health;
+	MaxHealth = Health;
+}
+
+void ADDCastle::UpdateHealth(const float HealthModifier)
+{
+	TempHealth += HealthModifier;
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, 
+		FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
+
+	if (TempHealth <= 0)
+	{
+		OnDeath();
+	}
+}
+
+const float ADDCastle::GetHealth()
+{
+	return TempHealth;
+}
+
+void ADDCastle::SetMaxHealth(const float MaxHealthModifier)
+{
+	MaxHealth = MaxHealthModifier;
+}
+
+const float ADDCastle::GetMaxHealth()
+{
+	return MaxHealth;
 }
 
 void ADDCastle::ResetStats()
 {
-
+	TempHealth = Health;
+	MaxHealth = Health;
 }
 
 void ADDCastle::ApplyModifiers()
 {
-
+	//TODO - Do what the function says
 }
 
 void ADDCastle::OnDeath()
@@ -51,3 +79,7 @@ void ADDCastle::GameOverEventFunction()
 	ResetStats();
 }
 
+void ADDCastle::GameStartEventFunction()
+{
+	//TODO - Figure something out here. Might not need this function?
+}

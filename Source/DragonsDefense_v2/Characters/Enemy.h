@@ -12,6 +12,8 @@ class UAudioComponent;
 class ADDCastle;
 class ADDProjectile;
 
+DECLARE_DELEGATE_OneParam(FOnEnemyDeath, AEnemy*)
+
 /**
  * 
  */
@@ -67,6 +69,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	FOnEnemyDeath OnEnemyDeath;
+
 private:
 	void CheckDistance();
 	void ApplyModifiers() override;
@@ -74,7 +78,6 @@ private:
 	void StopShooting();
 	void Shoot();
 	void ValidateProjectile();
-	
 	void FindCastle();
 
 	ADDCastle* Castle;

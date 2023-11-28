@@ -24,12 +24,12 @@ void ALivingActor::Tick(float DeltaTime)
 
 }
 
-float ALivingActor::GetHealth()
+const float ALivingActor::GetHealth()
 {
 	return Health;
 }
 
-void ALivingActor::SetHealth(float HealthModifier)
+void ALivingActor::UpdateHealth(const float HealthModifier)
 {
 	Health += HealthModifier;
 

@@ -3,9 +3,11 @@
 #include "DDProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/BoxComponent.h"
+#include "NiagaraComponent.h"
+//My classes
 #include "../Game/DDGameModeBase.h" //TODO - Access difficulty mode to apply to damage modifier
 #include "../Characters/LivingActor.h"
-#include "NiagaraComponent.h"
+#include "../Game/DDProjectileManager.h"
 
 #define ECC_EnemyChannel ECC_GameTraceChannel1
 
@@ -43,8 +45,10 @@ void ADDProjectile::BeginPlay()
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
-		GameMode->AddToActorPool(this);
+		ADDProjectileManager& ProjectileManager = GameMode->GetProjectileManager();
+		ProjectileManager.AddProjectileToPool(this);
 	}
+	
 
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &ADDProjectile::EnableCollision, 0.1f, false);
@@ -71,9 +75,10 @@ void ADDProjectile::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	ALivingActor* Living = Cast<ALivingActor>(OtherActor);
 
+	//Checking if valid pointer and actor isn't hurt from own projectile
 	if (Living && (Living->GetUniqueID() != OwnerID)) {
-		Destroy();
-		Living->SetHealth(ProjectileDamage);
+		Living->UpdateHealth(ProjectileDamage);
+		DestroySelf();
 	}
 }
 
@@ -89,9 +94,5 @@ void ADDProjectile::EnableCollision()
 
 void ADDProjectile::DestroySelf()
 {
-	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
-	if (GameMode) {
-		GameMode->RemoveActorFromPool(this);
-	}
-	Destroy();
+	OnProjectileDestroyed.ExecuteIfBound(this);
 }

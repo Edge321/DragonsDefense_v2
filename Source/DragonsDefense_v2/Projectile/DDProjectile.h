@@ -11,6 +11,8 @@ class UProjectileMovementComponent;
 class UAudioComponent;
 class UNiagaraComponent;
 
+DECLARE_DELEGATE_OneParam(FOnProjectileDestroyed, ADDProjectile*)
+
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDProjectile : public AActor
 {
@@ -51,6 +53,8 @@ public:
 	/*FVector GetVelocity();*/
 	void SetProjectileOwner(uint32 ActorID);
 	void SetCollisionChannelToIgnore(ECollisionChannel Channel);
+
+	FOnProjectileDestroyed OnProjectileDestroyed;
 
 private:
 	UFUNCTION()

@@ -29,11 +29,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float ArmorHealth = 0;
 
+	void UpdateHealth(const float HealthModifier) override;
+	const float GetHealth() override;
+
 private:
+	void SetMaxHealth(const float MaxHealthModifier);
+	const float GetMaxHealth();
 	void ResetStats();
 	void ApplyModifiers() override;
 	void OnDeath() override;
 	void GameOverEventFunction();
+	void GameStartEventFunction();
 
 	float TempHealth;
 	float MaxHealth;

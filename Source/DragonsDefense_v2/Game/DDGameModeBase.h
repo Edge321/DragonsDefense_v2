@@ -8,11 +8,12 @@
 
 // TODO - Add an enum class for difficulties
 
-//DECLARE_MULTICAST_DELEGATE(FOnGameOver)
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameOver);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
+
 class UDDScoreWidget;
+class ADDProjectileManager;
 
 /**
  * 
@@ -31,6 +32,7 @@ protected:
 	//Todo: Add widget stuff here
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UUserWidget> ScoreWidgetClass;
+	
 
 	UPROPERTY()
 	UDDScoreWidget* ScoreWidget;
@@ -40,15 +42,20 @@ protected:
 public:
 
 	void AddScore(int32 Score);
-	void AddToActorPool(AActor* Actor);
-	void RemoveActorFromPool(AActor* Actor);
+	ADDProjectileManager& GetProjectileManager();
+	
+	UFUNCTION(BlueprintCallable, Category = "GameState")
 	void GameOver();
+	UFUNCTION(BlueprintCallable, Category = "GameState")
+	void GameStart();
 
 	UPROPERTY(BlueprintAssignable, Category = "Event")
 	FOnGameOver OnGameOver;
+	UPROPERTY(BlueprintAssignable, Category = "Event")
+	FOnGameStart OnGameStart;
 
 private:
-	TArray<AActor*> ActorPool;
-	void RemoveAllActors();
+	void FindProjectileManager();
 
+	ADDProjectileManager* ProjectileManager;
 };

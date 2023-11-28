@@ -2,8 +2,11 @@
 
 
 #include "DDGameModeBase.h"
-#include "../Game/DDScoreWidget.h"
+#include "Kismet/GameplayStatics.h"
 #include "Blueprint/UserWidget.h"
+//My classes
+#include "../Game/DDScoreWidget.h"
+#include "../Game/DDProjectileManager.h"
 
 void ADDGameModeBase::BeginPlay()
 {
@@ -15,6 +18,7 @@ void ADDGameModeBase::BeginPlay()
 			UpdateScoreText();
 		}
 	}
+	FindProjectileManager();
 }
 
 void ADDGameModeBase::UpdateScoreText()
@@ -28,27 +32,39 @@ void ADDGameModeBase::AddScore(int32 Score)
 	UpdateScoreText();
 }
 
-void ADDGameModeBase::AddToActorPool(AActor* Actor)
+ADDProjectileManager& ADDGameModeBase::GetProjectileManager()
 {
-	ActorPool.Add(Actor);
-}
-
-void ADDGameModeBase::RemoveActorFromPool(AActor* Actor)
-{
-	int32 removed = ActorPool.Remove(Actor);
+	check(ProjectileManager)
+	return *ProjectileManager;
 }
 
 void ADDGameModeBase::GameOver()
 {
-	RemoveAllActors();
+	TotalEnemiesKilled = 0;
+	UpdateScoreText();
 	OnGameOver.Broadcast();
-	//TODO - Reset whatever object needs to be reset
 }
 
-void ADDGameModeBase::RemoveAllActors()
+void ADDGameModeBase::GameStart()
 {
-	for (AActor* Actor : ActorPool) {
-		Actor->Destroy();
+	OnGameStart.Broadcast();
+}
+
+void ADDGameModeBase::FindProjectileManager()
+{
+	TArray<AActor*> ProjectileManagersToFind;
+	if (UWorld* World = GetWorld()) {
+		UGameplayStatics::GetAllActorsOfClass(World, ADDProjectileManager::StaticClass(), ProjectileManagersToFind);
+
+		check(ProjectileManagersToFind.Num() == 1)
+		check(!ProjectileManagersToFind.IsEmpty());
+
+		for (AActor* ProjManager : ProjectileManagersToFind) {
+			ADDProjectileManager* SomeProjManager = Cast<ADDProjectileManager>(ProjManager);
+			if (SomeProjManager) {
+				ProjectileManager = SomeProjManager;
+				break;
+			}
+		}
 	}
-	ActorPool.Empty();
 }
