@@ -50,7 +50,6 @@ protected:
 
 public:
 	void SetVelocity(FVector Velocity);
-	/*FVector GetVelocity();*/
 	void SetProjectileOwner(uint32 ActorID);
 	void SetCollisionChannelToIgnore(ECollisionChannel Channel);
 

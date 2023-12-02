@@ -23,8 +23,6 @@ void ADDEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	StartSpawn();
-
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		GameMode->OnGameOver.AddDynamic(this, &ADDEnemySpawner::GameOverEventFunction);

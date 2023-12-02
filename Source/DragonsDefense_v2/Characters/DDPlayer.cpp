@@ -32,6 +32,9 @@ void ADDPlayer::BeginPlay()
 		GameMode->OnGameOver.AddDynamic(this, &ADDPlayer::GameOverEventFunction);
 		GameMode->OnGameStart.AddDynamic(this, &ADDPlayer::GameStartEventFunction);
 	}
+
+	//Want to disable the input at the beginning obviously!
+	GameOverEventFunction();
 }
 
 // Called to bind functionality to input

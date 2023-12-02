@@ -6,9 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "DDMainMenuWidget.generated.h"
 
-/**
- * 
- */
+class UCanvasPanel;
+
 UCLASS()
 class DRAGONSDEFENSE_V2_API UDDMainMenuWidget : public UUserWidget
 {
@@ -16,6 +15,10 @@ class DRAGONSDEFENSE_V2_API UDDMainMenuWidget : public UUserWidget
 
 protected:
 	
-
-
+	UFUNCTION(BlueprintCallable)
+	void Start();
+	UFUNCTION(BlueprintCallable)
+	void SwitchMenus(UCanvasPanel* MenuDest, UCanvasPanel* MenuSrc);
+	UFUNCTION(BlueprintCallable)
+	void Quit() const;
 };

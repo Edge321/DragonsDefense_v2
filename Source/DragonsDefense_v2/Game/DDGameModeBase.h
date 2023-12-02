@@ -13,11 +13,9 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameOver);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
 
 class UDDScoreWidget;
+class UDDMainMenuWidget;
 class ADDProjectileManager;
 
-/**
- * 
- */
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDGameModeBase : public AGameModeBase
 {
@@ -32,10 +30,13 @@ protected:
 	//Todo: Add widget stuff here
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UUserWidget> ScoreWidgetClass;
-	
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> MainMenuWidgetClass;
 
 	UPROPERTY()
 	UDDScoreWidget* ScoreWidget;
+	UPROPERTY()
+	UDDMainMenuWidget* MainMenuWidget;
 
 	void UpdateScoreText();
 
@@ -43,7 +44,9 @@ public:
 
 	void AddScore(int32 Score);
 	ADDProjectileManager& GetProjectileManager();
-	
+
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	UDDMainMenuWidget* GetMainMenuWidget();
 	UFUNCTION(BlueprintCallable, Category = "GameState")
 	void GameOver();
 	UFUNCTION(BlueprintCallable, Category = "GameState")

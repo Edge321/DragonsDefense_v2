@@ -14,9 +14,6 @@ class ADDProjectile;
 
 DECLARE_DELEGATE_OneParam(FOnEnemyDeath, AEnemy*)
 
-/**
- * 
- */
 UCLASS()
 class DRAGONSDEFENSE_V2_API AEnemy : public ALivingActor
 {

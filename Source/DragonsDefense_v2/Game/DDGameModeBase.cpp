@@ -7,9 +7,11 @@
 //My classes
 #include "../Game/DDScoreWidget.h"
 #include "../Game/DDProjectileManager.h"
+#include "../UI/DDMainMenuWidget.h"
 
 void ADDGameModeBase::BeginPlay()
 {
+	//TODO - Bunch these widgets in an array of widgets, dont have to copy code that way
 	if (ScoreWidgetClass) {
 		ScoreWidget = Cast<UDDScoreWidget>(CreateWidget(GetWorld(), ScoreWidgetClass));
 
@@ -18,6 +20,15 @@ void ADDGameModeBase::BeginPlay()
 			UpdateScoreText();
 		}
 	}
+
+	if (MainMenuWidgetClass) {
+		MainMenuWidget = Cast<UDDMainMenuWidget>(CreateWidget(GetWorld(), MainMenuWidgetClass));
+
+		if (MainMenuWidget) {
+			MainMenuWidget->AddToViewport();
+		}
+	}
+
 	FindProjectileManager();
 }
 
@@ -36,6 +47,12 @@ ADDProjectileManager& ADDGameModeBase::GetProjectileManager()
 {
 	check(ProjectileManager)
 	return *ProjectileManager;
+}
+
+UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget()
+{
+	check(MainMenuWidget)
+	return MainMenuWidget;
 }
 
 void ADDGameModeBase::GameOver()

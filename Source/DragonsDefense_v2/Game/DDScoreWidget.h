@@ -6,9 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "DDScoreWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class DRAGONSDEFENSE_V2_API UDDScoreWidget : public UUserWidget
 {
@@ -20,5 +17,4 @@ public:
 	void SetScoreText(int32 EnemiesKilled);
 	UFUNCTION(BlueprintImplementableEvent)
 	void ResetScoreText();
-
 };
