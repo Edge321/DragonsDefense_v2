@@ -26,8 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	int32 TotalEnemiesKilled = 0;
-	
-	//Todo: Add widget stuff here
+
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UUserWidget> ScoreWidgetClass;
 	UPROPERTY(EditAnywhere, Category = "Widgets")
@@ -58,6 +57,10 @@ public:
 	FOnGameStart OnGameStart;
 
 private:
+	/**
+	 * @brief Caches the projectile manager
+	 * 
+	 */
 	void FindProjectileManager();
 
 	ADDProjectileManager* ProjectileManager;

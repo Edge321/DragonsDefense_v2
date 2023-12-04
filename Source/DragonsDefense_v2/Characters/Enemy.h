@@ -27,7 +27,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	//COMPONENTS
 	//insert AI component here if needed
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh; //TODO - Replace with skeletal mesh when we get to animation
@@ -36,29 +35,34 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAudioComponent* ShootSound;
 
-	//VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement");
 	float MovementSpeed = 1.0f;
+	//What projectile will the enemy be using?
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Projectile");
 	TSubclassOf<ADDProjectile> Projectile;
+	//Offset of spawned projectile relative to the origin of the enemy
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile");
 	FVector ProjectileOffset = FVector::Zero();
+	//Distance from the castle to attack
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
 	float DistanceToAttack = 100.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
 	float ShootCooldown = 1.0f;
+	//Modifies movement speed if Easy mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float EasyMovementSpeedMod = 0.9f;
+	//Modifies movement speed if Hard mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float HardMovementSpeedMod = 1.1f;
+	//Modifies shooting cooldown if Easy mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float EasyShootCooldownMod = 1.2f;
+	//Modifies shooting cooldown if Hard mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float HardShootCooldownMod = 0.8f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score");
 	int32 Score = 1;
 
-	//FUNCTIONS
 	UFUNCTION(BlueprintNativeEvent)
 	void OnDeath() override;
 
@@ -69,11 +73,19 @@ public:
 	FOnEnemyDeath OnEnemyDeath;
 
 private:
+	/**
+	 * @brief Checks the distance of self and the castle
+	 * 
+	 */
 	void CheckDistance();
 	void ApplyModifiers() override;
 	void StartShooting();
 	void StopShooting();
 	void Shoot();
+	/**
+	 * @brief Checks if projectile was assigned
+	 * 
+	 */
 	void ValidateProjectile();
 	void FindCastle();
 

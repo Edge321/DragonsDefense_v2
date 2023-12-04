@@ -39,6 +39,7 @@ void ADDProjectileManager::RemoveProjectileFromPool(ADDProjectile* Proj)
 {
 	int32 ProjID = Proj->GetUniqueID();
 
+	//Searches based on the projectile's ID
 	for (ADDProjectile* SomeProj : ProjectilePool) {
 		if (SomeProj && SomeProj->GetUniqueID() == ProjID) {
 			SomeProj->Destroy();

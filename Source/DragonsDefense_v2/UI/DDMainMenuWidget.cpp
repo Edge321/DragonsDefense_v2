@@ -19,6 +19,13 @@ void UDDMainMenuWidget::Start()
 void UDDMainMenuWidget::SwitchMenus(UCanvasPanel* MenuDest, UCanvasPanel* MenuSrc)
 {
 	if (MenuDest && MenuSrc) {
+		if (MenuSrc->Visibility == ESlateVisibility::Hidden) {
+			UE_LOG(LogTemp, Warning, TEXT("Warning: Menu source is already hidden!"))
+		}
+		if (MenuDest->Visibility == ESlateVisibility::Visible) {
+			UE_LOG(LogTemp, Warning, TEXT("Warning: Menu destination is already hidden!"))
+		}
+
 		MenuSrc->SetVisibility(ESlateVisibility::Hidden);
 		MenuDest->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	}
@@ -35,5 +42,4 @@ void UDDMainMenuWidget::Quit() const
 	if (World) {
 		UKismetSystemLibrary::QuitGame(World, nullptr, EQuitPreference::Quit, false);
 	}
-
 }

@@ -9,6 +9,9 @@
 class UBillboardComponent;
 class ADDProjectile;
 
+/**
+ * Does what the class's name says
+ */
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDProjectileManager : public AActor
 {
@@ -22,7 +25,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//COMPONENTS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* ManagerIcon;
 
@@ -33,6 +35,11 @@ private:
 	TArray<ADDProjectile*> ProjectilePool;
 
 	void RemoveProjectileFromPool(ADDProjectile* Proj);
+	/**
+	 * @brief Cleans all elements that are in the projectile
+	 * pool and destroys them if they still exist
+	 * 
+	 */
 	void CleanPool();
 
 	UFUNCTION()

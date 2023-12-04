@@ -3,6 +3,7 @@
 
 #include "DDCastle.h"
 #include "Components/BoxComponent.h"
+//My classes
 #include "../Characters/DDCastle.h"
 
 // Sets default values
@@ -30,6 +31,7 @@ void ADDCastle::UpdateHealth(const float HealthModifier)
 {
 	TempHealth += HealthModifier;
 
+	//Temporary until in-game health bars are implemented
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, 
 		FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
 
@@ -71,6 +73,7 @@ void ADDCastle::OnDeath()
 	if (GameMode) {
 		GameMode->GameOver();
 	}
+	//I know I can go straight to ResetStats() but I want to stay consistent with GameOverEventFunction
 	GameOverEventFunction();
 }
 

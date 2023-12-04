@@ -24,10 +24,9 @@ AEnemy::AEnemy()
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
 
+	//Forces only the collider to have collision
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetCollisionObjectType(ECC_EnemyChannel);
-
-	Health = 10.0f;
 }
 
 void AEnemy::BeginPlay()
@@ -79,13 +78,14 @@ void AEnemy::OnDeath_Implementation()
 
 void AEnemy::StartShooting()
 {	
-	//Prevents the Timer Handle for shooting reseting every tick
+	//Boolean prevents the Timer Handle from resetting every tick
 	if (!IsShooting) { 
 		IsShooting = true;
 		GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemy::Shoot, ShootCooldown, true);
 	}
 }
 
+//TODO - Utilize this somehow. Has not been used yet
 void AEnemy::StopShooting()
 {
 	if (IsShooting) {
@@ -116,6 +116,7 @@ void AEnemy::ValidateProjectile()
 
 void AEnemy::FindCastle()
 {
+	//TODO - Find a more optimized way of finding the castle. Cache it in GameMode perhaps?
 	TArray<AActor*> CastlesToFind;
 	if (UWorld* World = GetWorld()) {
 		UGameplayStatics::GetAllActorsOfClass(World, ADDCastle::StaticClass(), CastlesToFind);

@@ -7,6 +7,7 @@
 // Sets default values
 ALivingActor::ALivingActor()
 {
+	//Class that inherits is responsible for setting the root component
 	Collider = CreateDefaultSubobject<UBoxComponent>("BoxCollider");
 }
 
@@ -33,6 +34,7 @@ void ALivingActor::UpdateHealth(const float HealthModifier)
 {
 	Health += HealthModifier;
 
+	//Temporary line until health bars in-game exist
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("%s's Health: %f"), *GetName(), Health));
 
 	if (Health <= 0)

@@ -32,9 +32,7 @@ void ADDEnemySpawner::BeginPlay()
 
 void ADDEnemySpawner::SpawnEnemy()
 {
-	if (EnemiesToSpawn.IsEmpty()) {
-		UE_LOG(LogTemp, Error, TEXT("Error: EnemiesToSpawn array is empty!"))
-	}
+	check(EnemiesToSpawn.Num() > 0)
 
 	int32 EnemyIndex = FMath::RandRange(0, EnemiesToSpawn.Num() - 1);
 	float RandomAreaY = FMath::RandRange(-SpawnAreaY, SpawnAreaY);
@@ -45,10 +43,9 @@ void ADDEnemySpawner::SpawnEnemy()
 	AEnemy* ActualEnemy = GetWorld()->SpawnActor<AEnemy>(Enemy, RandomLocation, GetActorRotation());
 
 	if (ActualEnemy) {
-		//TODO - Figure out what to do with the returned pointer. Add to enemy pool perhaps?
 		ActualEnemy->SpawnDefaultController();
 		ActualEnemy->AutoPossessAI = EAutoPossessAI::Spawned;
-		ActualEnemy->OnEnemyDeath.BindUObject(this, &ADDEnemySpawner::EnemyDeathEventFunction);
+		ActualEnemy->OnEnemyDeath.BindUObject(this, &ADDEnemySpawner::RemoveEnemyFromPool);
 		AddEnemyToPool(ActualEnemy);
 	}
 }
@@ -66,11 +63,6 @@ void ADDEnemySpawner::CleanPool()
 		}
 	}
 	EnemyPool.Empty();
-}
-
-void ADDEnemySpawner::EnemyDeathEventFunction(AEnemy* Enemy)
-{
-	RemoveEnemyFromPool(Enemy);
 }
 
 void ADDEnemySpawner::GameOverEventFunction()

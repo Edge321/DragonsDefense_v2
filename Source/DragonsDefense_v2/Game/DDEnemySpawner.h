@@ -9,6 +9,10 @@
 class UBillboardComponent;
 class AEnemy;
 
+/**
+ * Does what the class's name says as well as
+ * has a pool of enemies to manage
+ */
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDEnemySpawner : public AActor
 {
@@ -22,15 +26,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//COMPONENTS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* SpawnerIcon;
 
-	//VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	float SpawnInterval = 3.0f;
+	//Area of where an enemy can be spawned on the Y-axis
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	float SpawnAreaY = 1500.0f;
+	//Used for reducing the spawn interval for fast enemy spawning
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	float SpawnTimeReducer;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
@@ -44,8 +48,6 @@ private:
 	void RemoveEnemyFromPool(AEnemy* Enemy);
 	void CleanPool();
 
-	void EnemyDeathEventFunction(AEnemy* Enemy);
-
 	UFUNCTION()
 	void GameOverEventFunction();
 	UFUNCTION()
@@ -53,6 +55,4 @@ private:
 
 	FTimerHandle SpawnTimerHandle;
 	TArray<AEnemy*> EnemyPool;
-
-	//TODO - Consider having a Pool for the spawner to avoid coupling (Enemy - GameMode)
 };

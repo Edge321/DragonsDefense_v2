@@ -9,6 +9,9 @@
 
 class UBoxComponent;
 
+/**
+ * An abstract class meant for actors that have health
+ */
 UCLASS(Abstract)
 class DRAGONSDEFENSE_V2_API ALivingActor : public APawn
 {
@@ -22,19 +25,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//COMPONENTS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* Collider;
 
-	//VARIABLES
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health");
 	float Health = 1.0f;
+	//Modifies health if Easy mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float EasyHealthModifier = 0.8f;
+	//Modifies health if Hard mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
 	float HardHealthModifier = 1.2f;
 
-	//VIRTUAL FUNCTIONS
+	//Apparently Unreal does not like pure virtual functions so...yeah
 	virtual void ApplyModifiers() {}
 	virtual void OnDeath() {}
 

@@ -36,6 +36,11 @@ private:
 	void SetMaxHealth(const float MaxHealthModifier);
 	const float GetMaxHealth();
 	void ResetStats();
+	/**
+	 * @brief Applies difficulty modifier to the necessary
+	 * stats
+	 * 
+	 */
 	void ApplyModifiers() override;
 	void OnDeath() override;
 	void GameOverEventFunction();

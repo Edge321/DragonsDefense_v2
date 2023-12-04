@@ -17,6 +17,7 @@ ADDPlayer::ADDPlayer()
 
 	RootComponent = Mesh;
 
+	//Forces collider to have the only collision
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
@@ -37,6 +38,11 @@ void ADDPlayer::BeginPlay()
 	GameOverEventFunction();
 }
 
+void ADDPlayer::Tick(float DeltaTime)
+{
+	LimitArea();
+}
+
 // Called to bind functionality to input
 void ADDPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -51,7 +57,14 @@ void ADDPlayer::ValidateProjectile()
 
 void ADDPlayer::ResetStats()
 {
+	//TODO - Reset them stats!
+}
 
+void ADDPlayer::LimitArea()
+{
+	FVector NewLocation = GetActorLocation();
+	NewLocation.Y = FMath::Clamp(NewLocation.Y, -AreaLimitY, AreaLimitY);
+	SetActorLocation(NewLocation);
 }
 
 void ADDPlayer::GameOverEventFunction()

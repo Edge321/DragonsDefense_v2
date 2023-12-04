@@ -23,33 +23,39 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// COMPONENTS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh; //TODO - Later down the line change to SkeletalMeshComponent
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
 
-	// VARIABLES
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	TSubclassOf<ADDProjectile> Projectile;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MovementSpeed = 20.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ShootCooldown = 0.6f;
+	//Limits the area of where the player can move on the Y-axis
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float AreaLimit = 50.0f;
+	float AreaLimitY = 50.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector ProjectileOffset = FVector(0, 0, 0); //Where the projectile is spawned relative to the player
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool OnCooldown = false;
 
-public:	
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
 	void ValidateProjectile();
 	void ResetStats();
+	/**
+	 * @brief Limits area the player can move to
+	 * 
+	 */
+	void LimitArea();
 
 	UFUNCTION()
 	void GameOverEventFunction();
