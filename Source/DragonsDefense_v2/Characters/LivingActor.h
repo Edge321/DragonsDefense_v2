@@ -5,9 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "../Game/DDGameModeBase.h"
+#include "Components/BoxComponent.h"
 #include "LivingActor.generated.h"
-
-class UBoxComponent;
 
 /**
  * An abstract class meant for actors that have health

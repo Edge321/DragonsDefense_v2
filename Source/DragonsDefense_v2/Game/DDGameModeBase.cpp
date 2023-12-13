@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 //My classes
 #include "../Game/DDScoreWidget.h"
+#include "../Characters/DDPlayer.h"
 #include "../Game/DDProjectileManager.h"
 #include "../UI/DDMainMenuWidget.h"
 
@@ -29,7 +30,9 @@ void ADDGameModeBase::BeginPlay()
 		}
 	}
 
-	FindProjectileManager();
+	//FindProjectileManager();
+	FindUObject<ADDProjectileManager>(ProjectileManager);
+	FindUObject<ADDPlayer>(Player);
 }
 
 void ADDGameModeBase::UpdateScoreText()
@@ -47,6 +50,11 @@ ADDProjectileManager& ADDGameModeBase::GetProjectileManager()
 {
 	check(ProjectileManager)
 	return *ProjectileManager;
+}
+
+const int32 ADDGameModeBase::GetSouls()
+{
+	return Souls;
 }
 
 UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget()
@@ -80,6 +88,27 @@ void ADDGameModeBase::FindProjectileManager()
 			ADDProjectileManager* SomeProjManager = Cast<ADDProjectileManager>(ProjManager);
 			if (SomeProjManager) {
 				ProjectileManager = SomeProjManager;
+				break;
+			}
+		}
+	}
+}
+
+//BUG - This generic function is NOT working!!!!
+template<class T>
+inline void ADDGameModeBase::FindUObject(T* ActualActor)
+{
+	TArray<AActor*> ActorArray;
+	if (UWorld* World = GetWorld()) {
+		UGameplayStatics::GetAllActorsOfClass(World, T::StaticClass(), ActorArray);
+
+		check(ActorArray.Num() == 1)
+		check(!ActorArray.IsEmpty());
+
+		for (AActor* Actor : ActorArray) {
+			T* SomeActor = Cast<T>(Actor);
+			if (SomeActor) {
+				ActualActor = SomeActor;
 				break;
 			}
 		}

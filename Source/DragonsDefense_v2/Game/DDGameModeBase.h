@@ -15,6 +15,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
 class UDDScoreWidget;
 class UDDMainMenuWidget;
 class ADDProjectileManager;
+class ADDPlayer;
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDGameModeBase : public AGameModeBase
@@ -42,8 +43,12 @@ protected:
 public:
 
 	void AddScore(int32 Score);
-	ADDProjectileManager& GetProjectileManager();
 
+	//TODO - Make a get player function
+	ADDProjectileManager& GetProjectileManager();
+	
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	const int32 GetSouls();
 	UFUNCTION(BlueprintCallable, Category = "Getters")
 	UDDMainMenuWidget* GetMainMenuWidget();
 	UFUNCTION(BlueprintCallable, Category = "GameState")
@@ -63,5 +68,10 @@ private:
 	 */
 	void FindProjectileManager();
 
+	template <class T> void FindUObject(T* ActualActor);
+
 	ADDProjectileManager* ProjectileManager;
+	ADDPlayer* Player;
+
+	int32 Souls = 0;
 };

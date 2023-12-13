@@ -10,6 +10,7 @@ class UStaticMeshComponent;
 class UFloatingPawnMovement;
 class UAudioComponent;
 class ADDCastle;
+class ADDPlayer;
 class ADDProjectile;
 
 DECLARE_DELEGATE_OneParam(FOnEnemyDeath, AEnemy*)
@@ -63,6 +64,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score");
 	int32 Score = 1;
 
+	//TODO - Might just get rid of this tbh
 	UFUNCTION(BlueprintNativeEvent)
 	void OnDeath() override;
 
@@ -87,9 +89,9 @@ private:
 	 * 
 	 */
 	void ValidateProjectile();
-	void FindCastle();
+	void FindPlayer();
 
-	ADDCastle* Castle;
+	ADDPlayer* Player;
 	FTimerHandle ShootHandle;
 	float TempShootCooldown;
 	bool IsShooting = false;

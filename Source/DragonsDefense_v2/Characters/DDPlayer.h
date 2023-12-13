@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "../Characters/LivingActor.h"
 #include "DDPlayer.generated.h"
 
 class UCameraComponent;
@@ -11,7 +12,7 @@ class UFloatingPawnMovement;
 class ADDProjectile;
 
 UCLASS()
-class DRAGONSDEFENSE_V2_API ADDPlayer : public APawn
+class DRAGONSDEFENSE_V2_API ADDPlayer : public ALivingActor
 {
 	GENERATED_BODY()
 
@@ -28,25 +29,40 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Projectile")
 	TSubclassOf<ADDProjectile> Projectile;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float Armor = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float MovementSpeed = 20.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float ShootCooldown = 0.6f;
+	//Shooting speed in seconds
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shooting")
+	float ShootSpeed = 0.6f;
 	//Limits the area of where the player can move on the Y-axis
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Area Limit")
 	float AreaLimitY = 50.0f;
+	//Where the projectile is spawned relative to the player
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector ProjectileOffset = FVector(0, 0, 0); //Where the projectile is spawned relative to the player
+	FVector ProjectileOffset = FVector(0, 0, 0); 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool OnCooldown = false;
 
+	void UpdateHealth(const float HealthModifier) override;
+	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	const float GetHealth() override;
+	const float GetMaxHealth() const;
+	
+	UFUNCTION(BlueprintCallable)
+	void UpdateMaxHealth(const float MaxHealthModifier);
+	UFUNCTION(BlueprintCallable)
+	void UpdateMovementSpeed(const float MovementSpeedModifier);
+	UFUNCTION(BlueprintCallable)
+	void UpdateShootSpeed(const float ShootSpeedModifier);
 
 private:
 	void ValidateProjectile();
@@ -56,9 +72,15 @@ private:
 	 * 
 	 */
 	void LimitArea();
+	void OnDeath() override;
 
 	UFUNCTION()
 	void GameOverEventFunction();
 	UFUNCTION()
 	void GameStartEventFunction();
+
+	float MaxHealth;
+	float TempHealth;
+	float TempMovementSpeed;
+	float TempShootSpeed;
 };

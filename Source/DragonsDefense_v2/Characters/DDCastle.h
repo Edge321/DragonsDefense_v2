@@ -7,6 +7,7 @@
 #include "DDCastle.generated.h"
 
 class UStaticMeshComponent;
+class ADDPlayer;
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDCastle : public ALivingActor

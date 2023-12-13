@@ -4,7 +4,7 @@
 #include "DDCastle.h"
 #include "Components/BoxComponent.h"
 //My classes
-#include "../Characters/DDCastle.h"
+#include "../Characters/DDPlayer.h"
 
 // Sets default values
 ADDCastle::ADDCastle()

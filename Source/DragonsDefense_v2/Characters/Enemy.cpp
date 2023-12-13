@@ -8,6 +8,7 @@
 //My classes
 #include "../Projectile/DDProjectile.h"
 #include "../Characters/DDCastle.h"
+#include "../Characters/DDPlayer.h"
 #include "../Game/DDGameModeBase.h"
 
 #define ECC_EnemyChannel ECC_GameTraceChannel1
@@ -37,7 +38,7 @@ void AEnemy::BeginPlay()
 	FloatingPawnMovement->MaxSpeed = MovementSpeed;
 
 	ValidateProjectile();
-	FindCastle();
+	FindPlayer();
 }
 
 // Called every frame
@@ -53,7 +54,8 @@ void AEnemy::Tick(float DeltaTime)
 //Checks distance between the enemy and the castle
 void AEnemy::CheckDistance()
 {
-	float Distance = FMath::Abs(GetActorLocation().X - Castle->GetActorLocation().X);
+	//Distance formula on one dimension
+	float Distance = FMath::Abs(GetActorLocation().X - Player->GetActorLocation().X);
 
 	if (Distance < DistanceToAttack) {
 		FloatingPawnMovement->MaxSpeed = 0;
@@ -114,22 +116,23 @@ void AEnemy::ValidateProjectile()
 	check(Projectile != nullptr);
 }
 
-void AEnemy::FindCastle()
+void AEnemy::FindPlayer()
 {
-	//TODO - Find a more optimized way of finding the castle. Cache it in GameMode perhaps?
-	TArray<AActor*> CastlesToFind;
+	//TODO - Find a more optimized way of finding the player. Cache it in GameMode perhaps?
+	//Not sure if using the Player actor would be the best bet
+	TArray<AActor*> PlayersToFind;
 	if (UWorld* World = GetWorld()) {
-		UGameplayStatics::GetAllActorsOfClass(World, ADDCastle::StaticClass(), CastlesToFind);
+		UGameplayStatics::GetAllActorsOfClass(World, ADDPlayer::StaticClass(), PlayersToFind);
 
-		if (CastlesToFind.Num() > 1) {
+		if (PlayersToFind.Num() > 1) {
 			UE_LOG(LogTemp, Warning, TEXT("More than one castle exists in the level"))
 		}
-		check(!CastlesToFind.IsEmpty());
+		check(!PlayersToFind.IsEmpty());
 
-		for (AActor* CastleActor : CastlesToFind) {
-			ADDCastle* SomeCastle = Cast<ADDCastle>(CastleActor);
-			if (SomeCastle) {
-				Castle = SomeCastle;
+		for (AActor* PlayerActor : PlayersToFind) {
+			ADDPlayer* SomePlayer = Cast<ADDPlayer>(PlayerActor);
+			if (SomePlayer) {
+				Player = SomePlayer;
 				break;
 			}
 		}
