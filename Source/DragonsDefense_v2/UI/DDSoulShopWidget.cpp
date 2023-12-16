@@ -3,16 +3,6 @@
 
 #include "DDSoulShopWidget.h"
 
-void UDDSoulShopWidget::IncreasePrice()
-{
-
-}
-
-void UDDSoulShopWidget::IsBuyable()
-{
-
-}
-
 void UDDSoulShopWidget::DisplayStats()
 {
 

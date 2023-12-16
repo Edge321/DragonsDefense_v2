@@ -15,7 +15,7 @@ void UDDShopButton::IsMaxxedOut()
 	if (PriceIndex + 1 > Prices.Num()) {
 		PriceText->SetText(FText::FromString("Another day, another victory for the OGs"));
 		SetIsEnabled(false);
-		//TODO - Change color of button to maxxed out color
+		//TODO - Change color of button to maxxed out color (red)
 	}
 }
 
@@ -51,7 +51,8 @@ void UDDShopButton::ResetPrice()
 {
 	PriceIndex = 0;
 }
-
+//TODO - Gonna have to think up of how the hell to call various buttons with
+//different texts.
 void UDDShopButton::GameOverEventHandle()
 {
 	//TODO - Bind to the game over delegate from GameModeBase

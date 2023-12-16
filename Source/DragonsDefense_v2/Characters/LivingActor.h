@@ -27,7 +27,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* Collider;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health");
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
 	float Health = 1.0f;
 	//Modifies health if Easy mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");

@@ -34,6 +34,7 @@ void ADDPlayer::BeginPlay()
 	TempHealth = Health;
 	TempMovementSpeed = MovementSpeed;
 	TempShootSpeed = ShootSpeed;
+	Armor = 0;
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
@@ -42,20 +43,6 @@ void ADDPlayer::BeginPlay()
 	}
 	//Want to disable the input at the beginning obviously!
 	GameOverEventFunction();
-}
-
-void ADDPlayer::UpdateHealth(const float HealthModifier)
-{
-	TempHealth += HealthModifier;
-
-	//Temporary until in-game health bars are implemented
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
-		FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
-
-	if (TempHealth <= 0)
-	{
-		OnDeath();
-	}
 }
 
 void ADDPlayer::Tick(float DeltaTime)
@@ -80,6 +67,20 @@ const float ADDPlayer::GetMaxHealth() const
 	return MaxHealth;
 }
 
+void ADDPlayer::UpdateHealth(const float HealthModifier)
+{
+	TempHealth += HealthModifier;
+
+	//Temporary until in-game health bars are implemented
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
+		FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
+
+	if (TempHealth <= 0)
+	{
+		OnDeath();
+	}
+}
+
 void ADDPlayer::UpdateMaxHealth(const float MaxHealthModifier)
 {
 	MaxHealth += MaxHealthModifier;
@@ -95,6 +96,11 @@ void ADDPlayer::UpdateShootSpeed(const float ShootSpeedModifier)
 	TempShootSpeed += ShootSpeedModifier;
 }
 
+void ADDPlayer::UpdateArmor(const float ArmorModifier)
+{
+	Armor += ArmorModifier;
+}
+
 void ADDPlayer::ValidateProjectile()
 {
 	check(Projectile != nullptr);
@@ -102,7 +108,11 @@ void ADDPlayer::ValidateProjectile()
 
 void ADDPlayer::ResetStats()
 {
-	//TODO - Reset them stats!
+	TempHealth = Health;
+	MaxHealth = Health;
+	TempMovementSpeed = MovementSpeed;
+	TempShootSpeed = ShootSpeed;
+	Armor = 0;
 }
 
 void ADDPlayer::LimitArea()
@@ -126,13 +136,13 @@ void ADDPlayer::GameOverEventFunction()
 	APlayerController* PlayController = GetController<APlayerController>();
 	DisableInput(PlayController);
 	PlayController->bShowMouseCursor = true;
-	PlayController->SetInputMode(FInputModeGameAndUI());
+	PlayController->SetInputMode(FInputModeUIOnly());
 }
 
 void ADDPlayer::GameStartEventFunction()
 {
 	APlayerController* PlayController = GetController<APlayerController>();
 	EnableInput(PlayController);
-	PlayController->bShowMouseCursor = false;
-	PlayController->SetInputMode(FInputModeGameOnly());
+	//PlayController->bShowMouseCursor = false;
+	PlayController->SetInputMode(FInputModeGameAndUI());
 }

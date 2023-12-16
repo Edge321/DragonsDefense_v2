@@ -5,13 +5,15 @@
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/UserWidget.h"
 //My classes
-#include "../Game/DDScoreWidget.h"
 #include "../Characters/DDPlayer.h"
 #include "../Game/DDProjectileManager.h"
+#include "../Game/DDScoreWidget.h"
 #include "../UI/DDMainMenuWidget.h"
+#include "../UI/DDSoulShopWidget.h"
 
 void ADDGameModeBase::BeginPlay()
 {
+	//WidgetToViewport();
 	//TODO - Bunch these widgets in an array of widgets, dont have to copy code that way
 	if (ScoreWidgetClass) {
 		ScoreWidget = Cast<UDDScoreWidget>(CreateWidget(GetWorld(), ScoreWidgetClass));
@@ -30,9 +32,16 @@ void ADDGameModeBase::BeginPlay()
 		}
 	}
 
-	//FindProjectileManager();
-	FindUObject<ADDProjectileManager>(ProjectileManager);
-	FindUObject<ADDPlayer>(Player);
+	if (SoulShopWidgetClass) {
+		SoulShopWidget = Cast<UDDSoulShopWidget>(CreateWidget(GetWorld(), SoulShopWidgetClass));
+
+		if (SoulShopWidget) {
+			SoulShopWidget->AddToViewport();
+		}
+	}
+
+	ProjectileManager = FindUObject<ADDProjectileManager>();
+	Player = FindUObject<ADDPlayer>();
 }
 
 void ADDGameModeBase::UpdateScoreText()
@@ -50,6 +59,12 @@ ADDProjectileManager& ADDGameModeBase::GetProjectileManager()
 {
 	check(ProjectileManager)
 	return *ProjectileManager;
+}
+
+ADDPlayer& ADDGameModeBase::GetPlayer()
+{
+	check(Player)
+	return *Player;
 }
 
 const int32 ADDGameModeBase::GetSouls()
@@ -70,33 +85,29 @@ void ADDGameModeBase::GameOver()
 	OnGameOver.Broadcast();
 }
 
-void ADDGameModeBase::GameStart()
+void ADDGameModeBase::GameStart() const
 {
 	OnGameStart.Broadcast();
 }
 
-void ADDGameModeBase::FindProjectileManager()
+//void ADDGameModeBase::WidgetToViewport()
+//{
+//	for (TSubclassOf<UUserWidget> Widget : WidgetClassArray) {
+//		UUserWidget* SomeWidget = Cast<UUserWidget>(CreateWidget(GetWorld(), Widget));
+//		if (SomeWidget) {
+//			UpdateScoreText();
+//		}
+//	}
+//}
+
+template<class T>
+T* ADDGameModeBase::AddWidgetToViewport()
 {
-	TArray<AActor*> ProjectileManagersToFind;
-	if (UWorld* World = GetWorld()) {
-		UGameplayStatics::GetAllActorsOfClass(World, ADDProjectileManager::StaticClass(), ProjectileManagersToFind);
-
-		check(ProjectileManagersToFind.Num() == 1)
-		check(!ProjectileManagersToFind.IsEmpty());
-
-		for (AActor* ProjManager : ProjectileManagersToFind) {
-			ADDProjectileManager* SomeProjManager = Cast<ADDProjectileManager>(ProjManager);
-			if (SomeProjManager) {
-				ProjectileManager = SomeProjManager;
-				break;
-			}
-		}
-	}
+	//T* SomeWidget = Cast<T>(CreateWidget(GetWorld(), Widget));
 }
 
-//BUG - This generic function is NOT working!!!!
 template<class T>
-inline void ADDGameModeBase::FindUObject(T* ActualActor)
+T* ADDGameModeBase::FindUObject()
 {
 	TArray<AActor*> ActorArray;
 	if (UWorld* World = GetWorld()) {
@@ -108,9 +119,9 @@ inline void ADDGameModeBase::FindUObject(T* ActualActor)
 		for (AActor* Actor : ActorArray) {
 			T* SomeActor = Cast<T>(Actor);
 			if (SomeActor) {
-				ActualActor = SomeActor;
-				break;
+				return SomeActor;
 			}
 		}
 	}
+	return nullptr;
 }

@@ -8,6 +8,7 @@ UENUM(BlueprintType)
 enum class EPlayerStats : uint8 {
 	MovementSpeed,
 	ShootSpeed,
+	MaxHealth,
 	Health,
 	Armor
 };

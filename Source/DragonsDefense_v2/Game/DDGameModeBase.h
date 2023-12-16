@@ -14,6 +14,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
 
 class UDDScoreWidget;
 class UDDMainMenuWidget;
+class UDDSoulShopWidget;
 class ADDProjectileManager;
 class ADDPlayer;
 
@@ -29,14 +30,22 @@ protected:
 	int32 TotalEnemiesKilled = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TArray<TSubclassOf<class UUserWidget>> WidgetClassArray;
+	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UUserWidget> ScoreWidgetClass;
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TSubclassOf<class UUserWidget> MainMenuWidgetClass;
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> SoulShopWidgetClass;
 
+	//So we have an array of widget classes. Wtf do I do for array of
+	//various sorts of widgets like below?
 	UPROPERTY()
 	UDDScoreWidget* ScoreWidget;
 	UPROPERTY()
 	UDDMainMenuWidget* MainMenuWidget;
+	UPROPERTY()
+	UDDSoulShopWidget* SoulShopWidget;
 
 	void UpdateScoreText();
 
@@ -44,8 +53,8 @@ public:
 
 	void AddScore(int32 Score);
 
-	//TODO - Make a get player function
 	ADDProjectileManager& GetProjectileManager();
+	ADDPlayer& GetPlayer();
 	
 	UFUNCTION(BlueprintCallable, Category = "Getters")
 	const int32 GetSouls();
@@ -54,7 +63,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GameState")
 	void GameOver();
 	UFUNCTION(BlueprintCallable, Category = "GameState")
-	void GameStart();
+	void GameStart() const;
 
 	UPROPERTY(BlueprintAssignable, Category = "Event")
 	FOnGameOver OnGameOver;
@@ -62,13 +71,13 @@ public:
 	FOnGameStart OnGameStart;
 
 private:
+	template <class T> T* AddWidgetToViewport();
 	/**
-	 * @brief Caches the projectile manager
+	 * @brief Caches any object in GameMode. Also checks if there is only
+	 * one instance of the object.
 	 * 
 	 */
-	void FindProjectileManager();
-
-	template <class T> void FindUObject(T* ActualActor);
+	template <class T> T* FindUObject();
 
 	ADDProjectileManager* ProjectileManager;
 	ADDPlayer* Player;

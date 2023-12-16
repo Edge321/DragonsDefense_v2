@@ -31,12 +31,11 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Projectile")
 	TSubclassOf<ADDProjectile> Projectile;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	float Armor = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	//Base movement speed
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float MovementSpeed = 20.0f;
-	//Shooting speed in seconds
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shooting")
+	//Base shooting speed (in seconds)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float ShootSpeed = 0.6f;
 	//Limits the area of where the player can move on the Y-axis
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Area Limit")
@@ -47,7 +46,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool OnCooldown = false;
 
-	void UpdateHealth(const float HealthModifier) override;
+	
 	
 public:
 	// Called every frame
@@ -57,12 +56,15 @@ public:
 	const float GetHealth() override;
 	const float GetMaxHealth() const;
 	
-	UFUNCTION(BlueprintCallable)
+	//UFUNCTION(BlueprintCallable)
+	void UpdateHealth(const float HealthModifier) override;
+	//UFUNCTION(BlueprintCallable)
 	void UpdateMaxHealth(const float MaxHealthModifier);
-	UFUNCTION(BlueprintCallable)
+	//UFUNCTION(BlueprintCallable)
 	void UpdateMovementSpeed(const float MovementSpeedModifier);
-	UFUNCTION(BlueprintCallable)
+	//UFUNCTION(BlueprintCallable)
 	void UpdateShootSpeed(const float ShootSpeedModifier);
+	void UpdateArmor(const float ArmorModifier);
 
 private:
 	void ValidateProjectile();
@@ -83,4 +85,5 @@ private:
 	float TempHealth;
 	float TempMovementSpeed;
 	float TempShootSpeed;
+	float Armor;
 };

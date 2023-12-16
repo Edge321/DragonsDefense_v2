@@ -7,7 +7,6 @@
 #include "Components/BoxComponent.h"
 //My classes
 #include "../Projectile/DDProjectile.h"
-#include "../Characters/DDCastle.h"
 #include "../Characters/DDPlayer.h"
 #include "../Game/DDGameModeBase.h"
 
@@ -118,23 +117,10 @@ void AEnemy::ValidateProjectile()
 
 void AEnemy::FindPlayer()
 {
-	//TODO - Find a more optimized way of finding the player. Cache it in GameMode perhaps?
-	//Not sure if using the Player actor would be the best bet
-	TArray<AActor*> PlayersToFind;
-	if (UWorld* World = GetWorld()) {
-		UGameplayStatics::GetAllActorsOfClass(World, ADDPlayer::StaticClass(), PlayersToFind);
-
-		if (PlayersToFind.Num() > 1) {
-			UE_LOG(LogTemp, Warning, TEXT("More than one castle exists in the level"))
-		}
-		check(!PlayersToFind.IsEmpty());
-
-		for (AActor* PlayerActor : PlayersToFind) {
-			ADDPlayer* SomePlayer = Cast<ADDPlayer>(PlayerActor);
-			if (SomePlayer) {
-				Player = SomePlayer;
-				break;
-			}
-		}
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		// You know me having this line of code defeats the entire 
+		// purpose of GetPlayer returning only a reference. Very awesome
+		Player = &(GameMode->GetPlayer());
 	}
 }

@@ -64,7 +64,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score");
 	int32 Score = 1;
 
-	//TODO - Might just get rid of this tbh
+	//TODO - Might just get rid of this UFUNCTION tbh
 	UFUNCTION(BlueprintNativeEvent)
 	void OnDeath() override;
 
@@ -85,7 +85,7 @@ private:
 	void StopShooting();
 	void Shoot();
 	/**
-	 * @brief Checks if projectile was assigned
+	 * @brief Checks if projectile was assigned to the enemy
 	 * 
 	 */
 	void ValidateProjectile();

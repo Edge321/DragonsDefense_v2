@@ -48,7 +48,6 @@ void ADDProjectile::BeginPlay()
 		ADDProjectileManager& ProjectileManager = GameMode->GetProjectileManager();
 		ProjectileManager.AddProjectileToPool(this);
 	}
-	
 
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &ADDProjectile::EnableCollision, 0.1f, false);

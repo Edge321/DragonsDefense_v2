@@ -17,13 +17,9 @@ class DRAGONSDEFENSE_V2_API UDDUpgradeShopButton : public UDDShopButton
 
 protected:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UpgradeAmount");
+	float UpgradeAmount = 1;
+
 	UFUNCTION(BlueprintCallable)
-	void Upgrade(EPlayerStats Stat);
-
-	//NOTE - might not need this variable tbh
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat");
-	EPlayerStats PlayerStat;
-
-private:
-	float UpgradeAmount = 0;
+	void Upgrade(EPlayerStats Stat) const;
 };

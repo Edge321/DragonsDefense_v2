@@ -15,11 +15,7 @@ class DRAGONSDEFENSE_V2_API UDDSoulShopWidget : public UUserWidget
 	GENERATED_BODY()
 
 protected:
-	
-	UFUNCTION(BlueprintCallable)
-	void IncreasePrice();
-	UFUNCTION(BlueprintCallable)
-	void IsBuyable();
+
 	UFUNCTION(BlueprintCallable)
 	void DisplayStats();
 

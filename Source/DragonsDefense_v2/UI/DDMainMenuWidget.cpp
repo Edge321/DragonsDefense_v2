@@ -19,10 +19,10 @@ void UDDMainMenuWidget::Start()
 void UDDMainMenuWidget::SwitchMenus(UCanvasPanel* MenuDest, UCanvasPanel* MenuSrc)
 {
 	if (MenuDest && MenuSrc) {
-		if (MenuSrc->Visibility == ESlateVisibility::Hidden) {
+		if (MenuSrc->GetVisibility() == ESlateVisibility::Hidden) {
 			UE_LOG(LogTemp, Warning, TEXT("Warning: Menu source is already hidden!"))
 		}
-		if (MenuDest->Visibility == ESlateVisibility::Visible) {
+		if (MenuSrc->GetVisibility() == ESlateVisibility::Visible) {
 			UE_LOG(LogTemp, Warning, TEXT("Warning: Menu destination is already hidden!"))
 		}
 
