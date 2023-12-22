@@ -20,7 +20,7 @@ void ADDGameModeBase::BeginPlay()
 
 		if (ScoreWidget) {
 			ScoreWidget->AddToViewport();
-			UpdateScoreText();
+			UpdateScoreText(); //TODO - If we want to use a generic function, we need to find a way to get this bozo out of here
 		}
 	}
 

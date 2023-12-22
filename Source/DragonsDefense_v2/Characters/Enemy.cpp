@@ -119,7 +119,7 @@ void AEnemy::FindPlayer()
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
-		// You know me having this line of code defeats the entire 
+		// You know, me having this line of code defeats the entire 
 		// purpose of GetPlayer returning only a reference. Very awesome
 		Player = &(GameMode->GetPlayer());
 	}

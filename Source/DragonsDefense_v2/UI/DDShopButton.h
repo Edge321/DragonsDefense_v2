@@ -25,8 +25,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Prices")
 	TArray<int32> Prices;
 
-	
-
 public:
 
 	UFUNCTION(BlueprintCallable)
