@@ -5,18 +5,32 @@
 //My classes
 #include "../Game/DDGameModeBase.h"
 
+void UDDShopButton::UpdateText()
+{
+	PriceText->SetText(FetchFTextPrice());
+}
+
 void UDDShopButton::ValidatePriceText()
 {
 	check(PriceText)
 }
 
-void UDDShopButton::IsMaxxedOut()
+void UDDShopButton::InitPriceText()
 {
+	PriceText->SetText(FetchFTextPrice());
+}
+
+bool UDDShopButton::IsMaxxedOut()
+{
+	bool MaxxedOut = false;
 	if (PriceIndex + 1 > Prices.Num()) {
-		PriceText->SetText(FText::FromString("Another day, another victory for the OGs"));
+		PriceText->SetText(FText::FromString("MAX"));
 		SetIsEnabled(false);
+		MaxxedOut = true;
 		//TODO - Change color of button to maxxed out color (red)
 	}
+
+	return MaxxedOut;
 }
 
 const bool UDDShopButton::IsBuyable()
@@ -44,16 +58,29 @@ const bool UDDShopButton::IsBuyable()
 void UDDShopButton::IncreasePrice()
 {
 	PriceIndex++;
-	IsMaxxedOut();
+	if (!IsMaxxedOut()) {
+		UpdateText();
+	}
 }
 
 void UDDShopButton::ResetPrice()
 {
 	PriceIndex = 0;
+	PriceText->SetText(FetchFTextPrice());
 }
 //TODO - Gonna have to think up of how the hell to call various buttons with
 //different texts.
-void UDDShopButton::GameOverEventHandle()
+void UDDShopButton::GameOverEventFunction()
 {
 	//TODO - Bind to the game over delegate from GameModeBase
+	//To initialize in the canvas, have the canvas gather a list of all the buttons that exist within the canvas
+	ResetPrice();
+	UpdateText();
+	SetIsEnabled(true);
+}
+
+FText UDDShopButton::FetchFTextPrice()
+{
+	FString PriceString = FString::FromInt(Prices[PriceIndex]);
+	return FText::FromString(PriceString);
 }

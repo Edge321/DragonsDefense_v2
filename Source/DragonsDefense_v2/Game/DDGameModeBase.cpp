@@ -81,6 +81,7 @@ UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget()
 void ADDGameModeBase::GameOver()
 {
 	TotalEnemiesKilled = 0;
+	Souls = 0;
 	UpdateScoreText();
 	OnGameOver.Broadcast();
 }

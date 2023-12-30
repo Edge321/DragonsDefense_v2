@@ -56,13 +56,9 @@ public:
 	const float GetHealth() override;
 	const float GetMaxHealth() const;
 	
-	//UFUNCTION(BlueprintCallable)
 	void UpdateHealth(const float HealthModifier) override;
-	//UFUNCTION(BlueprintCallable)
 	void UpdateMaxHealth(const float MaxHealthModifier);
-	//UFUNCTION(BlueprintCallable)
 	void UpdateMovementSpeed(const float MovementSpeedModifier);
-	//UFUNCTION(BlueprintCallable)
 	void UpdateShootSpeed(const float ShootSpeedModifier);
 	void UpdateArmor(const float ArmorModifier);
 

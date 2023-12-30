@@ -6,6 +6,9 @@
 #include "Blueprint/UserWidget.h"
 #include "DDSoulShopWidget.generated.h"
 
+class UDDShopButton;
+class UCanvasPanel;
+
 /**
  * 
  */
@@ -18,6 +21,11 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void DisplayStats();
+	UFUNCTION(BlueprintCallable)
+	TArray<UDDShopButton*> FindAllShopButtons(UCanvasPanel* Canvas);
 
+private:
+
+	void RecursiveFindButtons(UWidget* Widget, TArray<UDDShopButton*>& ButtonArray);
 
 };

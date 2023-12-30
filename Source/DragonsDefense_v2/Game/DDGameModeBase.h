@@ -73,8 +73,8 @@ public:
 private:
 	template <class T> T* AddWidgetToViewport();
 	/**
-	 * @brief Caches any object in GameMode. Also checks if there is only
-	 * one instance of the object.
+	 * @brief Searches for some kind of UObject in the world. Also 
+	 * checks if there is only one instance of the object.
 	 * 
 	 */
 	template <class T> T* FindUObject();

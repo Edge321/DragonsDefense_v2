@@ -17,6 +17,8 @@ class DRAGONSDEFENSE_V2_API UDDShopButton : public UButton
 
 protected:
 	
+	void UpdateText();
+
 	//Text for displaying the current price of the shop item
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceText")
 	UTextBlock* PriceText;
@@ -27,21 +29,25 @@ protected:
 
 public:
 
+	//Checks if the PriceText variable was set. Otherwise, this shit would be pointless!!!!
 	UFUNCTION(BlueprintCallable)
 	void ValidatePriceText();
 	UFUNCTION(BlueprintCallable)
-	void IsMaxxedOut();
+	void InitPriceText();
+	UFUNCTION(BlueprintCallable)
+	bool IsMaxxedOut();
 	UFUNCTION(BlueprintCallable)
 	const bool IsBuyable();
 	UFUNCTION(BlueprintCallable)
 	void IncreasePrice();
 	UFUNCTION(BlueprintCallable)
 	void ResetPrice();
+	UFUNCTION(BlueprintCallable)
+	void GameOverEventFunction();
 
 private:
 
-	UFUNCTION()
-	void GameOverEventHandle();
+	FText FetchFTextPrice();
 
 	int PriceIndex = 0;
 };
