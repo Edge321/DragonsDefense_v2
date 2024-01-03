@@ -12,6 +12,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameOver);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateSouls);
+
 class UDDScoreWidget;
 class UDDMainMenuWidget;
 class UDDSoulShopWidget;
@@ -26,8 +28,6 @@ class DRAGONSDEFENSE_V2_API ADDGameModeBase : public AGameModeBase
 protected:
 	
 	virtual void BeginPlay() override;
-
-	int32 TotalEnemiesKilled = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Widgets")
 	TArray<TSubclassOf<class UUserWidget>> WidgetClassArray;
@@ -48,10 +48,12 @@ protected:
 	UDDSoulShopWidget* SoulShopWidget;
 
 	void UpdateScoreText();
+	void UpdateSoulsText();
 
 public:
 
 	void AddScore(int32 Score);
+	void UpdateSouls(int32 Souls);
 
 	ADDProjectileManager& GetProjectileManager();
 	ADDPlayer& GetPlayer();
@@ -65,10 +67,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GameState")
 	void GameStart() const;
 
-	UPROPERTY(BlueprintAssignable, Category = "Event")
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnGameOver OnGameOver;
-	UPROPERTY(BlueprintAssignable, Category = "Event")
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnGameStart OnGameStart;
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnUpdateSouls OnUpdateSouls;
 
 private:
 	template <class T> T* AddWidgetToViewport();
@@ -82,5 +86,6 @@ private:
 	ADDProjectileManager* ProjectileManager;
 	ADDPlayer* Player;
 
-	int32 Souls = 0;
+	int32 TotalEnemiesKilled = 0;
+	int32 TotalSouls = 0;
 };

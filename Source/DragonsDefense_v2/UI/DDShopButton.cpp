@@ -15,9 +15,10 @@ void UDDShopButton::ValidatePriceText()
 	check(PriceText)
 }
 
-void UDDShopButton::InitPriceText()
+void UDDShopButton::InitializeButton()
 {
-	PriceText->SetText(FetchFTextPrice());
+	UpdateText();
+	SetBackgroundColor(UnBuyableColor);
 }
 
 bool UDDShopButton::IsMaxxedOut()
@@ -27,15 +28,19 @@ bool UDDShopButton::IsMaxxedOut()
 		PriceText->SetText(FText::FromString("MAX"));
 		SetIsEnabled(false);
 		MaxxedOut = true;
-		//TODO - Change color of button to maxxed out color (red)
+		SetBackgroundColor(UnBuyableColor);
 	}
 
 	return MaxxedOut;
 }
 
-const bool UDDShopButton::IsBuyable()
+void UDDShopButton::IsBuyable()
 {
 	int32 Souls;
+
+	if (IsMaxxedOut()) {
+		return;
+	}
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
@@ -43,14 +48,18 @@ const bool UDDShopButton::IsBuyable()
 	}
 	else {
 		UE_LOG(LogTemp, Fatal, TEXT("Something went wrong with fetching GameMode!"))
-		return false;
+		bIsBuyable = false;
+		SetBackgroundColor(UnBuyableColor);
+		return;
 	}
 
-	if (Souls > Prices[PriceIndex]) {
-		return true;
+	if (Souls >= Prices[PriceIndex]) {
+		bIsBuyable = true;
+		SetBackgroundColor(BuyableColor);
 	}
 	else {
-		return false;
+		bIsBuyable = false;
+		SetBackgroundColor(UnBuyableColor);
 	}
 
 }
@@ -61,6 +70,22 @@ void UDDShopButton::IncreasePrice()
 	if (!IsMaxxedOut()) {
 		UpdateText();
 	}
+}
+
+void UDDShopButton::UpdateSouls()
+{
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->UpdateSouls(-Prices[PriceIndex]);
+	}
+	else {
+		UE_LOG(LogTemp, Fatal, TEXT("How did we get here?"))
+	}
+}
+
+const bool UDDShopButton::GetBuyableStatus()
+{
+	return bIsBuyable;
 }
 
 void UDDShopButton::ResetPrice()
@@ -76,7 +101,9 @@ void UDDShopButton::GameOverEventFunction()
 	//To initialize in the canvas, have the canvas gather a list of all the buttons that exist within the canvas
 	ResetPrice();
 	UpdateText();
+	bIsBuyable = false;
 	SetIsEnabled(true);
+	SetBackgroundColor(UnBuyableColor);
 }
 
 FText UDDShopButton::FetchFTextPrice()

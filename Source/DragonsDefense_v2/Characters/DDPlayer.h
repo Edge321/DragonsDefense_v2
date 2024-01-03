@@ -34,9 +34,13 @@ protected:
 	//Base movement speed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float MovementSpeed = 20.0f;
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	float TempMovementSpeed;
 	//Base shooting speed (in seconds)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float ShootSpeed = 0.6f;
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	float TempShootSpeed;
 	//Limits the area of where the player can move on the Y-axis
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Area Limit")
 	float AreaLimitY = 50.0f;
@@ -79,7 +83,5 @@ private:
 
 	float MaxHealth;
 	float TempHealth;
-	float TempMovementSpeed;
-	float TempShootSpeed;
 	float Armor;
 };

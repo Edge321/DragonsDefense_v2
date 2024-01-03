@@ -26,6 +26,10 @@ protected:
 	//An array of increasing prices for when the player purchases whatever the button sells
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Prices")
 	TArray<int32> Prices;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ButtonColor")
+	FLinearColor BuyableColor = FLinearColor::Blue;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ButtonColor")
+	FLinearColor UnBuyableColor = FLinearColor::Red;
 
 public:
 
@@ -33,13 +37,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ValidatePriceText();
 	UFUNCTION(BlueprintCallable)
-	void InitPriceText();
+	void InitializeButton();
 	UFUNCTION(BlueprintCallable)
 	bool IsMaxxedOut();
 	UFUNCTION(BlueprintCallable)
-	const bool IsBuyable();
+	void IsBuyable();
 	UFUNCTION(BlueprintCallable)
 	void IncreasePrice();
+	UFUNCTION(BlueprintCallable)
+	void UpdateSouls();
+	UFUNCTION(BlueprintCallable)
+	const bool GetBuyableStatus();
 	UFUNCTION(BlueprintCallable)
 	void ResetPrice();
 	UFUNCTION(BlueprintCallable)
@@ -50,4 +58,5 @@ private:
 	FText FetchFTextPrice();
 
 	int PriceIndex = 0;
+	bool bIsBuyable = false;
 };

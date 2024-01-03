@@ -72,6 +72,7 @@ void AEnemy::OnDeath_Implementation()
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		GameMode->AddScore(Score);
+		GameMode->UpdateSouls(SoulValue);
 	}
 
 	OnEnemyDeath.ExecuteIfBound(this);

@@ -63,6 +63,8 @@ protected:
 	float HardShootCooldownMod = 0.8f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score");
 	int32 Score = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SoulValue");
+	int32 SoulValue = 1;
 
 	//TODO - Might just get rid of this UFUNCTION tbh
 	UFUNCTION(BlueprintNativeEvent)

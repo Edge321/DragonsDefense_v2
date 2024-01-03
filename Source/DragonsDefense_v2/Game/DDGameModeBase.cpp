@@ -49,10 +49,22 @@ void ADDGameModeBase::UpdateScoreText()
 	ScoreWidget->SetScoreText(TotalEnemiesKilled);
 }
 
+void ADDGameModeBase::UpdateSoulsText()
+{
+	SoulShopWidget->UpdateSoulsText(TotalSouls);
+}
+
 void ADDGameModeBase::AddScore(int32 Score)
 {
 	TotalEnemiesKilled += Score;
 	UpdateScoreText();
+}
+
+void ADDGameModeBase::UpdateSouls(int32 Souls)
+{
+	TotalSouls += Souls;
+	UpdateSoulsText();
+	OnUpdateSouls.Broadcast();
 }
 
 ADDProjectileManager& ADDGameModeBase::GetProjectileManager()
@@ -69,7 +81,7 @@ ADDPlayer& ADDGameModeBase::GetPlayer()
 
 const int32 ADDGameModeBase::GetSouls()
 {
-	return Souls;
+	return TotalSouls;
 }
 
 UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget()
@@ -81,8 +93,9 @@ UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget()
 void ADDGameModeBase::GameOver()
 {
 	TotalEnemiesKilled = 0;
-	Souls = 0;
+	TotalSouls = 0;
 	UpdateScoreText();
+	UpdateSoulsText();
 	OnGameOver.Broadcast();
 }
 

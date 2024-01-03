@@ -24,6 +24,11 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	TArray<UDDShopButton*> FindAllShopButtons(UCanvasPanel* Canvas);
 
+public:
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Event")
+	void UpdateSoulsText(int32 Souls);
+
 private:
 
 	void RecursiveFindButtons(UWidget* Widget, TArray<UDDShopButton*>& ButtonArray);

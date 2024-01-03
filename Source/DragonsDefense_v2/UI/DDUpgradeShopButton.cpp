@@ -16,6 +16,7 @@ void UDDUpgradeShopButton::Upgrade(EPlayerStats Stat) const
 
 	check(Player)
 
+	//TODO - Add damage upgrade!
 	switch (Stat) {
 		case EPlayerStats::MovementSpeed:
 			Player->UpdateMovementSpeed(UpgradeAmount);
@@ -33,7 +34,7 @@ void UDDUpgradeShopButton::Upgrade(EPlayerStats Stat) const
 			Player->UpdateArmor(UpgradeAmount);
 			break;
 		default:
-			UE_LOG(LogTemp, Warning, TEXT("Warning %s: No upgrade set. Nothing will occur"), *GetName())
+			UE_LOG(LogTemp, Error, TEXT("Error: No upgrade set to %s. Bad things will occur"), *GetName())
 			break;
 	}
 }
