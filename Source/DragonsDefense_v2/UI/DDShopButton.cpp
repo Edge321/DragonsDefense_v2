@@ -12,7 +12,9 @@ void UDDShopButton::UpdateText()
 
 void UDDShopButton::ValidatePriceText()
 {
-	check(PriceText)
+	if (PriceText == nullptr) {
+		UE_LOG(LogTemp, Fatal, TEXT("Error: %s does not have a price text reference"), *GetName())
+	}
 }
 
 void UDDShopButton::InitializeButton()
@@ -33,7 +35,8 @@ bool UDDShopButton::IsMaxxedOut()
 
 	return MaxxedOut;
 }
-
+// BUG - There existed a time where gathering a bunch of souls and buying resulted in being able
+// to buy another upgrade where you didnt have enough souls. Not sure how.
 void UDDShopButton::IsBuyable()
 {
 	int32 Souls;

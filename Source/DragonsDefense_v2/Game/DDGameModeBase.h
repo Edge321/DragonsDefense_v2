@@ -83,6 +83,11 @@ private:
 	 */
 	template <class T> T* FindUObject();
 
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	ADDPlayer* BlueprintGetPlayer();
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	ADDProjectileManager* BlueprintGetProjectileManager();
+
 	ADDProjectileManager* ProjectileManager;
 	ADDPlayer* Player;
 

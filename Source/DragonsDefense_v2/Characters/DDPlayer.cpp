@@ -34,6 +34,7 @@ void ADDPlayer::BeginPlay()
 	TempHealth = Health;
 	TempMovementSpeed = MovementSpeed;
 	TempShootSpeed = ShootSpeed;
+	TempDamage = Damage;
 	Armor = 0;
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -57,7 +58,7 @@ void ADDPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-const float ADDPlayer::GetHealth()
+const float ADDPlayer::GetHealth() const
 {
 	return TempHealth;
 }
@@ -65,6 +66,26 @@ const float ADDPlayer::GetHealth()
 const float ADDPlayer::GetMaxHealth() const
 {
 	return MaxHealth;
+}
+
+const float ADDPlayer::GetMovementSpeed() const
+{
+	return TempMovementSpeed;
+}
+
+const float ADDPlayer::GetShootSpeed() const
+{
+	return TempShootSpeed;
+}
+
+const float ADDPlayer::GetArmor() const
+{
+	return Armor;
+}
+
+const float ADDPlayer::GetDamage() const
+{
+	return TempDamage;
 }
 
 void ADDPlayer::UpdateHealth(const float HealthModifier)
@@ -101,6 +122,11 @@ void ADDPlayer::UpdateArmor(const float ArmorModifier)
 	Armor += ArmorModifier;
 }
 
+void ADDPlayer::UpdateDamage(const float DamageModifier)
+{
+	TempDamage += DamageModifier;
+}
+
 void ADDPlayer::ValidateProjectile()
 {
 	check(Projectile != nullptr);
@@ -113,6 +139,7 @@ void ADDPlayer::ResetStats()
 	TempMovementSpeed = MovementSpeed;
 	TempShootSpeed = ShootSpeed;
 	Armor = 0;
+	TempDamage = Damage;
 }
 
 void ADDPlayer::LimitArea()

@@ -105,6 +105,7 @@ void AEnemy::Shoot()
 		FVector Velocity = Proj->GetVelocity();
 		Proj->SetVelocity(Velocity * -1);
 		Proj->SetCollisionChannelToIgnore(ECC_EnemyChannel);
+		Proj->SetDamage(Damage);
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("ERROR: Enemy projectile unable to spawn"))

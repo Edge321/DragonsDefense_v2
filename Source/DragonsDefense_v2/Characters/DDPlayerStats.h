@@ -10,5 +10,6 @@ enum class EPlayerStats : uint8 {
 	ShootSpeed,
 	MaxHealth,
 	Health,
-	Armor
+	Armor,
+	Damage
 };

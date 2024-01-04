@@ -36,6 +36,8 @@ protected:
 	float MovementSpeed = 20.0f;
 	UPROPERTY(BlueprintReadOnly, Category = "Stats")
 	float TempMovementSpeed;
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	float TempDamage;
 	//Base shooting speed (in seconds)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float ShootSpeed = 0.6f;
@@ -49,22 +51,32 @@ protected:
 	FVector ProjectileOffset = FVector(0, 0, 0); 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool OnCooldown = false;
-
-	
 	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	const float GetHealth() override;
-	const float GetMaxHealth() const;
 	
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	const float GetHealth() const override;
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	const float GetMaxHealth() const;
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	const float GetMovementSpeed() const;
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	const float GetShootSpeed() const;
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	const float GetArmor() const;
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	const float GetDamage() const override;
+
 	void UpdateHealth(const float HealthModifier) override;
 	void UpdateMaxHealth(const float MaxHealthModifier);
 	void UpdateMovementSpeed(const float MovementSpeedModifier);
 	void UpdateShootSpeed(const float ShootSpeedModifier);
 	void UpdateArmor(const float ArmorModifier);
+	void UpdateDamage(const float DamageModifier);
 
 private:
 	void ValidateProjectile();

@@ -54,17 +54,27 @@ void ADDProjectile::BeginPlay()
 	GetWorldTimerManager().SetTimer(ProjectileTimer, this, &ADDProjectile::DestroySelf, ProjectileLifetime, false);
 }
 
-void ADDProjectile::SetVelocity(FVector Velocity)
+void ADDProjectile::SetVelocity(const FVector Velocity)
 {
 	ProjectileMovement->Velocity = Velocity;
 }
 
-void ADDProjectile::SetProjectileOwner(uint32 ActorID)
+const float ADDProjectile::GetDamage() const
+{
+	return ProjectileDamage;
+}
+
+void ADDProjectile::SetDamage(float Damage)
+{
+	ProjectileDamage = Damage;
+}
+
+void ADDProjectile::SetProjectileOwner(const uint32 ActorID)
 {
 	OwnerID = ActorID;
 }
 
-void ADDProjectile::SetCollisionChannelToIgnore(ECollisionChannel Channel)
+void ADDProjectile::SetCollisionChannelToIgnore(const ECollisionChannel Channel)
 {
 	Collider->SetCollisionResponseToChannel(Channel, ECR_Ignore);
 }

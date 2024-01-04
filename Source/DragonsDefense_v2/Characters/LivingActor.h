@@ -27,6 +27,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* Collider;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	float Damage = -1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
 	float Health = 1.0f;
 	//Modifies health if Easy mode was chosen
@@ -37,6 +39,7 @@ protected:
 	float HardHealthModifier = 1.2f;
 
 	//Apparently Unreal does not like pure virtual functions so...yeah
+
 	virtual void ApplyModifiers() {}
 	virtual void OnDeath() {}
 
@@ -44,6 +47,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual const float GetHealth();
+	virtual const float GetHealth() const;
 	virtual void UpdateHealth(const float HealthModifier);
+	virtual const float GetDamage() const;
+	void SetDamage(const float NewDamage);
+	//Equivalent to SetDamage(GetDamage() + float)
+	void UpdateDamage(const float NewDamage);
 };

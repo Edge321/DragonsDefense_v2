@@ -53,14 +53,12 @@ protected:
 	float ProjectileLifetime = 10.0f;
 
 public:
-	void SetVelocity(FVector Velocity);
-	/**
-	 * @brief Who owns the projectile
-	 * 
-	 * @param ActorID ID of the UObject owner
-	 */
-	void SetProjectileOwner(uint32 ActorID);
-	void SetCollisionChannelToIgnore(ECollisionChannel Channel);
+	void SetVelocity(const FVector Velocity);
+	const float GetDamage() const;
+	void SetDamage(const float Damage);
+	// Who owns the projectile
+	void SetProjectileOwner(const uint32 ActorID);
+	void SetCollisionChannelToIgnore(const ECollisionChannel Channel);
 
 	FOnProjectileDestroyed OnProjectileDestroyed;
 

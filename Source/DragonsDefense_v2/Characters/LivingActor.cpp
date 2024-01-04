@@ -24,7 +24,7 @@ void ALivingActor::Tick(float DeltaTime)
 
 }
 
-const float ALivingActor::GetHealth()
+const float ALivingActor::GetHealth() const
 {
 	return Health;
 }
@@ -40,4 +40,19 @@ void ALivingActor::UpdateHealth(const float HealthModifier)
 	{
 		OnDeath();
 	}
+}
+
+const float ALivingActor::GetDamage() const
+{
+	return Damage;
+}
+
+void ALivingActor::SetDamage(const float NewDamage)
+{
+	Damage = NewDamage;
+}
+
+void ALivingActor::UpdateDamage(const float NewDamage)
+{
+	Damage += NewDamage;
 }

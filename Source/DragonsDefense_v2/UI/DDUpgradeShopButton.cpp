@@ -33,6 +33,9 @@ void UDDUpgradeShopButton::Upgrade(EPlayerStats Stat) const
 		case EPlayerStats::Armor:
 			Player->UpdateArmor(UpgradeAmount);
 			break;
+		case EPlayerStats::Damage:
+			Player->UpdateDamage(UpgradeAmount);
+			break;
 		default:
 			UE_LOG(LogTemp, Error, TEXT("Error: No upgrade set to %s. Bad things will occur"), *GetName())
 			break;

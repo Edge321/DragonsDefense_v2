@@ -104,6 +104,16 @@ void ADDGameModeBase::GameStart() const
 	OnGameStart.Broadcast();
 }
 
+ADDPlayer* ADDGameModeBase::BlueprintGetPlayer()
+{
+	return Player;
+}
+
+ADDProjectileManager* ADDGameModeBase::BlueprintGetProjectileManager()
+{
+	return ProjectileManager;
+}
+
 //void ADDGameModeBase::WidgetToViewport()
 //{
 //	for (TSubclassOf<UUserWidget> Widget : WidgetClassArray) {
