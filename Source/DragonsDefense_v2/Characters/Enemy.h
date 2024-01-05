@@ -36,8 +36,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAudioComponent* ShootSound;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement");
-	float MovementSpeed = 1.0f;
 	//What projectile will the enemy be using?
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Projectile");
 	TSubclassOf<ADDProjectile> Projectile;
@@ -47,24 +45,33 @@ protected:
 	//Distance from the castle to attack
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
 	float DistanceToAttack = 100.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
 	float ShootCooldown = 1.0f;
-	//Modifies movement speed if Easy mode was chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float EasyMovementSpeedMod = 0.9f;
-	//Modifies movement speed if Hard mode was chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float HardMovementSpeedMod = 1.1f;
-	//Modifies shooting cooldown if Easy mode was chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float EasyShootCooldownMod = 1.2f;
-	//Modifies shooting cooldown if Hard mode was chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float HardShootCooldownMod = 0.8f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
+	float MovementSpeed = 1.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
+	int32 SoulValue = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score");
 	int32 Score = 1;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SoulValue");
-	int32 SoulValue = 1;
+	
+	//Variables below are all modifiers for Enemy's stats
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	float EasyMovementSpeedMod = 0.9f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	float HardMovementSpeedMod = 1.1f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	float EasyShootCooldownMod = 1.2f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	float HardShootCooldownMod = 0.8f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	float EasyDamageMod = 0.8f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	float HardDamageMod = 1.5f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	int32 EasySoulValueMod = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	int32 HardSoulValueMod = -1;
 
 	//TODO - Might just get rid of this UFUNCTION tbh
 	UFUNCTION(BlueprintNativeEvent)
@@ -95,6 +102,5 @@ private:
 
 	ADDPlayer* Player;
 	FTimerHandle ShootHandle;
-	float TempShootCooldown;
 	bool IsShooting = false;
 };

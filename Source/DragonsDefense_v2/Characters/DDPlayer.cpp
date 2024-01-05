@@ -1,5 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include <cmath>
+
 #include "DDPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
@@ -90,7 +92,7 @@ const float ADDPlayer::GetDamage() const
 
 void ADDPlayer::UpdateHealth(const float HealthModifier)
 {
-	TempHealth += HealthModifier;
+	TempHealth = FMathf::Clamp(TempHealth + HealthModifier, 0, MaxHealth);
 
 	//Temporary until in-game health bars are implemented
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
@@ -104,27 +106,32 @@ void ADDPlayer::UpdateHealth(const float HealthModifier)
 
 void ADDPlayer::UpdateMaxHealth(const float MaxHealthModifier)
 {
-	MaxHealth += MaxHealthModifier;
+	MaxHealth = FMathf::Clamp(MaxHealth + MaxHealthModifier, TempHealth, INFINITY);
 }
 
 void ADDPlayer::UpdateMovementSpeed(const float MovementSpeedModifier)
 {
-	TempMovementSpeed += MovementSpeedModifier;
+	TempMovementSpeed = FMathf::Clamp(TempMovementSpeed + MovementSpeedModifier, MovementSpeed, INFINITY);
 }
 
 void ADDPlayer::UpdateShootSpeed(const float ShootSpeedModifier)
 {
-	TempShootSpeed += ShootSpeedModifier;
+	//Just an arbitrary number. 
+	//TODO - Think of the ramifications of this
+	float MinShootClamp = 0.1f;
+	TempShootSpeed = FMathf::Clamp(TempShootSpeed + ShootSpeedModifier, MinShootClamp, INFINITY);
 }
 
 void ADDPlayer::UpdateArmor(const float ArmorModifier)
 {
-	Armor += ArmorModifier;
+	TempShootSpeed = FMathf::Clamp(Armor + ArmorModifier, 0, INFINITY);
 }
 
 void ADDPlayer::UpdateDamage(const float DamageModifier)
 {
-	TempDamage += DamageModifier;
+	//The enemy gotta do some damage you know
+	float MaxDamageClamp = -0.1;
+	TempDamage = FMathf::Clamp(TempDamage + DamageModifier, -INFINITY, MaxDamageClamp);
 }
 
 void ADDPlayer::ValidateProjectile()

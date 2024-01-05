@@ -16,6 +16,14 @@ void UDDMainMenuWidget::Start()
 	SetVisibility(ESlateVisibility::Hidden);
 }
 
+void UDDMainMenuWidget::SetDifficulty(EDifficulty Difficulty) const
+{
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->SetDifficulty(Difficulty);
+	}
+}
+
 void UDDMainMenuWidget::SwitchMenus(UCanvasPanel* MenuDest, UCanvasPanel* MenuSrc)
 {
 	if (MenuDest && MenuSrc) {

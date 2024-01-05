@@ -9,6 +9,7 @@
 #include "../Projectile/DDProjectile.h"
 #include "../Characters/DDPlayer.h"
 #include "../Game/DDGameModeBase.h"
+#include "../Game/DDDifficulty.h"
 
 #define ECC_EnemyChannel ECC_GameTraceChannel1
 
@@ -38,6 +39,7 @@ void AEnemy::BeginPlay()
 
 	ValidateProjectile();
 	FindPlayer();
+	ApplyModifiers();
 }
 
 // Called every frame
@@ -64,7 +66,35 @@ void AEnemy::CheckDistance()
 
 void AEnemy::ApplyModifiers()
 {
+	EDifficulty Difficulty = EDifficulty::Normal;
 	//TODO - Apply modifiers to health, speed, shoot cooldown, and any others
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		Difficulty = GameMode->GetDifficulty();
+	}
+
+	switch (Difficulty) {
+		case(EDifficulty::Easy):
+			Damage *= EasyDamageMod;
+			Health *= EasyHealthMod;
+			MovementSpeed *= EasyMovementSpeedMod;
+			ShootCooldown *= EasyShootCooldownMod;
+			SoulValue += EasySoulValueMod;
+			break;
+		case(EDifficulty::Normal):
+			//Nothing changes
+			break;
+		case(EDifficulty::Hard):
+			Damage *= HardDamageMod;
+			Health *= HardHealthMod;
+			MovementSpeed *= HardMovementSpeedMod;
+			ShootCooldown *= HardShootCooldownMod;
+			SoulValue += HardSoulValueMod;
+			break;
+		default:
+			UE_LOG(LogTemp, Fatal, TEXT("No difficulty exist from GameMode somehow? What the hell is this"))
+			break;
+	}
 }
 
 void AEnemy::OnDeath_Implementation()

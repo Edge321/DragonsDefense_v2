@@ -33,10 +33,10 @@ protected:
 	float Health = 1.0f;
 	//Modifies health if Easy mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float EasyHealthModifier = 0.8f;
+	float EasyHealthMod = 0.8f;
 	//Modifies health if Hard mode was chosen
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
-	float HardHealthModifier = 1.2f;
+	float HardHealthMod = 1.2f;
 
 	//Apparently Unreal does not like pure virtual functions so...yeah
 

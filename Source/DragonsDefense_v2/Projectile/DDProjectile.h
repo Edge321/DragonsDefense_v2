@@ -42,12 +42,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage");
 	float ProjectileDamage = -1.0f;
-	//Modifies projectile's stats if Easy mode is chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier");
-	float EasyModifier = 0.5f;
-	//Modifies projectile's stats if Hard mode is chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier");
-	float HardModifier = 2.0f;
 	//Length of life in seconds
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lifetime");
 	float ProjectileLifetime = 10.0f;
@@ -67,11 +61,6 @@ private:
 	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
 	
-	/**
-	 * @brief Applies the necessary modifiers to any of the projectile's stats
-	 * 
-	 */
-	void ApplyModifiers();
 	void EnableCollision();
 	void DestroySelf();
 

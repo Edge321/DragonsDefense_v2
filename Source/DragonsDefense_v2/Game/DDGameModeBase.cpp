@@ -8,6 +8,7 @@
 #include "../Characters/DDPlayer.h"
 #include "../Game/DDProjectileManager.h"
 #include "../Game/DDScoreWidget.h"
+#include "../Game/DDDifficulty.h"
 #include "../UI/DDMainMenuWidget.h"
 #include "../UI/DDSoulShopWidget.h"
 
@@ -42,6 +43,7 @@ void ADDGameModeBase::BeginPlay()
 
 	ProjectileManager = FindUObject<ADDProjectileManager>();
 	Player = FindUObject<ADDPlayer>();
+	Difficulty = EDifficulty::Normal;
 }
 
 void ADDGameModeBase::UpdateScoreText()
@@ -77,6 +79,16 @@ ADDPlayer& ADDGameModeBase::GetPlayer()
 {
 	check(Player)
 	return *Player;
+}
+
+const EDifficulty ADDGameModeBase::GetDifficulty() const
+{
+	return Difficulty;
+}
+
+void ADDGameModeBase::SetDifficulty(const EDifficulty NewDifficulty)
+{
+	Difficulty = NewDifficulty;
 }
 
 const int32 ADDGameModeBase::GetSouls()

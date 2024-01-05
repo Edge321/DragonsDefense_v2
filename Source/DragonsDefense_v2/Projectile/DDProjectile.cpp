@@ -91,11 +91,6 @@ void ADDProjectile::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	}
 }
 
-void ADDProjectile::ApplyModifiers()
-{
-	// TODO - Adjust damage of projectile according to difficulty chosen
-}
-
 void ADDProjectile::EnableCollision()
 {
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
