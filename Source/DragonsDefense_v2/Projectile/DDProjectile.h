@@ -40,18 +40,23 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UNiagaraComponent* ProjectileEffects;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage");
+	UPROPERTY(EditAnywhere, Category = "Damage");
 	float ProjectileDamage = -1.0f;
 	//Length of life in seconds
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lifetime");
+	UPROPERTY(EditDefaultsOnly, Category = "Lifetime");
 	float ProjectileLifetime = 10.0f;
 
 public:
-	void SetVelocity(const FVector Velocity);
+	
+	UFUNCTION(BlueprintCallable, Category = "Getters")
 	const float GetDamage() const;
+	UFUNCTION(BlueprintCallable, Category = "Setters")
 	void SetDamage(const float Damage);
+
+	void SetVelocity(const FVector Velocity);
 	// Who owns the projectile
 	void SetProjectileOwner(const uint32 ActorID);
+	//This function was made to avoid collision with its owner
 	void SetCollisionChannelToIgnore(const ECollisionChannel Channel);
 
 	FOnProjectileDestroyed OnProjectileDestroyed;

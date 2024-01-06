@@ -25,7 +25,8 @@ AEnemy::AEnemy()
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
 
-	//Forces only the collider to have collision
+	//Forces only the collider to have collision. 
+	//Whether this is a good idea, I dont know
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetCollisionObjectType(ECC_EnemyChannel);
 }
@@ -67,7 +68,7 @@ void AEnemy::CheckDistance()
 void AEnemy::ApplyModifiers()
 {
 	EDifficulty Difficulty = EDifficulty::Normal;
-	//TODO - Apply modifiers to health, speed, shoot cooldown, and any others
+
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		Difficulty = GameMode->GetDifficulty();
@@ -97,7 +98,7 @@ void AEnemy::ApplyModifiers()
 	}
 }
 
-void AEnemy::OnDeath_Implementation()
+void AEnemy::OnDeath()
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {

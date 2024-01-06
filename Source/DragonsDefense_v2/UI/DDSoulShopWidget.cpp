@@ -7,11 +7,6 @@
 //My classes
 #include "../UI/DDShopButton.h"
 
-void UDDSoulShopWidget::DisplayStats()
-{
-
-}
-
 TArray<UDDShopButton*> UDDSoulShopWidget::FindAllShopButtons(UCanvasPanel* Canvas)
 {
     TArray<UDDShopButton*> ButtonArray;

@@ -37,6 +37,7 @@ bool UDDShopButton::IsMaxxedOut()
 }
 // BUG - There existed a time where gathering a bunch of souls and buying resulted in being able
 // to buy another upgrade where you didnt have enough souls. Not sure how.
+// Update - It seems to exist only with the Damage button i think. Some bullshit
 void UDDShopButton::IsBuyable()
 {
 	int32 Souls;
@@ -96,12 +97,9 @@ void UDDShopButton::ResetPrice()
 	PriceIndex = 0;
 	PriceText->SetText(FetchFTextPrice());
 }
-//TODO - Gonna have to think up of how the hell to call various buttons with
-//different texts.
+
 void UDDShopButton::GameOverEventFunction()
 {
-	//TODO - Bind to the game over delegate from GameModeBase
-	//To initialize in the canvas, have the canvas gather a list of all the buttons that exist within the canvas
 	ResetPrice();
 	UpdateText();
 	bIsBuyable = false;

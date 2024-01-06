@@ -3,8 +3,8 @@
 
 #include "DDEnemySpawner.h"
 #include "Components/BillboardComponent.h"
-#include "../Game/DDGameModeBase.h"
 //My classes
+#include "../Game/DDGameModeBase.h"
 #include "../Characters/Enemy.h"
 
 // Sets default values

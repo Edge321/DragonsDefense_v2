@@ -7,6 +7,7 @@
 #include "DDUpgradeShopButton.generated.h"
 
 enum class EPlayerStats : uint8;
+
 /**
  * 
  */
@@ -17,7 +18,7 @@ class DRAGONSDEFENSE_V2_API UDDUpgradeShopButton : public UDDShopButton
 
 protected:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UpgradeAmount");
+	UPROPERTY(EditAnywhere, Category = "UpgradeAmount");
 	float UpgradeAmount = 1;
 
 	UFUNCTION(BlueprintCallable)

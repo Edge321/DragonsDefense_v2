@@ -20,8 +20,6 @@ class DRAGONSDEFENSE_V2_API UDDSoulShopWidget : public UUserWidget
 protected:
 
 	UFUNCTION(BlueprintCallable)
-	void DisplayStats();
-	UFUNCTION(BlueprintCallable)
 	TArray<UDDShopButton*> FindAllShopButtons(UCanvasPanel* Canvas);
 
 public:

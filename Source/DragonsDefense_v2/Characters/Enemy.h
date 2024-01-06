@@ -33,48 +33,46 @@ protected:
 	UStaticMeshComponent* Mesh; //TODO - Replace with skeletal mesh when we get to animation
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
 	UAudioComponent* ShootSound;
 
 	//What projectile will the enemy be using?
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Projectile");
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile");
 	TSubclassOf<ADDProjectile> Projectile;
 	//Offset of spawned projectile relative to the origin of the enemy
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile");
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile");
 	FVector ProjectileOffset = FVector::Zero();
 	//Distance from the castle to attack
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI");
+	UPROPERTY(EditAnywhere, Category = "AI");
 	float DistanceToAttack = 100.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
+	UPROPERTY(EditAnywhere, Category = "Stats");
 	float ShootCooldown = 1.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
+	UPROPERTY(EditAnywhere, Category = "Stats");
 	float MovementSpeed = 1.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
+	UPROPERTY(EditAnywhere, Category = "Stats");
 	int32 SoulValue = 1;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score");
+	UPROPERTY(EditAnywhere, Category = "Score");
 	int32 Score = 1;
 	
 	//Variables below are all modifiers for Enemy's stats
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float EasyMovementSpeedMod = 0.9f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float HardMovementSpeedMod = 1.1f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float EasyShootCooldownMod = 1.2f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float HardShootCooldownMod = 0.8f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float EasyDamageMod = 0.8f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float HardDamageMod = 1.5f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	int32 EasySoulValueMod = 1;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	int32 HardSoulValueMod = -1;
 
-	//TODO - Might just get rid of this UFUNCTION tbh
-	UFUNCTION(BlueprintNativeEvent)
 	void OnDeath() override;
 
 public:

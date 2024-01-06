@@ -6,16 +6,16 @@
 #include "GameFramework/GameModeBase.h"
 #include "DDGameModeBase.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameOver);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateSouls);
-
 class UDDScoreWidget;
 class UDDMainMenuWidget;
 class UDDSoulShopWidget;
 class ADDProjectileManager;
 class ADDPlayer;
 enum class EDifficulty : uint8;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameOver);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateSouls);
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDGameModeBase : public AGameModeBase
@@ -26,17 +26,18 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TArray<TSubclassOf<class UUserWidget>> WidgetClassArray;
-	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<class UUserWidget> ScoreWidgetClass;
-	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<class UUserWidget> MainMenuWidgetClass;
-	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<class UUserWidget> SoulShopWidgetClass;
 
 	//So we have an array of widget classes. Wtf do I do for array of
 	//various sorts of widgets like below?
+	//TODO - Are these UPROPERTY necessary?
 	UPROPERTY()
 	UDDScoreWidget* ScoreWidget;
 	UPROPERTY()
@@ -55,14 +56,14 @@ public:
 	ADDProjectileManager& GetProjectileManager();
 	ADDPlayer& GetPlayer();
 	
-	UFUNCTION(BlueprintCallable, Category = "Getters")
+	UFUNCTION(BlueprintPure, Category = "Getters")
 	const EDifficulty GetDifficulty() const;
 	UFUNCTION(BlueprintCallable, Category = "Setters")
 	void SetDifficulty(const EDifficulty NewDifficulty);
-	UFUNCTION(BlueprintCallable, Category = "Getters")
-	const int32 GetSouls();
-	UFUNCTION(BlueprintCallable, Category = "Getters")
-	UDDMainMenuWidget* GetMainMenuWidget();
+	UFUNCTION(BlueprintPure, Category = "Getters")
+	const int32 GetSouls() const;
+	UFUNCTION(BlueprintPure, Category = "Getters")
+	UDDMainMenuWidget* GetMainMenuWidget() const;
 	UFUNCTION(BlueprintCallable, Category = "GameState")
 	void GameOver();
 	UFUNCTION(BlueprintCallable, Category = "GameState")
@@ -85,7 +86,8 @@ private:
 	template <class T> T* FindUObject();
 
 	//Blueprint functions below are so C++ can't call it but blueprints can
-	//since C++ can modify the pointers
+	//since C++ can modify the pointers (even though you can change by reference
+	//to pointer but shut up okay?)
 
 	UFUNCTION(BlueprintCallable, Category = "Getters")
 	ADDPlayer* BlueprintGetPlayer();

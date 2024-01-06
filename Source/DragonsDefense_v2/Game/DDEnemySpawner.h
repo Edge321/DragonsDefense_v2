@@ -29,15 +29,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* SpawnerIcon;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	float SpawnInterval = 3.0f;
 	//Area of where an enemy can be spawned on the Y-axis
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	float SpawnAreaY = 1500.0f;
 	//Used for reducing the spawn interval for fast enemy spawning
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+	//Not currently used, but prob will be later on with waves implemented
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	float SpawnTimeReducer;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	TArray<TSubclassOf<AEnemy>> EnemiesToSpawn;
 
 private:

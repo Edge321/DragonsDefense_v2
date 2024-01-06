@@ -4,6 +4,7 @@
 //My classes
 #include "../Characters/DDPlayerStats.h"
 #include "../Characters/DDPlayer.h"
+#include "../Game/DDGameModeBase.h"
 
 void UDDUpgradeShopButton::Upgrade(EPlayerStats Stat) const
 {

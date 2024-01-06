@@ -5,9 +5,9 @@
 #include "Components/BoxComponent.h"
 #include "NiagaraComponent.h"
 //My classes
-#include "../Game/DDGameModeBase.h" //TODO - Access difficulty mode to apply to damage modifier
-#include "../Characters/LivingActor.h"
+#include "../Game/DDGameModeBase.h"
 #include "../Game/DDProjectileManager.h"
+#include "../Characters/LivingActor.h"
 
 #define ECC_EnemyChannel ECC_GameTraceChannel1
 

@@ -24,11 +24,11 @@ protected:
 	UTextBlock* PriceText;
 
 	//An array of increasing prices for when the player purchases whatever the button sells
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Prices")
+	UPROPERTY(EditDefaultsOnly, Category = "Prices")
 	TArray<int32> Prices;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ButtonColor")
+	UPROPERTY(EditDefaultsOnly, Category = "ButtonColor")
 	FLinearColor BuyableColor = FLinearColor::Blue;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ButtonColor")
+	UPROPERTY(EditDefaultsOnly, Category = "ButtonColor")
 	FLinearColor UnBuyableColor = FLinearColor::Red;
 
 public:
@@ -39,8 +39,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitializeButton();
 	UFUNCTION(BlueprintCallable)
-	bool IsMaxxedOut();
-	UFUNCTION(BlueprintCallable)
 	void IsBuyable();
 	UFUNCTION(BlueprintCallable)
 	void IncreasePrice();
@@ -49,12 +47,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	const bool GetBuyableStatus();
 	UFUNCTION(BlueprintCallable)
-	void ResetPrice();
-	UFUNCTION(BlueprintCallable)
 	void GameOverEventFunction();
 
 private:
-
+	
+	bool IsMaxxedOut();
+	void ResetPrice();
+	//Fetches the current price but is converted to FText
 	FText FetchFTextPrice();
 
 	int PriceIndex = 0;

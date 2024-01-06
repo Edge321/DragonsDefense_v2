@@ -6,8 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 //My classes
-#include "../Projectile/DDProjectile.h"
 #include "../Game/DDGameModeBase.h"
+#include "../Projectile/DDProjectile.h"
 
 // Sets default values
 ADDPlayer::ADDPlayer()

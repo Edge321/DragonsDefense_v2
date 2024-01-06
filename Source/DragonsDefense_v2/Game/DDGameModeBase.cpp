@@ -91,12 +91,12 @@ void ADDGameModeBase::SetDifficulty(const EDifficulty NewDifficulty)
 	Difficulty = NewDifficulty;
 }
 
-const int32 ADDGameModeBase::GetSouls()
+const int32 ADDGameModeBase::GetSouls() const
 {
 	return TotalSouls;
 }
 
-UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget()
+UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget() const
 {
 	check(MainMenuWidget)
 	return MainMenuWidget;

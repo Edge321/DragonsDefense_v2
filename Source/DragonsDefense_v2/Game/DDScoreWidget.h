@@ -18,10 +18,4 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetScoreText(int32 EnemiesKilled);
-	/**
-	 * @brief Sets the score text back to 0
-	 * 
-	 */
-	UFUNCTION(BlueprintImplementableEvent)
-	void ResetScoreText();
 };

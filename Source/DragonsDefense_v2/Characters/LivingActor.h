@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "../Game/DDGameModeBase.h"
 #include "Components/BoxComponent.h"
 #include "LivingActor.generated.h"
 
@@ -27,15 +26,15 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* Collider;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	UPROPERTY(EditAnywhere, Category = "Stats")
 	float Damage = -1.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats");
+	UPROPERTY(EditAnywhere, Category = "Stats");
 	float Health = 1.0f;
 	//Modifies health if Easy mode was chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditAnywhere, Category = "Modifiers");
 	float EasyHealthMod = 0.8f;
 	//Modifies health if Hard mode was chosen
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers");
+	UPROPERTY(EditAnywhere, Category = "Modifiers");
 	float HardHealthMod = 1.2f;
 
 	//Apparently Unreal does not like pure virtual functions so...yeah
@@ -48,9 +47,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual const float GetHealth() const;
-	virtual void UpdateHealth(const float HealthModifier);
 	virtual const float GetDamage() const;
 	void SetDamage(const float NewDamage);
+
+	virtual void UpdateHealth(const float HealthModifier);
 	//Equivalent to SetDamage(GetDamage() + float)
 	void UpdateDamage(const float NewDamage);
 };
