@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-12-05T23:10:29.175Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="mLpjyGAkOCGxNXCc05WM" version="22.1.2" type="device" pages="2">
+<mxfile host="Electron" modified="2024-01-11T00:08:11.246Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.18 Chrome/120.0.6099.199 Electron/28.1.2 Safari/537.36" etag="1htunBWw70aToj-3x9bt" version="22.1.18" type="device" pages="3">
   <diagram name="Pre-Waves" id="pLjyOtSR3gbEGqfqxWxf">
-    <mxGraphModel dx="1419" dy="819" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -40,7 +40,7 @@
         <mxCell id="9_PkaJwWOTpgHuZonPGM-16" value="Transparency is needed for the shop UI to see enemies behind it" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" parent="1" vertex="1">
           <mxGeometry x="995" y="50" width="100" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="9_PkaJwWOTpgHuZonPGM-17" value="button" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;opacity=50;" parent="1" vertex="1">
+        <mxCell id="9_PkaJwWOTpgHuZonPGM-17" value="button" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;opacity=50;" parent="1" vertex="1">
           <mxGeometry x="1055" y="280" width="75" height="20" as="geometry" />
         </mxCell>
         <mxCell id="9_PkaJwWOTpgHuZonPGM-18" value="Souls: 4" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
@@ -119,7 +119,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="xlVNbDbOI8hzHDaeTJNi" name="SoulShopUML">
-    <mxGraphModel dx="989" dy="582" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -186,7 +186,7 @@
         <mxCell id="ap1JBNdNoiOOsHR7phtA-6" value="&lt;b&gt;Blueprint Implementation&lt;/b&gt;&lt;br&gt;Linking button to functions" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="ap1JBNdNoiOOsHR7phtA-1" vertex="1">
           <mxGeometry y="178" width="200" height="42" as="geometry" />
         </mxCell>
-        <mxCell id="ap1JBNdNoiOOsHR7phtA-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="ap1JBNdNoiOOsHR7phtA-1" edge="1" target="ap1JBNdNoiOOsHR7phtA-8">
+        <mxCell id="ap1JBNdNoiOOsHR7phtA-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="ap1JBNdNoiOOsHR7phtA-1" target="ap1JBNdNoiOOsHR7phtA-8" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1000" y="130" as="sourcePoint" />
             <mxPoint x="1000" y="90" as="targetPoint" />
@@ -272,41 +272,214 @@
         <mxCell id="ap1JBNdNoiOOsHR7phtA-35" value="Might not need any special functions or what not here. Everything seems to be handled by the ShopButton class" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" parent="1" vertex="1">
           <mxGeometry x="620" y="110" width="120" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-1" value="" style="endArrow=classic;html=1;rounded=0;exitX=-0.002;exitY=-0.121;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ap1JBNdNoiOOsHR7phtA-15">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-1" value="" style="endArrow=classic;html=1;rounded=0;exitX=-0.002;exitY=-0.121;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="ap1JBNdNoiOOsHR7phtA-15" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="460" as="sourcePoint" />
             <mxPoint x="680" y="465" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-4" value="Needs access to" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-4" value="Needs access to" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="700" y="433" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-5" value="Player" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-5" value="Player" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="540" y="430" width="140" height="78" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-6" value="Whatever stats" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="VRrDs7QtfiqQPPknLBmO-5">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-6" value="Whatever stats" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="VRrDs7QtfiqQPPknLBmO-5" vertex="1">
           <mxGeometry y="26" width="140" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-7" value="..." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="VRrDs7QtfiqQPPknLBmO-5">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-7" value="..." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="VRrDs7QtfiqQPPknLBmO-5" vertex="1">
           <mxGeometry y="52" width="140" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.002;entryY=-0.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="VRrDs7QtfiqQPPknLBmO-22">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.002;entryY=-0.05;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="VRrDs7QtfiqQPPknLBmO-22" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1100" y="240" as="sourcePoint" />
             <mxPoint x="1190" y="240" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-19" value="GameModeBase" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-19" value="GameModeBase" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1230" y="188" width="140" height="78" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-20" value="Souls" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="VRrDs7QtfiqQPPknLBmO-19">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-20" value="Souls" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="VRrDs7QtfiqQPPknLBmO-19" vertex="1">
           <mxGeometry y="26" width="140" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-22" value="..." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="VRrDs7QtfiqQPPknLBmO-19">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-22" value="..." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="VRrDs7QtfiqQPPknLBmO-19" vertex="1">
           <mxGeometry y="52" width="140" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="VRrDs7QtfiqQPPknLBmO-23" value="Needs access to" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="VRrDs7QtfiqQPPknLBmO-23" value="Needs access to" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="1130" y="200" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-1" value="HealthBar" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="594" width="160" height="122" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-4" value="InitHealthBar()&lt;br&gt;UpdateHealthBar()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="PHvcgQMvm3Y1xPsBj9Y9-1">
+          <mxGeometry y="26" width="160" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-5" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="PHvcgQMvm3Y1xPsBj9Y9-1">
+          <mxGeometry y="62" width="160" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-6" value="&lt;b&gt;Blueprint Implementation&lt;/b&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="PHvcgQMvm3Y1xPsBj9Y9-1">
+          <mxGeometry y="70" width="160" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-7" value="Health Bar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="PHvcgQMvm3Y1xPsBj9Y9-1">
+          <mxGeometry y="96" width="160" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-8" value="Managed by Soul system for now. Not sure where else I would put it unless I want it to be a standalone" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="600" y="594" width="130" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-9" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=-0.154;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="PHvcgQMvm3Y1xPsBj9Y9-8" target="PHvcgQMvm3Y1xPsBj9Y9-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="684" as="sourcePoint" />
+            <mxPoint x="650" y="634" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.462;exitY=1.055;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="PHvcgQMvm3Y1xPsBj9Y9-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="824" as="sourcePoint" />
+            <mxPoint x="454" y="764" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-12" value="Player" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="764" width="140" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-13" value="Health" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="PHvcgQMvm3Y1xPsBj9Y9-12">
+          <mxGeometry y="26" width="140" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-14" value="..." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="PHvcgQMvm3Y1xPsBj9Y9-12">
+          <mxGeometry y="52" width="140" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PHvcgQMvm3Y1xPsBj9Y9-16" value="Needs acess to" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="724" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GFeeM2s0N520l2q8MAwP-1" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="644" as="sourcePoint" />
+            <mxPoint x="380" y="644" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GFeeM2s0N520l2q8MAwP-3" value="Called by a delegate of Player when health is updated. Avoid that constant tick call yknow?" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="220" y="590" width="100" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="EFLP7L1e3sDuJxZfcKZu" name="Post-Waves">
+    <mxGraphModel dx="3134" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="z8tUhQXvRm8BGavVuXqI-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="25" y="10" width="800" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="z8tUhQXvRm8BGavVuXqI-2" value="Castle" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="770" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="z8tUhQXvRm8BGavVuXqI-3" value="Player" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" vertex="1" parent="1">
+          <mxGeometry x="385" y="430" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z8tUhQXvRm8BGavVuXqI-4" value="Health Bar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" vertex="1" parent="1">
+          <mxGeometry x="265" y="550" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="C12ExzNDM29H3YwAwlHB-1" value="The game itself" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="395" y="295" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VQCbUlQYRzcp9eHo3a9R-1" value="Boss Health maybe?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;dashed=1;glass=1;" vertex="1" parent="1">
+          <mxGeometry x="285" y="20" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-1" value="" style="shape=loopLimit;whiteSpace=wrap;html=1;rotation=90;fillColor=#fa6800;fontColor=#000000;strokeColor=#C73500;" vertex="1" parent="1">
+          <mxGeometry y="180" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-2" value="" style="endArrow=none;html=1;rounded=0;exitX=0.9;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="7OqEI6UxFI503TV8QW0B-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="40" y="230" as="sourcePoint" />
+            <mxPoint x="40" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-3" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="50" y="230" as="sourcePoint" />
+            <mxPoint x="50" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-4" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="60" y="220" as="sourcePoint" />
+            <mxPoint x="60" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-6" value="Shop button&lt;br&gt;is hidden away until the player brings it up theirself" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="-140" y="170" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-7" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.449;entryY=0.961;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.027;exitY=0.517;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="7OqEI6UxFI503TV8QW0B-6" target="7OqEI6UxFI503TV8QW0B-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-90" y="300" as="sourcePoint" />
+            <mxPoint x="-40" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-8" value="" style="shape=loopLimit;whiteSpace=wrap;html=1;rotation=90;fillColor=#fa6800;fontColor=#000000;strokeColor=#C73500;" vertex="1" parent="1">
+          <mxGeometry x="2.5" y="287.5" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-10" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0;dx=30;notch=30;" vertex="1" parent="1">
+          <mxGeometry x="35" y="270" width="35" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-12" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0;exitDx=100;exitDy=60;exitPerimeter=0;" edge="1" parent="1" source="7OqEI6UxFI503TV8QW0B-6" target="7OqEI6UxFI503TV8QW0B-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-50" y="320" as="sourcePoint" />
+            <mxPoint y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-13" value="Stuck between these two designs. I&#39;ll ask someone later" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="-140" y="270" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-14" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.37;exitY=0.979;exitDx=0;exitDy=0;exitPerimeter=0;strokeWidth=3;" edge="1" parent="1" source="7OqEI6UxFI503TV8QW0B-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-180" y="110" as="sourcePoint" />
+            <mxPoint x="-200" y="70" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-90" y="70" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-15" value="Opened..." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-150" y="40" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-25" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-1005" y="10" width="800" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-26" value="Castle" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
+          <mxGeometry x="-990" y="500" width="770" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-27" value="Player" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" vertex="1" parent="1">
+          <mxGeometry x="-645" y="430" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-28" value="Health Bar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" vertex="1" parent="1">
+          <mxGeometry x="-765" y="550" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-29" value="The game itself" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-635" y="295" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-30" value="Boss Health maybe?" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;dashed=1;glass=1;" vertex="1" parent="1">
+          <mxGeometry x="-745" y="20" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-35" value="" style="shape=loopLimit;whiteSpace=wrap;html=1;rotation=90;fillColor=#fa6800;fontColor=#000000;strokeColor=#C73500;" vertex="1" parent="1">
+          <mxGeometry x="-890" y="287.5" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-36" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0;dx=30;notch=30;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="-857.5" y="270" width="35" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-37" value="Or maybe have the shop button here? Then we have to move the health bar" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="210" y="640" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-38" value="" style="shape=loopLimit;whiteSpace=wrap;html=1;rotation=0;fillColor=#fa6800;fontColor=#000000;strokeColor=#C73500;" vertex="1" parent="1">
+          <mxGeometry x="375" y="567.5" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-39" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0;dx=30;notch=30;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="407.5" y="550" width="35" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7OqEI6UxFI503TV8QW0B-40" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="7OqEI6UxFI503TV8QW0B-38">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="310" y="690" as="sourcePoint" />
+            <mxPoint x="360" y="640" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

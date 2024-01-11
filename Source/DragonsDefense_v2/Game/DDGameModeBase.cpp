@@ -14,32 +14,9 @@
 
 void ADDGameModeBase::BeginPlay()
 {
-	//WidgetToViewport();
-	//TODO - Bunch these widgets in an array of widgets, dont have to copy code that way
-	if (ScoreWidgetClass) {
-		ScoreWidget = Cast<UDDScoreWidget>(CreateWidget(GetWorld(), ScoreWidgetClass));
-
-		if (ScoreWidget) {
-			ScoreWidget->AddToViewport();
-			UpdateScoreText(); //TODO - If we want to use a generic function, we need to find a way to get this bozo out of here
-		}
-	}
-
-	if (MainMenuWidgetClass) {
-		MainMenuWidget = Cast<UDDMainMenuWidget>(CreateWidget(GetWorld(), MainMenuWidgetClass));
-
-		if (MainMenuWidget) {
-			MainMenuWidget->AddToViewport();
-		}
-	}
-
-	if (SoulShopWidgetClass) {
-		SoulShopWidget = Cast<UDDSoulShopWidget>(CreateWidget(GetWorld(), SoulShopWidgetClass));
-
-		if (SoulShopWidget) {
-			SoulShopWidget->AddToViewport();
-		}
-	}
+	ScoreWidget = AddWidgetToViewport<UDDScoreWidget>(ScoreWidgetClass);
+	MainMenuWidget = AddWidgetToViewport<UDDMainMenuWidget>(MainMenuWidgetClass);
+	SoulShopWidget = AddWidgetToViewport<UDDSoulShopWidget>(SoulShopWidgetClass);
 
 	ProjectileManager = FindUObject<ADDProjectileManager>();
 	Player = FindUObject<ADDPlayer>();
@@ -126,20 +103,24 @@ ADDProjectileManager* ADDGameModeBase::BlueprintGetProjectileManager()
 	return ProjectileManager;
 }
 
-//void ADDGameModeBase::WidgetToViewport()
-//{
-//	for (TSubclassOf<UUserWidget> Widget : WidgetClassArray) {
-//		UUserWidget* SomeWidget = Cast<UUserWidget>(CreateWidget(GetWorld(), Widget));
-//		if (SomeWidget) {
-//			UpdateScoreText();
-//		}
-//	}
-//}
-
 template<class T>
-T* ADDGameModeBase::AddWidgetToViewport()
+T* ADDGameModeBase::AddWidgetToViewport(TSubclassOf<UUserWidget> WidgetClass)
 {
-	//T* SomeWidget = Cast<T>(CreateWidget(GetWorld(), Widget));
+	if (WidgetClass) {
+		T* SomeWidget = Cast<T>(CreateWidget(GetWorld(), WidgetClass));
+		if (SomeWidget) {
+			SomeWidget->AddToViewport();
+			return SomeWidget;
+		}
+		else {
+			UE_LOG(LogTemp, Fatal, TEXT("Error: %s is not a subclass of UUserWidget"), *(SomeWidget->GetName()))
+		}
+	}
+	else {
+		UE_LOG(LogTemp, Fatal, TEXT("Error: invalid WidgetClass argument"))
+	}
+
+	return nullptr;
 }
 
 template<class T>

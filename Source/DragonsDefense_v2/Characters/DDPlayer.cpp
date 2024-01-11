@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include <cmath>
-
 #include "DDPlayer.h"
+#include <cmath>
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 //My classes
@@ -37,7 +36,6 @@ void ADDPlayer::BeginPlay()
 	TempMovementSpeed = MovementSpeed;
 	TempShootSpeed = ShootSpeed;
 	TempDamage = Damage;
-	Armor = 0;
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
@@ -80,11 +78,6 @@ const float ADDPlayer::GetShootSpeed() const
 	return TempShootSpeed;
 }
 
-const float ADDPlayer::GetArmor() const
-{
-	return Armor;
-}
-
 const float ADDPlayer::GetDamage() const
 {
 	return TempDamage;
@@ -116,15 +109,9 @@ void ADDPlayer::UpdateMovementSpeed(const float MovementSpeedModifier)
 
 void ADDPlayer::UpdateShootSpeed(const float ShootSpeedModifier)
 {
-	//Just an arbitrary number. 
-	//TODO - Think of the ramifications of this
+	//Just an arbitrary number. Prevents shoot speed going down to 0 (basically shooting every frame)
 	float MinShootClamp = 0.1f;
 	TempShootSpeed = FMathf::Clamp(TempShootSpeed + ShootSpeedModifier, MinShootClamp, INFINITY);
-}
-
-void ADDPlayer::UpdateArmor(const float ArmorModifier)
-{
-	TempShootSpeed = FMathf::Clamp(Armor + ArmorModifier, 0, INFINITY);
 }
 
 void ADDPlayer::UpdateDamage(const float DamageModifier)
@@ -145,7 +132,6 @@ void ADDPlayer::ResetStats()
 	MaxHealth = Health;
 	TempMovementSpeed = MovementSpeed;
 	TempShootSpeed = ShootSpeed;
-	Armor = 0;
 	TempDamage = Damage;
 }
 

@@ -66,15 +66,12 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetShootSpeed() const;
 	UFUNCTION(BlueprintPure, Category = "Getters")
-	const float GetArmor() const;
-	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetDamage() const override;
 
 	void UpdateHealth(const float HealthModifier) override;
 	void UpdateMaxHealth(const float MaxHealthModifier);
 	void UpdateMovementSpeed(const float MovementSpeedModifier);
 	void UpdateShootSpeed(const float ShootSpeedModifier);
-	void UpdateArmor(const float ArmorModifier);
 	void UpdateDamage(const float DamageModifier);
 
 private:
@@ -94,5 +91,4 @@ private:
 
 	float MaxHealth;
 	float TempHealth;
-	float Armor;
 };

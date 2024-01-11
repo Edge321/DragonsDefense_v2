@@ -17,7 +17,6 @@ void UDDUpgradeShopButton::Upgrade(EPlayerStats Stat) const
 
 	check(Player)
 
-	//TODO - Add damage upgrade!
 	switch (Stat) {
 		case EPlayerStats::MovementSpeed:
 			Player->UpdateMovementSpeed(UpgradeAmount);
@@ -30,9 +29,6 @@ void UDDUpgradeShopButton::Upgrade(EPlayerStats Stat) const
 			break;
 		case EPlayerStats::Health:
 			Player->UpdateHealth(UpgradeAmount);
-			break;
-		case EPlayerStats::Armor:
-			Player->UpdateArmor(UpgradeAmount);
 			break;
 		case EPlayerStats::Damage:
 			Player->UpdateDamage(UpgradeAmount);

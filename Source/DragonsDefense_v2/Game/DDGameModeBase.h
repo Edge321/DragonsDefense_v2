@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "DDGameModeBase.generated.h"
 
+class UUserWidget;
 class UDDScoreWidget;
 class UDDMainMenuWidget;
 class UDDSoulShopWidget;
@@ -34,16 +35,6 @@ protected:
 	TSubclassOf<class UUserWidget> MainMenuWidgetClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<class UUserWidget> SoulShopWidgetClass;
-
-	//So we have an array of widget classes. Wtf do I do for array of
-	//various sorts of widgets like below?
-	//TODO - Are these UPROPERTY necessary?
-	UPROPERTY()
-	UDDScoreWidget* ScoreWidget;
-	UPROPERTY()
-	UDDMainMenuWidget* MainMenuWidget;
-	UPROPERTY()
-	UDDSoulShopWidget* SoulShopWidget;
 
 	void UpdateScoreText();
 	void UpdateSoulsText();
@@ -77,12 +68,11 @@ public:
 	FOnUpdateSouls OnUpdateSouls;
 
 private:
-	template <class T> T* AddWidgetToViewport();
-	/**
-	 * @brief Searches for some kind of UObject in the world. Also 
-	 * checks if there is only one instance of the object.
-	 * 
-	 */
+	//Adds any subclass of UUserWidget to the viewport. Returns whatever class
+	//that inherits from UUserWidget.
+	template <class T> T* AddWidgetToViewport(TSubclassOf<UUserWidget> WidgetClass);
+	//Searches for some kind of UObject in the world. Also checks if there is only
+	//one instance of the object.
 	template <class T> T* FindUObject();
 
 	//Blueprint functions below are so C++ can't call it but blueprints can
@@ -97,8 +87,14 @@ private:
 	ADDProjectileManager* ProjectileManager;
 	ADDPlayer* Player;
 
+	UDDScoreWidget* ScoreWidget;
+	UDDMainMenuWidget* MainMenuWidget;
+	UDDSoulShopWidget* SoulShopWidget;
+
 	EDifficulty Difficulty;
 
 	int32 TotalEnemiesKilled = 0;
+
+	UPROPERTY(EditDefaultsOnly)
 	int32 TotalSouls = 0;
 };

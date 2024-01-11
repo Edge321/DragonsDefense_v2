@@ -41,8 +41,6 @@ void ADDProjectile::BeginPlay()
 	//Prevents collider from colliding if spawned inside its owner (heehee)
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	//TODO - Get the current difficulty
-
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		ADDProjectileManager& ProjectileManager = GameMode->GetProjectileManager();

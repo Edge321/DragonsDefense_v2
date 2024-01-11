@@ -38,6 +38,7 @@ bool UDDShopButton::IsMaxxedOut()
 // BUG - There existed a time where gathering a bunch of souls and buying resulted in being able
 // to buy another upgrade where you didnt have enough souls. Not sure how.
 // Update - It seems to exist only with the Damage button i think. Some bullshit
+// Another update - not the damage button, but worse, math. More bullshit
 void UDDShopButton::IsBuyable()
 {
 	int32 Souls;
@@ -80,14 +81,15 @@ void UDDShopButton::UpdateSouls()
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
-		GameMode->UpdateSouls(-Prices[PriceIndex]);
+		IncreasePrice();
+		GameMode->UpdateSouls(-Prices[PriceIndex - 1]);
 	}
 	else {
 		UE_LOG(LogTemp, Fatal, TEXT("How did we get here?"))
 	}
 }
 
-const bool UDDShopButton::GetBuyableStatus()
+const bool UDDShopButton::GetBuyableStatus() const
 {
 	return bIsBuyable;
 }

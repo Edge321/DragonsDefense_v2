@@ -24,11 +24,11 @@ protected:
 	UTextBlock* PriceText;
 
 	//An array of increasing prices for when the player purchases whatever the button sells
-	UPROPERTY(EditDefaultsOnly, Category = "Prices")
+	UPROPERTY(EditAnywhere, Category = "Prices")
 	TArray<int32> Prices;
-	UPROPERTY(EditDefaultsOnly, Category = "ButtonColor")
+	UPROPERTY(EditAnywhere, Category = "ButtonColor")
 	FLinearColor BuyableColor = FLinearColor::Blue;
-	UPROPERTY(EditDefaultsOnly, Category = "ButtonColor")
+	UPROPERTY(EditAnywhere, Category = "ButtonColor")
 	FLinearColor UnBuyableColor = FLinearColor::Red;
 
 public:
@@ -44,8 +44,8 @@ public:
 	void IncreasePrice();
 	UFUNCTION(BlueprintCallable)
 	void UpdateSouls();
-	UFUNCTION(BlueprintCallable)
-	const bool GetBuyableStatus();
+	UFUNCTION(BlueprintPure)
+	const bool GetBuyableStatus() const;
 	UFUNCTION(BlueprintCallable)
 	void GameOverEventFunction();
 
