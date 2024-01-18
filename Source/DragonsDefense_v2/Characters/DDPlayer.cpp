@@ -95,11 +95,14 @@ void ADDPlayer::UpdateHealth(const float HealthModifier)
 	{
 		OnDeath();
 	}
+
+	OnUpdateHealth.Broadcast(TempHealth, MaxHealth);
 }
 
 void ADDPlayer::UpdateMaxHealth(const float MaxHealthModifier)
 {
 	MaxHealth = FMathf::Clamp(MaxHealth + MaxHealthModifier, TempHealth, INFINITY);
+	OnUpdateHealth.Broadcast(TempHealth, MaxHealth);
 }
 
 void ADDPlayer::UpdateMovementSpeed(const float MovementSpeedModifier)

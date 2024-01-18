@@ -10,6 +10,8 @@ class UCameraComponent;
 class UFloatingPawnMovement;
 class ADDProjectile;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUpdateHealth, float, Health, float, MaxHealth);
+
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlayer : public ALivingActor
 {
@@ -73,6 +75,9 @@ public:
 	void UpdateMovementSpeed(const float MovementSpeedModifier);
 	void UpdateShootSpeed(const float ShootSpeedModifier);
 	void UpdateDamage(const float DamageModifier);
+
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnUpdateHealth OnUpdateHealth;
 
 private:
 	void ValidateProjectile();

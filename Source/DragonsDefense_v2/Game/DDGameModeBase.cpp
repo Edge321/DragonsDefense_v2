@@ -11,12 +11,14 @@
 #include "../Game/DDDifficulty.h"
 #include "../UI/DDMainMenuWidget.h"
 #include "../UI/DDSoulShopWidget.h"
+#include "../UI/DDHealthBarWidget.h"
 
 void ADDGameModeBase::BeginPlay()
 {
 	ScoreWidget = AddWidgetToViewport<UDDScoreWidget>(ScoreWidgetClass);
 	MainMenuWidget = AddWidgetToViewport<UDDMainMenuWidget>(MainMenuWidgetClass);
 	SoulShopWidget = AddWidgetToViewport<UDDSoulShopWidget>(SoulShopWidgetClass);
+	HealthBarWidget = AddWidgetToViewport<UDDHealthBarWidget>(HealthBarWidgetClass);
 
 	ProjectileManager = FindUObject<ADDProjectileManager>();
 	Player = FindUObject<ADDPlayer>();

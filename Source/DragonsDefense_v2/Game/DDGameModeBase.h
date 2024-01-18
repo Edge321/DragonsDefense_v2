@@ -10,6 +10,7 @@ class UUserWidget;
 class UDDScoreWidget;
 class UDDMainMenuWidget;
 class UDDSoulShopWidget;
+class UDDHealthBarWidget;
 class ADDProjectileManager;
 class ADDPlayer;
 enum class EDifficulty : uint8;
@@ -35,6 +36,9 @@ protected:
 	TSubclassOf<class UUserWidget> MainMenuWidgetClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 	TSubclassOf<class UUserWidget> SoulShopWidgetClass;
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HealthBarWidgetClass;
+
 
 	void UpdateScoreText();
 	void UpdateSoulsText();
@@ -90,6 +94,7 @@ private:
 	UDDScoreWidget* ScoreWidget;
 	UDDMainMenuWidget* MainMenuWidget;
 	UDDSoulShopWidget* SoulShopWidget;
+	UDDHealthBarWidget* HealthBarWidget;
 
 	EDifficulty Difficulty;
 
