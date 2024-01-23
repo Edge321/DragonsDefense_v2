@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/BoxComponent.h"
+#include "Components/ArrowComponent.h"
 #include "LivingActor.generated.h"
 
 /**
@@ -25,16 +26,18 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* Collider;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UArrowComponent* Arrow;
 
 	UPROPERTY(EditAnywhere, Category = "Stats")
 	float Damage = -1.0f;
-	UPROPERTY(EditAnywhere, Category = "Stats");
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Stats");
 	float Health = 1.0f;
 	//Modifies health if Easy mode was chosen
-	UPROPERTY(EditAnywhere, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float EasyHealthMod = 0.8f;
 	//Modifies health if Hard mode was chosen
-	UPROPERTY(EditAnywhere, Category = "Modifiers");
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float HardHealthMod = 1.2f;
 
 	//Apparently Unreal does not like pure virtual functions so...yeah

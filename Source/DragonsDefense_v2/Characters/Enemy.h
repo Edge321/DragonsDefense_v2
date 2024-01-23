@@ -8,10 +8,12 @@
 
 class UStaticMeshComponent;
 class UFloatingPawnMovement;
+class UMaterialBillboardComponent;
 class UAudioComponent;
 class ADDCastle;
 class ADDPlayer;
 class ADDProjectile;
+class UDDEnemyHealthBar;
 
 DECLARE_DELEGATE_OneParam(FOnEnemyDeath, AEnemy*)
 
@@ -53,6 +55,8 @@ protected:
 	int32 SoulValue = 1;
 	UPROPERTY(EditAnywhere, Category = "Score");
 	int32 Score = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Temp")
+	float TempHealth;
 	
 	//Variables below are all modifiers for Enemy's stats
 
@@ -73,6 +77,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	int32 HardSoulValueMod = -1;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "HealthBar")
+	void UpdateHealthBar();
+
+	void UpdateHealth(const float HealthModifier) override;
 	void OnDeath() override;
 
 public:
@@ -82,23 +90,22 @@ public:
 	FOnEnemyDeath OnEnemyDeath;
 
 private:
-	/**
-	 * @brief Checks the distance of self and the castle
-	 * 
-	 */
+	// Checks the distance of self and the castle
 	void CheckDistance();
 	void ApplyModifiers() override;
 	void StartShooting();
 	void StopShooting();
 	void Shoot();
-	/**
-	 * @brief Checks if projectile was assigned to the enemy
-	 * 
-	 */
+	// Checks if projectile was assigned to the enemy
 	void ValidateProjectile();
+	//Checks if Health Bar Billboard has a material to work with
+	void ValidateHealthBar();
 	void FindPlayer();
 
 	ADDPlayer* Player;
 	FTimerHandle ShootHandle;
+
+	float HealthBarSize;
+
 	bool IsShooting = false;
 };

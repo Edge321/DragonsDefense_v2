@@ -8,6 +8,7 @@ ALivingActor::ALivingActor()
 {
 	//Class that inherits is responsible for setting the root component
 	Collider = CreateDefaultSubobject<UBoxComponent>("BoxCollider");
+	Arrow = CreateDefaultSubobject<UArrowComponent>("ActorDirection");
 }
 
 // Called when the game starts or when spawned

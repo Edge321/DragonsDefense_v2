@@ -5,11 +5,13 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/BoxComponent.h"
+#include "Components/MaterialBillboardComponent.h"
 //My classes
 #include "../Projectile/DDProjectile.h"
 #include "../Characters/DDPlayer.h"
 #include "../Game/DDGameModeBase.h"
 #include "../Game/DDDifficulty.h"
+#include "../UI/DDEnemyHealthBar.h"
 
 #define ECC_EnemyChannel ECC_GameTraceChannel1
 
@@ -24,6 +26,7 @@ AEnemy::AEnemy()
 
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
+	Arrow->SetupAttachment(Mesh);
 
 	//Forces only the collider to have collision. 
 	//Whether this is a good idea, I dont know
@@ -37,8 +40,10 @@ void AEnemy::BeginPlay()
 
 	//Prevents enemy from accelerating like crazy at the beginning
 	FloatingPawnMovement->MaxSpeed = MovementSpeed;
+	TempHealth = Health;
 
 	ValidateProjectile();
+	ValidateHealthBar();
 	FindPlayer();
 	ApplyModifiers();
 }
@@ -78,6 +83,7 @@ void AEnemy::ApplyModifiers()
 		case(EDifficulty::Easy):
 			Damage *= EasyDamageMod;
 			Health *= EasyHealthMod;
+			TempHealth = Health;
 			MovementSpeed *= EasyMovementSpeedMod;
 			ShootCooldown *= EasyShootCooldownMod;
 			SoulValue += EasySoulValueMod;
@@ -88,6 +94,7 @@ void AEnemy::ApplyModifiers()
 		case(EDifficulty::Hard):
 			Damage *= HardDamageMod;
 			Health *= HardHealthMod;
+			TempHealth = Health;
 			MovementSpeed *= HardMovementSpeedMod;
 			ShootCooldown *= HardShootCooldownMod;
 			SoulValue += HardSoulValueMod;
@@ -96,6 +103,19 @@ void AEnemy::ApplyModifiers()
 			UE_LOG(LogTemp, Fatal, TEXT("No difficulty exist from GameMode somehow? What the hell is this"))
 			break;
 	}
+}
+
+void AEnemy::UpdateHealth(const float HealthModifier)
+{
+	TempHealth += HealthModifier;
+
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
+
+	if (TempHealth <= 0) {
+		OnDeath();
+	}
+
+	UpdateHealthBar();
 }
 
 void AEnemy::OnDeath()
@@ -146,6 +166,11 @@ void AEnemy::Shoot()
 void AEnemy::ValidateProjectile()
 {
 	check(Projectile != nullptr);
+}
+
+void AEnemy::ValidateHealthBar()
+{
+	//TODO - Do we even need this?
 }
 
 void AEnemy::FindPlayer()

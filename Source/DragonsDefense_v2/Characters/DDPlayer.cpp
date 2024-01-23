@@ -22,6 +22,7 @@ ADDPlayer::ADDPlayer()
 	//Forces collider to have the only collision
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetupAttachment(Mesh);
+	Arrow->SetupAttachment(Mesh);
 }
 
 // Called when the game starts or when spawned
@@ -88,8 +89,8 @@ void ADDPlayer::UpdateHealth(const float HealthModifier)
 	TempHealth = FMathf::Clamp(TempHealth + HealthModifier, 0, MaxHealth);
 
 	//Temporary until in-game health bars are implemented
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
-		FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
+		//FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
 
 	if (TempHealth <= 0)
 	{
