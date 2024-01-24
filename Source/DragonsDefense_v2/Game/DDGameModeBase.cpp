@@ -81,6 +81,16 @@ UDDMainMenuWidget* ADDGameModeBase::GetMainMenuWidget() const
 	return MainMenuWidget;
 }
 
+const bool ADDGameModeBase::GetPauseState()
+{
+	return bIsPaused;
+}
+
+void ADDGameModeBase::SetPauseState(const bool PauseState)
+{
+	bIsPaused = PauseState;
+}
+
 void ADDGameModeBase::GameOver()
 {
 	TotalEnemiesKilled = 0;

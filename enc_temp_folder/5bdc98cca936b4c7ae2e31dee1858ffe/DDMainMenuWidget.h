@@ -20,6 +20,14 @@ protected:
 	void Start();
 	UFUNCTION(BlueprintCallable)
 	void SetDifficulty(EDifficulty Difficulty) const;
+	/**
+	 * @brief Switches the menus the player is currently on
+	 * 
+	 * @param MenuDest Menu the player is going to
+	 * @param MenuSrc Menu the player is coming from
+	 */
+	UFUNCTION(BlueprintCallable)
+	void SwitchMenus(UCanvasPanel* MenuDest, UCanvasPanel* MenuSrc);
 	UFUNCTION(BlueprintCallable)
 	void Quit() const;
 };

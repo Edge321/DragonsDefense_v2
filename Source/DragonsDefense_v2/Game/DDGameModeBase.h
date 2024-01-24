@@ -59,6 +59,10 @@ public:
 	const int32 GetSouls() const;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	UDDMainMenuWidget* GetMainMenuWidget() const;
+	UFUNCTION(BlueprintPure, Category = "Getters")
+	const bool GetPauseState();
+	UFUNCTION(BlueprintCallable, Category = "Setters")
+	void SetPauseState(const bool PauseState);
 	UFUNCTION(BlueprintCallable, Category = "GameState")
 	void GameOver();
 	UFUNCTION(BlueprintCallable, Category = "GameState")
@@ -99,7 +103,7 @@ private:
 	EDifficulty Difficulty;
 
 	int32 TotalEnemiesKilled = 0;
-
-	UPROPERTY(EditDefaultsOnly)
 	int32 TotalSouls = 0;
+
+	bool bIsPaused = false;
 };
