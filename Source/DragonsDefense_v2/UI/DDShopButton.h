@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "../Characters/DDPlayerStats.h"
+#include "../Characters/DDPlayer.h"
+#include "../Game/DDGameModeBase.h"
 #include "DDShopButton.generated.h"
 
 /**
@@ -16,20 +19,16 @@ class DRAGONSDEFENSE_V2_API UDDShopButton : public UButton
 	GENERATED_BODY()
 
 protected:
-	
-	void UpdateText();
 
 	//Text for displaying the current price of the shop item
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PriceText")
 	UTextBlock* PriceText;
-
-	//An array of increasing prices for when the player purchases whatever the button sells
-	UPROPERTY(EditAnywhere, Category = "Prices")
-	TArray<int32> Prices;
 	UPROPERTY(EditAnywhere, Category = "ButtonColor")
 	FLinearColor BuyableColor = FLinearColor::Blue;
 	UPROPERTY(EditAnywhere, Category = "ButtonColor")
 	FLinearColor UnBuyableColor = FLinearColor::Red;
+
+	bool bIsBuyable = false;
 
 public:
 
@@ -39,23 +38,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitializeButton();
 	UFUNCTION(BlueprintCallable)
-	void IsBuyable();
+	virtual void IsBuyable() {}; //pure virtual
 	UFUNCTION(BlueprintCallable)
-	void IncreasePrice();
-	UFUNCTION(BlueprintCallable)
-	void UpdateSouls();
+	virtual void UpdateSouls() {}; //pure virtual
 	UFUNCTION(BlueprintPure)
 	const bool GetBuyableStatus() const;
 	UFUNCTION(BlueprintCallable)
-	void GameOverEventFunction();
+	virtual void GameOverEventFunction();
 
-private:
-	
-	bool IsMaxxedOut();
-	void ResetPrice();
-	//Fetches the current price but is converted to FText
-	FText FetchFTextPrice();
+protected:
 
-	int PriceIndex = 0;
-	bool bIsBuyable = false;
+	virtual void UpdateText() {}; //pure virtual
+	virtual FText FetchFTextPrice() { return FText(); }; //pure virtual
 };

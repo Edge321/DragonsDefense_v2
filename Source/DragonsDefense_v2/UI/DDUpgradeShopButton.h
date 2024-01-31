@@ -6,8 +6,6 @@
 #include "../UI/DDShopButton.h"
 #include "DDUpgradeShopButton.generated.h"
 
-enum class EPlayerStats : uint8;
-
 /**
  * 
  */
@@ -17,10 +15,26 @@ class DRAGONSDEFENSE_V2_API UDDUpgradeShopButton : public UDDShopButton
 	GENERATED_BODY()
 
 protected:
-
-	UPROPERTY(EditAnywhere, Category = "UpgradeAmount");
+	//An array of increasing prices for when the player purchases whatever the button sells
+	UPROPERTY(EditAnywhere, Category = "Prices")
+	TArray<int32> Prices;
+	UPROPERTY(EditAnywhere, Category = "UpgradeAmount")
 	float UpgradeAmount = 1;
 
+	void IsBuyable() override;
 	UFUNCTION(BlueprintCallable)
 	void Upgrade(EPlayerStats Stat) const;
+	UFUNCTION(BlueprintCallable)
+	void IncreasePrice();
+	void UpdateSouls() override;
+	void GameOverEventFunction() override;
+
+private:
+	void UpdateText() override;
+	//Fetches the current price but is converted to FText
+	bool IsMaxxedOut();
+	void ResetPrice();
+	FText FetchFTextPrice() override;
+
+	int PriceIndex = 0;
 };
