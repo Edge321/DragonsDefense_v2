@@ -9,6 +9,7 @@
 #include "../Game/DDProjectileManager.h"
 #include "../Game/DDScoreWidget.h"
 #include "../Game/DDDifficulty.h"
+#include "../Game/DDEnemySpawner.h"
 #include "../UI/DDMainMenuWidget.h"
 #include "../UI/DDSoulShopWidget.h"
 #include "../UI/DDHealthBarWidget.h"
@@ -22,6 +23,7 @@ void ADDGameModeBase::BeginPlay()
 
 	ProjectileManager = FindUObject<ADDProjectileManager>();
 	Player = FindUObject<ADDPlayer>();
+	EnemySpawner = FindUObject<ADDEnemySpawner>();
 	Difficulty = EDifficulty::Normal;
 }
 
@@ -52,6 +54,12 @@ ADDProjectileManager& ADDGameModeBase::GetProjectileManager()
 {
 	check(ProjectileManager)
 	return *ProjectileManager;
+}
+
+ADDEnemySpawner& ADDGameModeBase::GetEnemySpawner()
+{
+	check(EnemySpawner)
+	return *EnemySpawner;
 }
 
 ADDPlayer& ADDGameModeBase::GetPlayer()

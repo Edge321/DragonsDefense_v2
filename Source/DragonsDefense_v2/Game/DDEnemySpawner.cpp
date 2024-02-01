@@ -89,6 +89,36 @@ void ADDEnemySpawner::RemoveEnemyFromPool(AEnemy* Enemy)
 	}
 }
 
+void ADDEnemySpawner::SpawnEnemies(TArray<TSubclassOf<AEnemy>> Enemies, int32 EnemyAmount, FVector SpawnLocation)
+{
+	if (Enemies.Num() <= 0) {
+		UE_LOG(LogTemp, Warning, TEXT("Oy dumbass you passed in an empty array to EnemySpawner"))
+		return;
+	}
+
+	//float YSpawnLocation = SpawnLocation.Y;
+	int EnemyIndex;
+	float RandomAreaY;
+	FVector RandomLocation;
+
+	for (int i = 0; i < EnemyAmount; i++) {
+		EnemyIndex = FMath::RandRange(0, Enemies.Num() - 1);
+		RandomAreaY = FMath::RandRange(-SpawnAreaY, SpawnAreaY);
+
+		RandomLocation = FVector(SpawnLocation.X, RandomAreaY, SpawnLocation.Z);
+
+		TSubclassOf<AEnemy> Enemy = Enemies[EnemyIndex];
+		AEnemy* ActualEnemy = GetWorld()->SpawnActor<AEnemy>(Enemy, RandomLocation, GetActorRotation());
+
+		if (ActualEnemy) {
+			ActualEnemy->SpawnDefaultController();
+			ActualEnemy->AutoPossessAI = EAutoPossessAI::Spawned;
+			ActualEnemy->OnEnemyDeath.BindUObject(this, &ADDEnemySpawner::RemoveEnemyFromPool);
+			AddEnemyToPool(ActualEnemy);
+		}
+	}
+}
+
 void ADDEnemySpawner::StartSpawn()
 {
 	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &ADDEnemySpawner::SpawnEnemy, SpawnInterval, true);

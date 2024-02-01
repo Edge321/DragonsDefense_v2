@@ -105,7 +105,5 @@ private:
 	ADDPlayer* Player;
 	FTimerHandle ShootHandle;
 
-	float HealthBarSize;
-
 	bool IsShooting = false;
 };

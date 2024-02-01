@@ -41,6 +41,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	TArray<TSubclassOf<AEnemy>> EnemiesToSpawn;
 
+public:
+	void SpawnEnemies(TArray<TSubclassOf<AEnemy>> Enemies, int32 EnemyAmount, FVector SpawnLocation);
+
 private:
 	void StartSpawn();
 	void StopSpawn();

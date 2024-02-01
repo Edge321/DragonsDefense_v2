@@ -3,3 +3,7 @@
 
 #include "DDPlacementShopButton.h"
 
+void UDDPlacementShopButton::PlaceObject()
+{
+
+}

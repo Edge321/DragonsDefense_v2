@@ -12,6 +12,7 @@ class UDDMainMenuWidget;
 class UDDSoulShopWidget;
 class UDDHealthBarWidget;
 class ADDProjectileManager;
+class ADDEnemySpawner;
 class ADDPlayer;
 enum class EDifficulty : uint8;
 
@@ -49,6 +50,7 @@ public:
 	void UpdateSouls(int32 Souls);
 
 	ADDProjectileManager& GetProjectileManager();
+	ADDEnemySpawner& GetEnemySpawner();
 	ADDPlayer& GetPlayer();
 	
 	UFUNCTION(BlueprintPure, Category = "Getters")
@@ -93,6 +95,7 @@ private:
 	ADDProjectileManager* BlueprintGetProjectileManager();
 
 	ADDProjectileManager* ProjectileManager;
+	ADDEnemySpawner* EnemySpawner;
 	ADDPlayer* Player;
 
 	UDDScoreWidget* ScoreWidget;
