@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/FloatingPawnMovement.h"
 #include "../Characters/LivingActor.h"
 #include "Enemy.generated.h"
 
@@ -82,16 +83,19 @@ protected:
 
 	void UpdateHealth(const float HealthModifier) override;
 	void OnDeath() override;
+	// Checks the distance of self and the castle
+	void CheckDistance();
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UStaticMeshComponent* GetMeshComponent() const;
+	UFloatingPawnMovement* GetFloatingPawnMovement() const;
+
 	FOnEnemyDeath OnEnemyDeath;
 
 private:
-	// Checks the distance of self and the castle
-	void CheckDistance();
 	void ApplyModifiers() override;
 	void StartShooting();
 	void StopShooting();

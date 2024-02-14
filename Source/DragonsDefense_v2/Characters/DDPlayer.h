@@ -96,4 +96,5 @@ private:
 
 	float MaxHealth;
 	float TempHealth;
+	FVector OriginalLocation;
 };

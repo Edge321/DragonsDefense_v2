@@ -38,6 +38,8 @@ void ADDPlayer::BeginPlay()
 	TempShootSpeed = ShootSpeed;
 	TempDamage = Damage;
 
+	OriginalLocation = GetActorLocation();
+
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		GameMode->OnGameOver.AddDynamic(this, &ADDPlayer::GameOverEventFunction);
@@ -167,6 +169,6 @@ void ADDPlayer::GameStartEventFunction()
 {
 	APlayerController* PlayController = GetController<APlayerController>();
 	EnableInput(PlayController);
-	//PlayController->bShowMouseCursor = false;
 	PlayController->SetInputMode(FInputModeGameAndUI());
+	SetActorLocation(OriginalLocation);
 }

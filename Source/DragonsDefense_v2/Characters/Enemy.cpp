@@ -3,7 +3,6 @@
 
 #include "Enemy.h"
 #include "Kismet/GameplayStatics.h"
-#include "GameFramework/FloatingPawnMovement.h"
 #include "Components/BoxComponent.h"
 #include "Components/MaterialBillboardComponent.h"
 //My classes
@@ -57,6 +56,14 @@ void AEnemy::Tick(float DeltaTime)
 	FloatingPawnMovement->AddInputVector(ActualMovement);
 
 	CheckDistance();
+}
+UStaticMeshComponent* AEnemy::GetMeshComponent() const
+{
+	return Mesh;
+}
+UFloatingPawnMovement* AEnemy::GetFloatingPawnMovement() const
+{
+	return FloatingPawnMovement;
 }
 //Checks distance between the enemy and the castle
 void AEnemy::CheckDistance()

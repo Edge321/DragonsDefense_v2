@@ -3,6 +3,7 @@
 
 #include "DDEnemySpawner.h"
 #include "Components/BillboardComponent.h"
+#include "GameFramework/FloatingPawnMovement.h"
 //My classes
 #include "../Game/DDGameModeBase.h"
 #include "../Characters/Enemy.h"
@@ -96,24 +97,29 @@ void ADDEnemySpawner::SpawnEnemies(TArray<TSubclassOf<AEnemy>> Enemies, int32 En
 		return;
 	}
 
-	//float YSpawnLocation = SpawnLocation.Y;
-	int EnemyIndex;
-	float RandomAreaY;
+	int32 EnemyIndex;
+	float RandomX;
+	float RandomY;
 	FVector RandomLocation;
+	FVector PushForce;
 
 	for (int i = 0; i < EnemyAmount; i++) {
 		EnemyIndex = FMath::RandRange(0, Enemies.Num() - 1);
-		RandomAreaY = FMath::RandRange(-SpawnAreaY, SpawnAreaY);
-
-		RandomLocation = FVector(SpawnLocation.X, RandomAreaY, SpawnLocation.Z);
+		int32 RandomSignX = FMath::RandBool() ? 1 : -1;
+		int32 RandomSignY = FMath::RandBool() ? 1 : -1;
+		RandomX = FMath::RandRange(300.0f, 500.0f) * RandomSignX;
+		RandomY = FMath::RandRange(1000.0f, 3000.0f) * RandomSignY;
 
 		TSubclassOf<AEnemy> Enemy = Enemies[EnemyIndex];
-		AEnemy* ActualEnemy = GetWorld()->SpawnActor<AEnemy>(Enemy, RandomLocation, GetActorRotation());
+		AEnemy* ActualEnemy = GetWorld()->SpawnActor<AEnemy>(Enemy, SpawnLocation, GetActorRotation());
+
+		PushForce = FVector(RandomX, RandomY, 0);
 
 		if (ActualEnemy) {
 			ActualEnemy->SpawnDefaultController();
 			ActualEnemy->AutoPossessAI = EAutoPossessAI::Spawned;
 			ActualEnemy->OnEnemyDeath.BindUObject(this, &ADDEnemySpawner::RemoveEnemyFromPool);
+			ActualEnemy->GetFloatingPawnMovement()->Velocity += PushForce;
 			AddEnemyToPool(ActualEnemy);
 		}
 	}
