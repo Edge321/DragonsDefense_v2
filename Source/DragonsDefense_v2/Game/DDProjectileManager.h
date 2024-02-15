@@ -44,4 +44,6 @@ private:
 
 	UFUNCTION()
 	void GameOverEventFunction();
+	UFUNCTION()
+	void WaveOverEventFunction();
 };

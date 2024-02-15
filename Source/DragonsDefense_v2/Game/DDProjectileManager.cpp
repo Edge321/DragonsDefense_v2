@@ -26,6 +26,7 @@ void ADDProjectileManager::BeginPlay()
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		GameMode->OnGameOver.AddDynamic(this, &ADDProjectileManager::GameOverEventFunction);
+		GameMode->OnWaveOver.AddDynamic(this, &ADDProjectileManager::WaveOverEventFunction);
 	}
 }
 
@@ -60,6 +61,13 @@ void ADDProjectileManager::CleanPool()
 }
 
 void ADDProjectileManager::GameOverEventFunction()
+{
+	CleanPool();
+}
+//	^^
+//	||  WHAT THE FUCK IS REUSING A FUNCTION!!!
+//	vv
+void ADDProjectileManager::WaveOverEventFunction()
 {
 	CleanPool();
 }

@@ -113,6 +113,16 @@ void ADDGameModeBase::GameStart() const
 	OnGameStart.Broadcast();
 }
 
+void ADDGameModeBase::WaveOver() const
+{
+	OnWaveOver.Broadcast();
+}
+
+void ADDGameModeBase::WaveStart() const
+{
+	OnWaveStart.Broadcast();
+}
+
 ADDPlayer* ADDGameModeBase::BlueprintGetPlayer()
 {
 	return Player;

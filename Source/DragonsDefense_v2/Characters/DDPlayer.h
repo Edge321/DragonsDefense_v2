@@ -93,6 +93,10 @@ private:
 	void GameOverEventFunction();
 	UFUNCTION()
 	void GameStartEventFunction();
+	UFUNCTION()
+	void WaveOverEventFunction();
+	UFUNCTION()
+	void WaveStartEventFunction();
 
 	float MaxHealth;
 	float TempHealth;

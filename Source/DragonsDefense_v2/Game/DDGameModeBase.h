@@ -19,6 +19,9 @@ enum class EDifficulty : uint8;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameOver);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateSouls);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWaveOver);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWaveStart);
+//TODO - consider the above... what classes have their feeling affected?
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDGameModeBase : public AGameModeBase
@@ -69,6 +72,10 @@ public:
 	void GameOver();
 	UFUNCTION(BlueprintCallable, Category = "GameState")
 	void GameStart() const;
+	UFUNCTION(BlueprintCallable, Category = "WaveState")
+	void WaveOver() const;
+	UFUNCTION(BlueprintCallable, Category = "WaveState")
+	void WaveStart() const;
 
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnGameOver OnGameOver;
@@ -76,6 +83,10 @@ public:
 	FOnGameStart OnGameStart;
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnUpdateSouls OnUpdateSouls;
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnWaveStart OnWaveStart;
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnWaveOver OnWaveOver;
 
 private:
 	//Adds any subclass of UUserWidget to the viewport. Returns whatever class

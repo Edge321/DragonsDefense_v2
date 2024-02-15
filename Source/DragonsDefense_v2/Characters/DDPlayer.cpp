@@ -44,6 +44,8 @@ void ADDPlayer::BeginPlay()
 	if (GameMode) {
 		GameMode->OnGameOver.AddDynamic(this, &ADDPlayer::GameOverEventFunction);
 		GameMode->OnGameStart.AddDynamic(this, &ADDPlayer::GameStartEventFunction);
+		GameMode->OnWaveOver.AddDynamic(this, &ADDPlayer::WaveOverEventFunction);
+		GameMode->OnWaveStart.AddDynamic(this, &ADDPlayer::WaveStartEventFunction);
 	}
 	//Want to disable the input at the beginning obviously!
 	GameOverEventFunction();
@@ -171,4 +173,17 @@ void ADDPlayer::GameStartEventFunction()
 	EnableInput(PlayController);
 	PlayController->SetInputMode(FInputModeGameAndUI());
 	SetActorLocation(OriginalLocation);
+}
+
+void ADDPlayer::WaveOverEventFunction()
+{
+	APlayerController* PlayController = GetController<APlayerController>();
+	DisableInput(PlayController);
+	PlayController->bShowMouseCursor = true;
+	PlayController->SetInputMode(FInputModeUIOnly());
+}
+
+void ADDPlayer::WaveStartEventFunction()
+{
+	GameStartEventFunction();
 }

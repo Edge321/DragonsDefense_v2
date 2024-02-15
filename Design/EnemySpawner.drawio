@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-02-14T02:30:55.350Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="idZWQm_TQ-Ua1vJUEocs" version="23.0.2" type="device">
+<mxfile host="Electron" modified="2024-02-14T20:31:40.821Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="j1iIxJ6E77-e0c5gdIrq" version="23.0.2" type="device">
   <diagram name="Page-1" id="A92BdNKljdkqnT62k-o3">
-    <mxGraphModel dx="1430" dy="830" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="988" dy="573" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -13,7 +13,7 @@
         <mxCell id="aze1-G2N5fPgMVTwDsin-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="aze1-G2N5fPgMVTwDsin-1" vertex="1">
           <mxGeometry y="150" width="200" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="aze1-G2N5fPgMVTwDsin-4" value="SpawnEnemy(Enemy)&lt;br&gt;SortWaves()&lt;br&gt;SearchWave()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="aze1-G2N5fPgMVTwDsin-1" vertex="1">
+        <mxCell id="aze1-G2N5fPgMVTwDsin-4" value="SpawnEnemy(Enemy)&lt;br&gt;SortWaves()&lt;br&gt;SearchWave()&lt;br&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="aze1-G2N5fPgMVTwDsin-1" vertex="1">
           <mxGeometry y="158" width="200" height="52" as="geometry" />
         </mxCell>
         <mxCell id="aze1-G2N5fPgMVTwDsin-5" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="aze1-G2N5fPgMVTwDsin-1" vertex="1">
@@ -64,7 +64,7 @@
         <mxCell id="BDAmWs_XElTPPhAQJqha-6" value="Search through entire sorted list, finding CurrentWaves % WaveTrigger == 0" style="whiteSpace=wrap;html=1;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="670" y="460" width="130" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="kOzjN_RzX7XbJ7V-DzSM-1" value="Feel like there is optimization potential here..." style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+        <mxCell id="kOzjN_RzX7XbJ7V-DzSM-1" value="Feel like there is optimization potential here..." style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" parent="1" vertex="1">
           <mxGeometry x="670" y="340" width="100" height="100" as="geometry" />
         </mxCell>
       </root>
