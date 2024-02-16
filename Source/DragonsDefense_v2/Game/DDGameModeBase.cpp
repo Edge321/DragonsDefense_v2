@@ -10,6 +10,7 @@
 #include "../Game/DDScoreWidget.h"
 #include "../Game/DDDifficulty.h"
 #include "../Game/DDEnemySpawner.h"
+#include "../Game/DDProjectileManager.h"
 #include "../UI/DDMainMenuWidget.h"
 #include "../UI/DDSoulShopWidget.h"
 #include "../UI/DDHealthBarWidget.h"
@@ -22,6 +23,7 @@ void ADDGameModeBase::BeginPlay()
 	HealthBarWidget = AddWidgetToViewport<UDDHealthBarWidget>(HealthBarWidgetClass);
 
 	ProjectileManager = FindUObject<ADDProjectileManager>();
+	PlaceableManager = FindUObject<ADDPlaceableManager>();
 	Player = FindUObject<ADDPlayer>();
 	EnemySpawner = FindUObject<ADDEnemySpawner>();
 	Difficulty = EDifficulty::Normal;
@@ -54,6 +56,12 @@ ADDProjectileManager& ADDGameModeBase::GetProjectileManager()
 {
 	check(ProjectileManager)
 	return *ProjectileManager;
+}
+
+ADDPlaceableManager& ADDGameModeBase::GetPlaceableManager()
+{
+	check(PlaceableManager)
+	return *PlaceableManager;
 }
 
 ADDEnemySpawner& ADDGameModeBase::GetEnemySpawner()
@@ -123,14 +131,19 @@ void ADDGameModeBase::WaveStart() const
 	OnWaveStart.Broadcast();
 }
 
-ADDPlayer* ADDGameModeBase::BlueprintGetPlayer()
+ADDPlayer* ADDGameModeBase::BlueprintGetPlayer() const
 {
 	return Player;
 }
 
-ADDProjectileManager* ADDGameModeBase::BlueprintGetProjectileManager()
+ADDProjectileManager* ADDGameModeBase::BlueprintGetProjectileManager() const
 {
 	return ProjectileManager;
+}
+
+ADDPlaceableManager* ADDGameModeBase::BlueprintGetPlaceableManager() const
+{
+	return PlaceableManager;
 }
 
 template<class T>
@@ -147,7 +160,7 @@ T* ADDGameModeBase::AddWidgetToViewport(TSubclassOf<UUserWidget> WidgetClass)
 		}
 	}
 	else {
-		UE_LOG(LogTemp, Fatal, TEXT("Error: invalid WidgetClass argument"))
+		UE_LOG(LogTemp, Fatal, TEXT("Error: Invalid WidgetClass argument"))
 	}
 
 	return nullptr;

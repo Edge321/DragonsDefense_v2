@@ -92,10 +92,6 @@ void ADDPlayer::UpdateHealth(const float HealthModifier)
 {
 	TempHealth = FMathf::Clamp(TempHealth + HealthModifier, 0, MaxHealth);
 
-	//Temporary until in-game health bars are implemented
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
-		//FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
-
 	if (TempHealth <= 0)
 	{
 		OnDeath();

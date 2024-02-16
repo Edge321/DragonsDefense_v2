@@ -13,6 +13,7 @@ class UDDSoulShopWidget;
 class UDDHealthBarWidget;
 class ADDProjectileManager;
 class ADDEnemySpawner;
+class ADDPlaceableManager;
 class ADDPlayer;
 enum class EDifficulty : uint8;
 
@@ -21,7 +22,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateSouls);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWaveOver);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWaveStart);
-//TODO - consider the above... what classes have their feeling affected?
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDGameModeBase : public AGameModeBase
@@ -53,6 +53,7 @@ public:
 	void UpdateSouls(int32 Souls);
 
 	ADDProjectileManager& GetProjectileManager();
+	ADDPlaceableManager& GetPlaceableManager();
 	ADDEnemySpawner& GetEnemySpawner();
 	ADDPlayer& GetPlayer();
 	
@@ -101,11 +102,14 @@ private:
 	//to pointer but shut up okay?)
 
 	UFUNCTION(BlueprintCallable, Category = "Getters")
-	ADDPlayer* BlueprintGetPlayer();
+	ADDPlayer* BlueprintGetPlayer() const;
 	UFUNCTION(BlueprintCallable, Category = "Getters")
-	ADDProjectileManager* BlueprintGetProjectileManager();
+	ADDProjectileManager* BlueprintGetProjectileManager() const;
+	UFUNCTION(BlueprintCallable, Category = "Getters")
+	ADDPlaceableManager* BlueprintGetPlaceableManager() const;
 
 	ADDProjectileManager* ProjectileManager;
+	ADDPlaceableManager* PlaceableManager;
 	ADDEnemySpawner* EnemySpawner;
 	ADDPlayer* Player;
 
