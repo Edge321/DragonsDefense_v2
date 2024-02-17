@@ -28,7 +28,6 @@ ADDProjectile::ADDProjectile()
 
 	//This is to make sure only the collider is allowed to collide
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDProjectile::OverlapBegin);
 
 	ProjectileMovement->Velocity = FVector(800.0f, 0, 0); //Default velocity of projectile 
 }
@@ -37,6 +36,8 @@ ADDProjectile::ADDProjectile()
 void ADDProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDProjectile::OverlapBegin);
 
 	//Prevents collider from colliding if spawned inside its owner (heehee)
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);

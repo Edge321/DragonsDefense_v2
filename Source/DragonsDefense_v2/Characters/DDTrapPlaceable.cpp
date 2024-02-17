@@ -14,20 +14,21 @@ ADDTrapPlaceable::ADDTrapPlaceable()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 
-
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
 	Arrow->SetupAttachment(Mesh);
 
 	//He was forced to use only collider box
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDTrapPlaceable::OverlapBegin);
+	//Collider->SetCollisionObjectType(ECollisionChannel::ECC_Visibility);
 }
 
 // Called when the game starts or when spawned
 void ADDTrapPlaceable::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDTrapPlaceable::OverlapBegin);
 }
 
 //TODO -  Figure out a way to prevent player's projectiles from colliding...
@@ -40,6 +41,7 @@ void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 
 	if (LivingActor) {
 		LivingActor->UpdateHealth(Damage);
+		Destroy();
 	}
 	else {
 		ADDProjectile* Projectile = Cast<ADDProjectile>(OtherActor);
