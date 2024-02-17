@@ -81,7 +81,6 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "HealthBar")
 	void UpdateHealthBar();
 
-	void UpdateHealth(const float HealthModifier) override;
 	void OnDeath() override;
 	// Checks the distance of self and the castle
 	void CheckDistance();
@@ -92,6 +91,8 @@ public:
 
 	UStaticMeshComponent* GetMeshComponent() const;
 	UFloatingPawnMovement* GetFloatingPawnMovement() const;
+
+	void UpdateHealth(const float HealthModifier) override;
 
 	FOnEnemyDeath OnEnemyDeath;
 

@@ -52,7 +52,7 @@ void ADDPlaceablePreview::GetControllerReference()
 void ADDPlaceablePreview::DisplayPreview()
 {
 	FVector MouseLocation, MouseDirection;
-	struct FHitResult Hit;
+	FHitResult Hit;
 	
 	if (Controller) {
 		Controller->DeprojectMousePositionToWorld(MouseLocation, MouseDirection);
@@ -64,10 +64,28 @@ void ADDPlaceablePreview::DisplayPreview()
 	//The big multiplication is to make sure to go far out to almost guarantee a hit from LineTrace
 	FVector End = (MouseDirection * 10000) + MouseLocation;
 
-	if (GetWorld()->LineTraceSingleByChannel(Hit, MouseLocation, End, ECollisionChannel::ECC_Visibility)) {
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
+	
+	TArray<AActor*> ActorsToIgnore;
+
+	//Lots of things happening here, so
+	//Basically just returns a FHitResult on the object the line trace collides with first
+	bool bHit = UKismetSystemLibrary::LineTraceSingleForObjects(
+		this, 
+		MouseLocation, 
+		End, 
+		ObjectTypes, 
+		false, 
+		ActorsToIgnore, 
+		EDrawDebugTrace::None, 
+		Hit, 
+		true);
+
+	if (bHit) {
 		SetActorLocation(Hit.Location);
 	}
 
-	DrawDebugLine(GetWorld(), MouseLocation, End, FColor::Red, false, -1, 0, 1);
+	//FVector MeshSize = Mesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
 }
 

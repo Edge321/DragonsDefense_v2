@@ -7,6 +7,7 @@
 #include "DDPlaceableManager.generated.h"
 
 class ADDPlaceablePreview;
+class ADDPlaceable;
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlaceableManager : public AActor
@@ -29,6 +30,8 @@ protected:
 	void DisablePreview();
 	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
 	bool IsPreviewDisabled() const;
+	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
+	FVector GetPreviewLocation() const;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* ManagerIcon;
@@ -36,8 +39,33 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Variables")
 	TSubclassOf<ADDPlaceablePreview> PreviewClass;
 
-private:
-	void CheckPreviewValidity();
+public:
 
+	UFUNCTION(BlueprintCallable, Category = "Spawn")
+	void SpawnPlaceable(TSubclassOf<ADDPlaceable> PlaceableClass, const FVector Location, const FRotator Rotation);
+	UFUNCTION(BlueprintCallable, Category = "Spawn")
+	void SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass);
+
+private:
+
+	void CheckPreviewValidity();
+	void AddPlaceableToPool(ADDPlaceable* Placeable);
+	void RemovePlaceableFromPool(ADDPlaceable* Placeable);
+	void ClearPool();
+
+	UFUNCTION()
+	void GameOverEventFunction();
+	UFUNCTION()
+	void GameStartEventFunction();
+	UFUNCTION()
+	void WaveStartEventFunction();
+	UFUNCTION()
+	void WaveOverEventFunction();
+
+	TArray<ADDPlaceable*> PlaceablePool;
 	ADDPlaceablePreview* Preview;
+
+	//TODO -  Think about what is going on here....few know this
+	int32 MaxPlaceables = 32;
+	int32 CurrentPlaceables = 0;
 };
