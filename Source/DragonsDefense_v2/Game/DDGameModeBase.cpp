@@ -131,6 +131,11 @@ void ADDGameModeBase::WaveStart() const
 	OnWaveStart.Broadcast();
 }
 
+void ADDGameModeBase::IsPlacing(bool Placing) const
+{
+	OnPlacing.Broadcast(Placing);
+}
+
 ADDPlayer* ADDGameModeBase::BlueprintGetPlayer() const
 {
 	return Player;

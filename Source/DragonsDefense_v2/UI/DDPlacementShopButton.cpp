@@ -2,8 +2,13 @@
 
 
 #include "DDPlacementShopButton.h"
+//My classes
+#include "../Game/DDGameModeBase.h"
 
-void UDDPlacementShopButton::PlaceObject()
+void UDDPlacementShopButton::PlacementMode(bool IsPlacing)
 {
-
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode) {
+		GameMode->IsPlacing(IsPlacing);
+	}
 }

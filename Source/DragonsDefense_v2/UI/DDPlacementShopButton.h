@@ -17,8 +17,10 @@ class DRAGONSDEFENSE_V2_API UDDPlacementShopButton : public UDDInfiniteShopButto
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Placeable")
-	TSubclassOf<AActor> Placeable; //TODO - Remove AActor with Placeable
-	
+	TSubclassOf<AActor> Placeable;
+
+public:
+
 	UFUNCTION(BlueprintCallable)
-	void PlaceObject(); //NOTE - Might have to do this in blueprints
+	void PlacementMode(bool IsPlacing);
 };

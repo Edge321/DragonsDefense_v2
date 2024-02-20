@@ -52,12 +52,15 @@ public:
 	const float GetDamage() const;
 	UFUNCTION(BlueprintCallable, Category = "Setters")
 	void SetDamage(const float Damage);
+	// Who owns the projectile
+	UFUNCTION(BlueprintCallable, Category = "Setter")
+	void SetProjectileOwner(const AActor* Actor);
+	UFUNCTION(BlueprintCallable, Category = "Collision")
+	void SetCollisionChannelToIgnore(const ECollisionChannel Channel);
 
 	void SetVelocity(const FVector Velocity);
-	// Who owns the projectile
 	void SetProjectileOwner(const uint32 ActorID);
-	//This function was made to avoid collision with its owner
-	void SetCollisionChannelToIgnore(const ECollisionChannel Channel);
+	
 
 	FOnProjectileDestroyed OnProjectileDestroyed;
 

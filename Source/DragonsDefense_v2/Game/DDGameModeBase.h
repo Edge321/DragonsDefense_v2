@@ -17,6 +17,7 @@ class ADDPlaceableManager;
 class ADDPlayer;
 enum class EDifficulty : uint8;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlacing, bool, IsPlacing);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameOver);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameStart);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpdateSouls);
@@ -77,6 +78,8 @@ public:
 	void WaveOver() const;
 	UFUNCTION(BlueprintCallable, Category = "WaveState")
 	void WaveStart() const;
+	UFUNCTION(BlueprintCallable, Category = "WaveState")
+	void IsPlacing(bool Placing) const;
 
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnGameOver OnGameOver;
@@ -88,6 +91,8 @@ public:
 	FOnWaveStart OnWaveStart;
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnWaveOver OnWaveOver;
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnPlacing OnPlacing;
 
 private:
 	//Adds any subclass of UUserWidget to the viewport. Returns whatever class

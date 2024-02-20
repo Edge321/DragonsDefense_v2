@@ -3,6 +3,7 @@
 
 #include "DDPlaceableManager.h"
 #include "Components/BillboardComponent.h"
+#include "Kismet/GameplayStatics.h"
 //My classes
 #include "../Game/DDPlaceablePreview.h"
 #include "../Game/DDGameModeBase.h"
@@ -81,9 +82,28 @@ void ADDPlaceableManager::SpawnPlaceable(TSubclassOf<ADDPlaceable> PlaceableClas
 
 void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass)
 {
+	FVector MouseLocation, MouseDirection;
+
 	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, GetPreviewLocation(), Preview->GetActorRotation());
 
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(this, 0);
+	if (Controller) {
+		Controller->DeprojectMousePositionToWorld(MouseLocation, MouseDirection);
+	}
+	else {
+		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceableManager, aborting"))
+	}
+
+	//TODO - Adjust the position accordingly cus it spawns in the floor
+	//FVector PreviewLocation = Preview->GetActorLocation();
+	//FVector MeshSize = Preview->GetMeshSize();
+
+	//FVector Adjustment = -MouseDirection * MeshSize.Z;
+
+	//DrawDebugLine(GetWorld(), PreviewLocation, PreviewLocation + Adjustment, FColor::Red, false, 5.0f);
+
 	if (Placeable) {
+		//Placeable->AddActorWorldOffset(Adjustment);
 		Placeable->SpawnDefaultController();
 		Placeable->AutoPossessAI = EAutoPossessAI::Spawned;
 		Placeable->OnPlaceableDeath.BindUObject(this, &ADDPlaceableManager::RemovePlaceableFromPool);

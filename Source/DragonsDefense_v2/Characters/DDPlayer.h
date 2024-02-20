@@ -69,6 +69,8 @@ public:
 	const float GetShootSpeed() const;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetDamage() const override;
+	UFUNCTION(BlueprintPure, Category = "Getters")
+	const bool IsPlacingState() const;
 
 	void UpdateHealth(const float HealthModifier) override;
 	void UpdateMaxHealth(const float MaxHealthModifier);
@@ -78,6 +80,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnUpdateHealth OnUpdateHealth;
+	
 
 private:
 	void ValidateProjectile();
@@ -97,7 +100,10 @@ private:
 	void WaveOverEventFunction();
 	UFUNCTION()
 	void WaveStartEventFunction();
+	UFUNCTION()
+	void PlacementEventFunction(bool IsPlacing);
 
+	bool bIsPlacing = true;
 	float MaxHealth;
 	float TempHealth;
 	FVector OriginalLocation;

@@ -29,6 +29,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	const FVector GetMeshSize() const;
 	void SetMesh(UStaticMesh* NewMesh);
 
 private:

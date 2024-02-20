@@ -46,6 +46,7 @@ void ADDPlayer::BeginPlay()
 		GameMode->OnGameStart.AddDynamic(this, &ADDPlayer::GameStartEventFunction);
 		GameMode->OnWaveOver.AddDynamic(this, &ADDPlayer::WaveOverEventFunction);
 		GameMode->OnWaveStart.AddDynamic(this, &ADDPlayer::WaveStartEventFunction);
+		GameMode->OnPlacing.AddDynamic(this, &ADDPlayer::PlacementEventFunction);
 	}
 	//Want to disable the input at the beginning obviously!
 	GameOverEventFunction();
@@ -86,6 +87,11 @@ const float ADDPlayer::GetShootSpeed() const
 const float ADDPlayer::GetDamage() const
 {
 	return TempDamage;
+}
+
+const bool ADDPlayer::IsPlacingState() const
+{
+	return bIsPlacing;
 }
 
 void ADDPlayer::UpdateHealth(const float HealthModifier)
@@ -182,4 +188,9 @@ void ADDPlayer::WaveOverEventFunction()
 void ADDPlayer::WaveStartEventFunction()
 {
 	GameStartEventFunction();
+}
+
+void ADDPlayer::PlacementEventFunction(bool IsPlacing)
+{
+	bIsPlacing = IsPlacing;
 }

@@ -9,8 +9,6 @@
 #include "../Game/DDProjectileManager.h"
 #include "../Characters/LivingActor.h"
 
-#define ECC_EnemyChannel ECC_GameTraceChannel1
-
 // Sets default values
 ADDProjectile::ADDProjectile()
 {
@@ -70,6 +68,12 @@ void ADDProjectile::SetDamage(float Damage)
 
 void ADDProjectile::SetProjectileOwner(const uint32 ActorID)
 {
+	OwnerID = ActorID;
+}
+
+void ADDProjectile::SetProjectileOwner(const AActor* Actor)
+{
+	uint32 ActorID = Actor->GetUniqueID();
 	OwnerID = ActorID;
 }
 

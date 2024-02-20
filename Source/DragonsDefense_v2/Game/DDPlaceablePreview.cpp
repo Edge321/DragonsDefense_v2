@@ -37,6 +37,11 @@ void ADDPlaceablePreview::Tick(float DeltaTime)
 	}
 }
 
+const FVector ADDPlaceablePreview::GetMeshSize() const
+{
+	return Mesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
+}
+
 void ADDPlaceablePreview::SetMesh(UStaticMesh* NewMesh)
 {
 	if (NewMesh) {
@@ -61,6 +66,10 @@ void ADDPlaceablePreview::DisplayPreview()
 		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceablePreview, aborting"))
 	}
 
+	//TODO - Account for the scale of the mesh since the BoundingBox uses the original size of the mesh
+	FVector Size = GetMeshSize();
+	FVector AdjustedOffset = -MouseDirection * (Size.Z / 2);
+
 	//The big multiplication is to make sure to go far out to almost guarantee a hit from LineTrace
 	FVector End = (MouseDirection * 10000) + MouseLocation;
 
@@ -83,9 +92,7 @@ void ADDPlaceablePreview::DisplayPreview()
 		true);
 
 	if (bHit) {
-		SetActorLocation(Hit.Location);
+		SetActorLocation(Hit.Location + AdjustedOffset);
 	}
-
-	//FVector MeshSize = Mesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
 }
 
