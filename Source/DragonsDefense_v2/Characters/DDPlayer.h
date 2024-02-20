@@ -69,6 +69,7 @@ public:
 	const float GetShootSpeed() const;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetDamage() const override;
+	//TODO - Think about if this function really needs to exist (along with the variable)
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const bool IsPlacingState() const;
 
@@ -103,7 +104,7 @@ private:
 	UFUNCTION()
 	void PlacementEventFunction(bool IsPlacing);
 
-	bool bIsPlacing = true;
+	bool bIsPlacing = false;
 	float MaxHealth;
 	float TempHealth;
 	FVector OriginalLocation;

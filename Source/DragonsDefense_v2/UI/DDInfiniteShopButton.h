@@ -21,5 +21,6 @@ protected:
 
 	void UpdateSouls() override;
 	void UpdateText() override;
+	void IsBuyable() override;
 	FText FetchFTextPrice() override;
 };

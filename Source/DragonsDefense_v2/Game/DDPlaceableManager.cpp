@@ -35,24 +35,20 @@ void ADDPlaceableManager::BeginPlay()
 		GameMode->OnGameStart.AddDynamic(this, &ADDPlaceableManager::GameStartEventFunction);
 		GameMode->OnWaveOver.AddDynamic(this, &ADDPlaceableManager::WaveOverEventFunction);
 		GameMode->OnWaveStart.AddDynamic(this, &ADDPlaceableManager::WaveStartEventFunction);
+		GameMode->OnPlacing.AddDynamic(this, &ADDPlaceableManager::SetPreviewStatus);
 	}
 
-	//DisablePreview();
-}
-
-void ADDPlaceableManager::ChangePreviewMesh(UStaticMesh* Mesh)
-{
-	Preview->SetMesh(Mesh);
-}
-
-void ADDPlaceableManager::EnablePreview()
-{
 	Preview->SetActorHiddenInGame(true);
 }
 
-void ADDPlaceableManager::DisablePreview()
+void ADDPlaceableManager::ChangePreviewMesh(UStaticMesh* Mesh, const FVector Scale)
 {
-	Preview->SetActorHiddenInGame(false);
+	Preview->SetMesh(Mesh);
+	Preview->SetScale(Scale);
+}
+
+void ADDPlaceableManager::SetPreviewStatus(bool IsPlacing) {
+	Preview->SetActorHiddenInGame(!IsPlacing);
 }
 
 bool ADDPlaceableManager::IsPreviewDisabled() const
@@ -94,16 +90,7 @@ void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> Place
 		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceableManager, aborting"))
 	}
 
-	//TODO - Adjust the position accordingly cus it spawns in the floor
-	//FVector PreviewLocation = Preview->GetActorLocation();
-	//FVector MeshSize = Preview->GetMeshSize();
-
-	//FVector Adjustment = -MouseDirection * MeshSize.Z;
-
-	//DrawDebugLine(GetWorld(), PreviewLocation, PreviewLocation + Adjustment, FColor::Red, false, 5.0f);
-
 	if (Placeable) {
-		//Placeable->AddActorWorldOffset(Adjustment);
 		Placeable->SpawnDefaultController();
 		Placeable->AutoPossessAI = EAutoPossessAI::Spawned;
 		Placeable->OnPlaceableDeath.BindUObject(this, &ADDPlaceableManager::RemovePlaceableFromPool);
@@ -128,10 +115,10 @@ void ADDPlaceableManager::RemovePlaceableFromPool(ADDPlaceable* Placeable)
 {
 	int32 UniqueID = Placeable->GetUniqueID();
 
-	for (ADDPlaceable* Placeable : PlaceablePool) {
-		if (Placeable && Placeable->GetUniqueID() == UniqueID) {
-			Placeable->Destroy();
-			PlaceablePool.Remove(Placeable);
+	for (ADDPlaceable* SomePlaceable : PlaceablePool) {
+		if (SomePlaceable && SomePlaceable->GetUniqueID() == UniqueID) {
+			SomePlaceable->Destroy();
+			PlaceablePool.Remove(SomePlaceable);
 			break;
 		}
 	}

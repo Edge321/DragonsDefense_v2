@@ -21,13 +21,15 @@ public:
 
 protected:
 
+	//TODO - Make a function for optionally ignoring enemy bullets. Maybe have to go into projectiles
+
 	virtual void BeginPlay() override;
+
+	const FVector GetActualMeshSize() const override;
+	const UStaticMeshComponent* GetMesh() const override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;
-
-public:
-
 
 private:
 

@@ -26,6 +26,10 @@ protected:
 
 	void OnDeath() override;
 
+	//Pure virtuals
+	virtual const FVector GetActualMeshSize() const { return FVector(); };
+	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };
+
 	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float EasyDamageMod = 1.2f;
 	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");

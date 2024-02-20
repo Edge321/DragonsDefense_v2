@@ -20,14 +20,25 @@ ADDTrapPlaceable::ADDTrapPlaceable()
 
 	//He was forced to use only collider box
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDTrapPlaceable::OverlapBegin);
 }
 
 // Called when the game starts or when spawned
 void ADDTrapPlaceable::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDTrapPlaceable::OverlapBegin);
+const FVector ADDTrapPlaceable::GetActualMeshSize() const
+{
+	FVector Size = Mesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
+	FVector Scale = Mesh->GetComponentScale();
+	return Size * Scale;
+}
+
+const UStaticMeshComponent* ADDTrapPlaceable::GetMesh() const
+{
+	return Mesh;
 }
 
 void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

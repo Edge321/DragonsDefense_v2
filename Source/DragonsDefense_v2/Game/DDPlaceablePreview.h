@@ -30,7 +30,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	const FVector GetMeshSize() const;
+
 	void SetMesh(UStaticMesh* NewMesh);
+	void SetScale(FVector Scale);
 
 private:
 

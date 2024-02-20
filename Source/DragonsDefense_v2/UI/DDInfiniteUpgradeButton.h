@@ -21,7 +21,5 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void Upgrade(EPlayerStats Stat);
-	void IsBuyable() override;
-	void UpdateSouls() override;
 
 };

@@ -16,11 +16,17 @@ class DRAGONSDEFENSE_V2_API UDDPlacementShopButton : public UDDInfiniteShopButto
 	
 protected:
 
-	UPROPERTY(EditDefaultsOnly, Category = "Placeable")
-	TSubclassOf<AActor> Placeable;
+	UFUNCTION(BlueprintCallable)
+	void SetPreviewMesh();
+
+	UPROPERTY(EditAnywhere, Category = "Mesh")
+	UStaticMesh* ButtonMesh;
 
 public:
 
+	//Switches placement mode from false to true and vice versa
 	UFUNCTION(BlueprintCallable)
 	void PlacementMode(bool IsPlacing);
+
+	
 };

@@ -23,12 +23,6 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
-	void ChangePreviewMesh(UStaticMesh* Mesh);
-	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
-	void EnablePreview();
-	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
-	void DisablePreview();
-	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
 	bool IsPreviewDisabled() const;
 	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
 	FVector GetPreviewLocation() const;
@@ -45,6 +39,8 @@ public:
 	void SpawnPlaceable(TSubclassOf<ADDPlaceable> PlaceableClass, const FVector Location, const FRotator Rotation);
 	UFUNCTION(BlueprintCallable, Category = "Spawn")
 	void SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass);
+	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
+	void ChangePreviewMesh(UStaticMesh* Mesh, const FVector Scale = FVector(1, 1, 1));
 
 private:
 
@@ -61,6 +57,8 @@ private:
 	void WaveStartEventFunction();
 	UFUNCTION()
 	void WaveOverEventFunction();
+	UFUNCTION()
+	void SetPreviewStatus(bool IsPlacing);
 
 	TArray<ADDPlaceable*> PlaceablePool;
 	ADDPlaceablePreview* Preview;

@@ -49,6 +49,11 @@ void ADDPlaceablePreview::SetMesh(UStaticMesh* NewMesh)
 	}
 }
 
+void ADDPlaceablePreview::SetScale(FVector Scale)
+{
+	Mesh->SetWorldScale3D(Scale);
+}
+
 void ADDPlaceablePreview::GetControllerReference()
 {
 	Controller = UGameplayStatics::GetPlayerController(this, 0);
@@ -67,8 +72,13 @@ void ADDPlaceablePreview::DisplayPreview()
 	}
 
 	//TODO - Account for the scale of the mesh since the BoundingBox uses the original size of the mesh
+	
+	//Math for adjusting the mesh to be on top of the floor instead of in it
 	FVector Size = GetMeshSize();
-	FVector AdjustedOffset = -MouseDirection * (Size.Z / 2);
+	float DeltaZ = Size.Z / 2;
+	float DeltaX = DeltaZ * (MouseDirection.X / MouseDirection.Z);
+
+	FVector AdjustedOffset(DeltaX, 0, DeltaZ);
 
 	//The big multiplication is to make sure to go far out to almost guarantee a hit from LineTrace
 	FVector End = (MouseDirection * 10000) + MouseLocation;
