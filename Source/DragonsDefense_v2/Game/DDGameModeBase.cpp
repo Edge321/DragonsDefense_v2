@@ -114,6 +114,7 @@ void ADDGameModeBase::GameOver()
 	UpdateScoreText();
 	UpdateSoulsText();
 	OnGameOver.Broadcast();
+	OnPlacing.Broadcast(false);
 }
 
 void ADDGameModeBase::GameStart() const
@@ -124,6 +125,7 @@ void ADDGameModeBase::GameStart() const
 void ADDGameModeBase::WaveOver() const
 {
 	OnWaveOver.Broadcast();
+	OnPlacing.Broadcast(false);
 }
 
 void ADDGameModeBase::WaveStart() const

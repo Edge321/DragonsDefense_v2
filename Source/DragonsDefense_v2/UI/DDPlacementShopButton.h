@@ -6,6 +6,8 @@
 #include "../UI/DDInfiniteShopButton.h"
 #include "DDPlacementShopButton.generated.h"
 
+class ADDPlaceable;
+
 /**
  * 
  */
@@ -17,16 +19,16 @@ class DRAGONSDEFENSE_V2_API UDDPlacementShopButton : public UDDInfiniteShopButto
 protected:
 
 	UFUNCTION(BlueprintCallable)
-	void SetPreviewMesh();
+	void SetPreviewAndPrice() const;
 
-	UPROPERTY(EditAnywhere, Category = "Mesh")
-	UStaticMesh* ButtonMesh;
+	UPROPERTY(EditAnywhere, Category = "Placeable")
+	TSubclassOf<ADDPlaceable> PlaceableClass;
 
 public:
 
 	//Switches placement mode from false to true and vice versa
 	UFUNCTION(BlueprintCallable)
-	void PlacementMode(bool IsPlacing);
+	void PlacementMode(bool IsPlacing) const;
 
 	
 };

@@ -6,7 +6,7 @@
 #include "../Game/DDGameModeBase.h"
 #include "../Game/DDPlaceableManager.h"
 
-void UDDPlacementShopButton::PlacementMode(bool IsPlacing)
+void UDDPlacementShopButton::PlacementMode(bool IsPlacing) const
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 
@@ -15,12 +15,12 @@ void UDDPlacementShopButton::PlacementMode(bool IsPlacing)
 	}
 }
 
-void UDDPlacementShopButton::SetPreviewMesh()
+void UDDPlacementShopButton::SetPreviewAndPrice() const
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 
 	if (GameMode) {
 		ADDPlaceableManager& Manager = GameMode->GetPlaceableManager();
-		Manager.ChangePreviewMesh(ButtonMesh);
+		Manager.SetCurrentPlaceable(PlaceableClass, Price);
 	}
 }

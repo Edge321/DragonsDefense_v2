@@ -20,15 +20,14 @@ class DRAGONSDEFENSE_V2_API ADDPlaceable : public ALivingActor
 public:
 	ADDPlaceable();
 
+	//Pure virtuals
+	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	void OnDeath() override;
-
-	//Pure virtuals
-	virtual const FVector GetActualMeshSize() const { return FVector(); };
-	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };
 
 	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float EasyDamageMod = 1.2f;

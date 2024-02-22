@@ -25,7 +25,6 @@ protected:
 
 	virtual void BeginPlay() override;
 
-	const FVector GetActualMeshSize() const override;
 	const UStaticMeshComponent* GetMesh() const override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")

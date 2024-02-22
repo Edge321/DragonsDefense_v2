@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Kismet/GameplayStatics.h"
 #include "DDPlaceablePreview.h"
+#include "Kismet/GameplayStatics.h"
 //My classes
 #include "../Game/DDGameModeBase.h"
 #include "../Characters/DDPlayer.h"
@@ -33,7 +33,7 @@ void ADDPlaceablePreview::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (!IsHidden()) {
-		DisplayPreview();
+		UpdatePreview();
 	}
 }
 
@@ -52,6 +52,7 @@ void ADDPlaceablePreview::SetMesh(UStaticMesh* NewMesh)
 void ADDPlaceablePreview::SetScale(FVector Scale)
 {
 	Mesh->SetWorldScale3D(Scale);
+	Mesh->SetRelativeScale3D(Scale);
 }
 
 void ADDPlaceablePreview::GetControllerReference()
@@ -59,7 +60,7 @@ void ADDPlaceablePreview::GetControllerReference()
 	Controller = UGameplayStatics::GetPlayerController(this, 0);
 }
 
-void ADDPlaceablePreview::DisplayPreview()
+void ADDPlaceablePreview::UpdatePreview()
 {
 	FVector MouseLocation, MouseDirection;
 	FHitResult Hit;
@@ -70,13 +71,12 @@ void ADDPlaceablePreview::DisplayPreview()
 	else {
 		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceablePreview, aborting"))
 	}
-
-	//TODO - Account for the scale of the mesh since the BoundingBox uses the original size of the mesh
 	
 	//Math for adjusting the mesh to be on top of the floor instead of in it
 	FVector Size = GetMeshSize();
-	float DeltaZ = Size.Z / 2;
-	float DeltaX = DeltaZ * (MouseDirection.X / MouseDirection.Z);
+	FVector Scale = Mesh->GetComponentScale();
+	float DeltaZ = (Size.Z / 2) * Scale.Z;
+	float DeltaX = (DeltaZ * (MouseDirection.X / MouseDirection.Z)) * Scale.X;
 
 	FVector AdjustedOffset(DeltaX, 0, DeltaZ);
 

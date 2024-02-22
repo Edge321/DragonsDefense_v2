@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 //My classes
 #include "../Game/DDPlaceablePreview.h"
+#include "../Game/DDPlaceablePurchaseInfo.h"
 #include "../Game/DDGameModeBase.h"
 #include "../Characters/DDPlaceable.h"
 
@@ -27,7 +28,9 @@ void ADDPlaceableManager::BeginPlay()
 
 	Preview = Cast<ADDPlaceablePreview>(GetWorld()->SpawnActor(PreviewClass));
 
+	Preview->SetActorHiddenInGame(true);
 	CheckPreviewValidity();
+	InitializePurchaseInfo();
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
@@ -37,8 +40,6 @@ void ADDPlaceableManager::BeginPlay()
 		GameMode->OnWaveStart.AddDynamic(this, &ADDPlaceableManager::WaveStartEventFunction);
 		GameMode->OnPlacing.AddDynamic(this, &ADDPlaceableManager::SetPreviewStatus);
 	}
-
-	Preview->SetActorHiddenInGame(true);
 }
 
 void ADDPlaceableManager::ChangePreviewMesh(UStaticMesh* Mesh, const FVector Scale)
@@ -76,20 +77,36 @@ void ADDPlaceableManager::SpawnPlaceable(TSubclassOf<ADDPlaceable> PlaceableClas
 	}
 }
 
-void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass)
+void ADDPlaceableManager::SetCurrentPlaceable(TSubclassOf<ADDPlaceable> PlaceableClass, int32 Price)
 {
-	FVector MouseLocation, MouseDirection;
+	//A bit of optimization
+	if (CurrentPlaceableClass == PlaceableClass) {
+		return;
+	}
 
-	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, GetPreviewLocation(), Preview->GetActorRotation());
+	CurrentPlaceableClass = PlaceableClass;
 
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(this, 0);
-	if (Controller) {
-		Controller->DeprojectMousePositionToWorld(MouseLocation, MouseDirection);
+	//Not sure if this is the greatest way to get the scale of the actor
+	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass);
+
+	if (Placeable) {
+		FVector Scale = Placeable->GetActorScale();
+		UStaticMesh* Mesh = Placeable->GetMesh()->GetStaticMesh();
+		ChangePreviewMesh(Mesh, Scale);
+		PlaceableInfo.SetPrice(Price);
 	}
 	else {
-		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceableManager, aborting"))
+		UE_LOG(LogTemp, Error, TEXT("Something went wrong with setting the preview object"))
 	}
 
+	Placeable->Destroy();
+}
+
+void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass)
+{
+	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, GetPreviewLocation(), Preview->GetActorRotation());
+	//BUG -  Placing placeable inside anything with collision will result in placeable being destroyed before being put in pool
+	// results in a memory violation error
 	if (Placeable) {
 		Placeable->SpawnDefaultController();
 		Placeable->AutoPossessAI = EAutoPossessAI::Spawned;
@@ -98,6 +115,26 @@ void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> Place
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Something went wrong with spawning a placeable at the cursor!"))
+	}
+}
+
+void ADDPlaceableManager::PurchasePlaceableAtCursor()
+{
+	if (PlaceableInfo.IsBuyable()) {
+		PlaceableInfo.UpdateSouls();
+
+		ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(CurrentPlaceableClass, GetPreviewLocation(), Preview->GetActorRotation());
+		//BUG -  Placing placeable inside anything with collision will result in placeable being destroyed before being put in pool
+		// results in a memory violation error
+		if (Placeable) {
+			Placeable->SpawnDefaultController();
+			Placeable->AutoPossessAI = EAutoPossessAI::Spawned;
+			Placeable->OnPlaceableDeath.BindUObject(this, &ADDPlaceableManager::RemovePlaceableFromPool);
+			AddPlaceableToPool(Placeable);
+		}
+		else {
+			UE_LOG(LogTemp, Error, TEXT("Something went wrong with spawning a placeable at the cursor!"))
+		}
 	}
 }
 
@@ -132,6 +169,18 @@ void ADDPlaceableManager::ClearPool()
 		}
 	}
 	PlaceablePool.Empty();
+}
+
+void ADDPlaceableManager::InitializePurchaseInfo()
+{
+	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
+
+	if (GameMode) {
+		PlaceableInfo.SetGameMode(GameMode);
+	}
+	else {
+		UE_LOG(LogTemp, Fatal, TEXT("How did we get here?"))
+	}
 }
 
 void ADDPlaceableManager::GameOverEventFunction()

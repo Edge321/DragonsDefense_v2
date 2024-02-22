@@ -29,13 +29,6 @@ void ADDTrapPlaceable::BeginPlay()
 	Super::BeginPlay();
 }
 
-const FVector ADDTrapPlaceable::GetActualMeshSize() const
-{
-	FVector Size = Mesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
-	FVector Scale = Mesh->GetComponentScale();
-	return Size * Scale;
-}
-
 const UStaticMeshComponent* ADDTrapPlaceable::GetMesh() const
 {
 	return Mesh;

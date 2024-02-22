@@ -22,23 +22,19 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Components")
-	APlayerController* Controller;
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	const FVector GetMeshSize() const;
 
 	void SetMesh(UStaticMesh* NewMesh);
 	void SetScale(FVector Scale);
 
 private:
 
-	void GetControllerReference();
-	void DisplayPreview();
+	APlayerController* Controller;
 
-	
+	const FVector GetMeshSize() const;
+	void GetControllerReference();
+	void UpdatePreview();
 
 };
