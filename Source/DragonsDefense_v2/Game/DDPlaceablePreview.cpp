@@ -14,8 +14,12 @@ ADDPlaceablePreview::ADDPlaceablePreview()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+	Collider = CreateDefaultSubobject<UBoxComponent>("BoxCollider");
 
 	RootComponent = Mesh;
+	Collider->SetupAttachment(Mesh);
+
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 // Called when the game starts or when spawned
@@ -24,7 +28,11 @@ void ADDPlaceablePreview::BeginPlay()
 	Super::BeginPlay();
 	
 	GetControllerReference();
-	//TODO - Worry about later if collsion and phsyics and all that will be a problem
+
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDPlaceablePreview::OverlapBegin);
+	Collider->OnComponentEndOverlap.AddDynamic(this, &ADDPlaceablePreview::OverlapEnd);
+
+	SetCollisionChannelToIgnore(ECollisionChannel::ECC_WorldStatic);
 }
 
 // Called every frame
@@ -37,6 +45,51 @@ void ADDPlaceablePreview::Tick(float DeltaTime)
 	}
 }
 
+void ADDPlaceablePreview::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	//Ignore projectiles
+	if (OtherActor->IsA<ADDProjectile>()) {
+		UE_LOG(LogTemp, Log, TEXT("Projectile found, ignored..."))
+		return;
+	}
+
+	AddActor(OtherActor);
+	OnColliding.ExecuteIfBound(true);
+}
+
+void ADDPlaceablePreview::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	RemoveActor(OtherActor);
+
+	if (ActorsColliding.Num() <= 0) {
+		OnColliding.ExecuteIfBound(false);
+	}
+}
+
+void ADDPlaceablePreview::RemoveActor(AActor* Actor)
+{
+	if (Actor) {
+		uint32 ID = Actor->GetUniqueID();
+
+		for (AActor* SomeActor : ActorsColliding) {
+			if (SomeActor && SomeActor->GetUniqueID() == ID) {
+				ActorsColliding.Remove(SomeActor);
+				break;
+			}
+		}
+	}
+	
+}
+
+void ADDPlaceablePreview::AddActor(AActor* Actor)
+{
+	if (Actor) {
+		ActorsColliding.Add(Actor);
+	}
+}
+
 const FVector ADDPlaceablePreview::GetMeshSize() const
 {
 	return Mesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
@@ -46,6 +99,8 @@ void ADDPlaceablePreview::SetMesh(UStaticMesh* NewMesh)
 {
 	if (NewMesh) {
 		Mesh->SetStaticMesh(NewMesh);
+		//BoxExtent basically doubles in size from Mesh size
+		Collider->SetBoxExtent(GetMeshSize() / 2);
 	}
 }
 
@@ -53,6 +108,16 @@ void ADDPlaceablePreview::SetScale(FVector Scale)
 {
 	Mesh->SetWorldScale3D(Scale);
 	Mesh->SetRelativeScale3D(Scale);
+}
+
+void ADDPlaceablePreview::SetMaterial(UMaterialInstance* Material)
+{
+	Mesh->SetMaterial(0, Material);
+}
+
+void ADDPlaceablePreview::ClearActorsArray()
+{
+	ActorsColliding.Empty();
 }
 
 void ADDPlaceablePreview::GetControllerReference()
@@ -72,6 +137,7 @@ void ADDPlaceablePreview::UpdatePreview()
 		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceablePreview, aborting"))
 	}
 	
+	//TODO - Could do a bit of optimization by doing this math once in some function
 	//Math for adjusting the mesh to be on top of the floor instead of in it
 	FVector Size = GetMeshSize();
 	FVector Scale = Mesh->GetComponentScale();
@@ -104,5 +170,10 @@ void ADDPlaceablePreview::UpdatePreview()
 	if (bHit) {
 		SetActorLocation(Hit.Location + AdjustedOffset);
 	}
+}
+
+void ADDPlaceablePreview::SetCollisionChannelToIgnore(const ECollisionChannel Channel)
+{
+	Collider->SetCollisionResponseToChannel(Channel, ECR_Ignore);
 }
 

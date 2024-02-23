@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "DDPlaceablePreview.generated.h"
 
+DECLARE_DELEGATE_OneParam(FOnColliding, bool);
+
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlaceablePreview : public AActor
 {
@@ -21,20 +23,40 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent* Collider;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Material")
+	void SetMaterial(UMaterialInstance* Material);
+
 	void SetMesh(UStaticMesh* NewMesh);
 	void SetScale(FVector Scale);
+	void ClearActorsArray();
+
+	FOnColliding OnColliding;
 
 private:
 
-	APlayerController* Controller;
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	UFUNCTION()
+	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	void RemoveActor(AActor* Actor);
+	void AddActor(AActor* Actor);
 	const FVector GetMeshSize() const;
 	void GetControllerReference();
 	void UpdatePreview();
+	void SetCollisionChannelToIgnore(const ECollisionChannel Channel);
 
+	TArray<AActor*> ActorsColliding;
+
+	APlayerController* Controller;
 };

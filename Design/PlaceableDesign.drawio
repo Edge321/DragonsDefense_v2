@@ -1,11 +1,11 @@
-<mxfile host="Electron" modified="2024-02-22T00:08:14.455Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="2IP5xt-gSgtzeZZDmO3s" version="23.1.5" type="device">
+<mxfile host="Electron" modified="2024-02-22T22:58:06.085Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="NcO2MW2IsOAk4Fl3NDVo" version="23.1.5" type="device">
   <diagram name="Page-1" id="dvUW2eC1L8cqyB-riuxm">
     <mxGraphModel dx="989" dy="582" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="raxqcrFRsS7nDfgu2iXv-1" value="&amp;lt;&amp;lt;enum : int32&amp;gt;&amp;gt;&lt;br&gt;PlaceableAI" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="10" y="320" width="150" height="182" as="geometry" />
+          <mxGeometry x="10" y="390" width="150" height="208" as="geometry" />
         </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-6" value="Deactivated" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-1" vertex="1">
           <mxGeometry y="26" width="150" height="26" as="geometry" />
@@ -25,6 +25,9 @@
         <mxCell id="raxqcrFRsS7nDfgu2iXv-7" value="RoundRobin" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-1" vertex="1">
           <mxGeometry y="156" width="150" height="26" as="geometry" />
         </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-14" value="CurrentAttacker" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="raxqcrFRsS7nDfgu2iXv-1">
+          <mxGeometry y="182" width="150" height="26" as="geometry" />
+        </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="raxqcrFRsS7nDfgu2iXv-9" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="425.0000000000002" y="190.0000000000001" as="targetPoint" />
@@ -37,25 +40,25 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-9" value="SentientPlaceable" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="230" y="300" width="180" height="200" as="geometry" />
+          <mxGeometry x="230" y="300" width="180" height="300" as="geometry" />
         </mxCell>
-        <mxCell id="raxqcrFRsS7nDfgu2iXv-10" value="CurrentAI : PlaceableAI&lt;br&gt;SkeletalMesh : SkeletalMesh&lt;br&gt;AttackRadius : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
-          <mxGeometry y="26" width="180" height="54" as="geometry" />
+        <mxCell id="raxqcrFRsS7nDfgu2iXv-10" value="CurrentAI : PlaceableAI&lt;br&gt;SkeletalMesh : SkeletalMesh&lt;br&gt;AttackCircle : CircleCollider&lt;br&gt;AttackRadius : float&lt;br&gt;bActive : bool&lt;br&gt;EnemiesInArea : TArray" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
+          <mxGeometry y="26" width="180" height="94" as="geometry" />
         </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-11" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
-          <mxGeometry y="80" width="180" height="8" as="geometry" />
+          <mxGeometry y="120" width="180" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="raxqcrFRsS7nDfgu2iXv-12" value="Attack()&lt;br&gt;Deactivate()&lt;br&gt;GetMesh() override" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
-          <mxGeometry y="88" width="180" height="52" as="geometry" />
+        <mxCell id="raxqcrFRsS7nDfgu2iXv-12" value="Attack()&lt;br&gt;Deactivate()&lt;br&gt;GetMesh() override&lt;div&gt;OverlapBegin()&lt;/div&gt;&lt;div&gt;OverlapEnd()&lt;/div&gt;&lt;div&gt;AddEnemy()&lt;/div&gt;&lt;div&gt;RemoveEnemy()&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
+          <mxGeometry y="128" width="180" height="112" as="geometry" />
         </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-13" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
-          <mxGeometry y="140" width="180" height="8" as="geometry" />
+          <mxGeometry y="240" width="180" height="8" as="geometry" />
         </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-14" value="&lt;b&gt;Blueprint Implementation&lt;/b&gt;" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
-          <mxGeometry y="148" width="180" height="26" as="geometry" />
+          <mxGeometry y="248" width="180" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="raxqcrFRsS7nDfgu2iXv-15" value="+ item: attribute" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
-          <mxGeometry y="174" width="180" height="26" as="geometry" />
+        <mxCell id="raxqcrFRsS7nDfgu2iXv-15" value="Circle of radius" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="raxqcrFRsS7nDfgu2iXv-9" vertex="1">
+          <mxGeometry y="274" width="180" height="26" as="geometry" />
         </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-17" value="A little inheriting" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="320" y="210" width="60" height="30" as="geometry" />
@@ -128,6 +131,51 @@
         </mxCell>
         <mxCell id="raxqcrFRsS7nDfgu2iXv-39" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="raxqcrFRsS7nDfgu2iXv-35" vertex="1">
           <mxGeometry y="110" width="185" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;opacity=50;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" vertex="1" parent="1">
+          <mxGeometry x="682.5" y="422.5" width="195" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-1" value="Sentient&lt;br&gt;Placeable" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="750" y="490" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-3" value="Area for attacking" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="810" y="502" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-4" value="Most likely a simple circle collision" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="730" y="650" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="eiWgDHBu17rfAYy6CMeM-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="780" y="650" as="sourcePoint" />
+            <mxPoint x="830" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-7" value="Enemy" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#a20025;fontColor=#ffffff;strokeColor=#6F0000;" vertex="1" parent="1">
+          <mxGeometry x="830" y="390" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-8" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="810" y="490" as="sourcePoint" />
+            <mxPoint x="840" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-9" value="When enemy enters circle, start attacking" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="335" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.016;entryY=0.589;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="eiWgDHBu17rfAYy6CMeM-9" target="eiWgDHBu17rfAYy6CMeM-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="920" y="400" as="sourcePoint" />
+            <mxPoint x="700" y="370" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="810" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-11" value="Multiple enemies in circle, shoot based on AI" style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="439" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="eiWgDHBu17rfAYy6CMeM-12" value="Have to extract information from the enemy, distance from castle, attacking placeable, etc." style="shape=note;size=20;whiteSpace=wrap;html=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="539" width="100" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

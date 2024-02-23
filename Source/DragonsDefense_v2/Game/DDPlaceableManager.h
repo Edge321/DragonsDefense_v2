@@ -27,14 +27,19 @@ protected:
 	bool IsPreviewDisabled() const;
 	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
 	FVector GetPreviewLocation() const;
+	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
+	void CanPlace(bool PlaceStatus);
+	UFUNCTION(BlueprintImplementableEvent, Category = "PlaceablePreview")
+	void SetPreviewMaterial(bool IsColliding);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* ManagerIcon;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "PlaceablePreview")
 	TSubclassOf<ADDPlaceablePreview> PreviewClass;
-
-
+	UPROPERTY(BlueprintReadOnly, Category = "PlaceablePreview")
+	ADDPlaceablePreview* Preview;
+	UPROPERTY(BlueprintReadOnly, Category = "PlaceablePreview")
+	bool bCanPlace = true;
 
 public:
 
@@ -69,7 +74,7 @@ private:
 
 	TSubclassOf<ADDPlaceable> CurrentPlaceableClass;
 	TArray<ADDPlaceable*> PlaceablePool;
-	ADDPlaceablePreview* Preview;
+	
 	FDDPlaceablePurchaseInfo PlaceableInfo;
 
 	int32 CurrentPlaceablePrice = 0;

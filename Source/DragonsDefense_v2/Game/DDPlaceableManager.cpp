@@ -27,8 +27,15 @@ void ADDPlaceableManager::BeginPlay()
 	Super::BeginPlay();
 
 	Preview = Cast<ADDPlaceablePreview>(GetWorld()->SpawnActor(PreviewClass));
+	
+	if (Preview) {
+		Preview->SetActorHiddenInGame(true);
+		Preview->OnColliding.BindUObject(this, &ADDPlaceableManager::SetPreviewMaterial);
+	}
+	else {
+		UE_LOG(LogTemp, Fatal, TEXT("Something went wrong with the preview!"))
+	}
 
-	Preview->SetActorHiddenInGame(true);
 	CheckPreviewValidity();
 	InitializePurchaseInfo();
 
@@ -61,6 +68,12 @@ FVector ADDPlaceableManager::GetPreviewLocation() const
 {
 	return Preview->GetActorLocation();
 }
+
+void ADDPlaceableManager::CanPlace(bool PlaceStatus)
+{
+	bCanPlace = PlaceStatus;
+}
+
 //TODO - might not need this tbh, we will see
 void ADDPlaceableManager::SpawnPlaceable(TSubclassOf<ADDPlaceable> PlaceableClass, const FVector Location, const FRotator Rotation)
 {
@@ -120,7 +133,7 @@ void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> Place
 
 void ADDPlaceableManager::PurchasePlaceableAtCursor()
 {
-	if (PlaceableInfo.IsBuyable()) {
+	if (PlaceableInfo.IsBuyable() && bCanPlace) {
 		PlaceableInfo.UpdateSouls();
 
 		ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(CurrentPlaceableClass, GetPreviewLocation(), Preview->GetActorRotation());
@@ -150,6 +163,7 @@ void ADDPlaceableManager::AddPlaceableToPool(ADDPlaceable* Placeable)
 
 void ADDPlaceableManager::RemovePlaceableFromPool(ADDPlaceable* Placeable)
 {
+	//TODO - Could possibly use maps or whatever UE uses for fast access
 	int32 UniqueID = Placeable->GetUniqueID();
 
 	for (ADDPlaceable* SomePlaceable : PlaceablePool) {
