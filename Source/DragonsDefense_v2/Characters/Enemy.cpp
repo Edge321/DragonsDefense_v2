@@ -139,8 +139,8 @@ void AEnemy::OnDeath()
 void AEnemy::StartShooting()
 {	
 	//Boolean prevents the Timer Handle from resetting every tick
-	if (!IsShooting) { 
-		IsShooting = true;
+	if (!bIsShooting) { 
+		bIsShooting = true;
 		GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemy::Shoot, ShootCooldown, true);
 	}
 }
@@ -148,8 +148,8 @@ void AEnemy::StartShooting()
 //TODO - Utilize this somehow. Has not been used yet
 void AEnemy::StopShooting()
 {
-	if (IsShooting) {
-		IsShooting = false;
+	if (bIsShooting) {
+		bIsShooting = false;
 		GetWorldTimerManager().ClearTimer(ShootHandle);
 	}
 }

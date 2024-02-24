@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class AEnemy;
+class ADDProjectile;
 
 enum class PlaceableAI : uint8;
 
@@ -33,11 +34,15 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USphereComponent* AttackCollider;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile");
+	TSubclassOf<ADDProjectile> Projectile;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
 	float AttackRadius = 25.0f;
 	//How fast Placeable attacks in seconds
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
 	float AttackSpeed = 1.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
+	float ProjectileSpeed = 500.0f;
 
 public:
 
@@ -58,12 +63,18 @@ private:
 	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	void ValidateProjectile();
 	void Attack() const;
+	void StartAttack();
+	void StopAttack();
+	void AttackEnemy(AEnemy* Enemy) const;
 	void Deactive();
 	void AddEnemy(AEnemy* Enemy);
 	void RemoveEnemy(AEnemy* Enemy);
 
+	bool bIsAttacking = false;
+
+	FTimerHandle AttackHandle;
 	PlaceableAI CurrentAI;
 	TArray<AEnemy*> EnemiesInArea;
-
 };

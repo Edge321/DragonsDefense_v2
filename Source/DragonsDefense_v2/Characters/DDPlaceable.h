@@ -6,6 +6,8 @@
 #include "../Characters/LivingActor.h"
 #include "DDPlaceable.generated.h"
 
+#define ECC_PlaceableChannel ECC_GameTraceChannel2
+
 DECLARE_DELEGATE_OneParam(FOnPlaceableDeath, ADDPlaceable*)
 
 /**

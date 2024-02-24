@@ -6,6 +6,7 @@
 //My classes
 #include "../Characters/Enemy.h"
 #include "../Characters/DDPlaceableAI.h"
+#include "../Projectile/DDProjectile.h"
 
 ADDSentientPlaceable::ADDSentientPlaceable()
 {
@@ -20,7 +21,13 @@ ADDSentientPlaceable::ADDSentientPlaceable()
 	AttackCollider->SetupAttachment(Mesh);
 	Arrow->SetupAttachment(Mesh);
 
-	CurrentAI = PlaceableAI::Deactivated;
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	AttackCollider->SetCollisionObjectType(ECC_PlaceableChannel);
+
+	AttackCollider->OnComponentBeginOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapBegin);
+	AttackCollider->OnComponentEndOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapEnd);
+
+	CurrentAI = PlaceableAI::ClosestEnemy;
 }
 
 void ADDSentientPlaceable::BeginPlay()
@@ -28,9 +35,6 @@ void ADDSentientPlaceable::BeginPlay()
 	Super::BeginPlay();
 
 	AttackCollider->SetSphereRadius(AttackRadius);
-
-	AttackCollider->OnComponentBeginOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapBegin);
-	AttackCollider->OnComponentEndOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapEnd);
 }
 
 const UStaticMeshComponent* ADDSentientPlaceable::GetMesh() const
@@ -63,9 +67,7 @@ void ADDSentientPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent
 		AddEnemy(Enemy);
 	}
 
-	//TODO - Maybe consider like a timer or something each time they attack? 
-	// That way placeable can check if AI has changed
-	Attack();
+	StartAttack();
 }
 
 void ADDSentientPlaceable::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
@@ -86,14 +88,24 @@ void ADDSentientPlaceable::OverlapEnd(UPrimitiveComponent* OverlappedComponent, 
 	}
 }
 
+void ADDSentientPlaceable::ValidateProjectile()
+{
+	check(Projectile != nullptr)
+}
+
 void ADDSentientPlaceable::Attack() const
 {
+	if (EnemiesInArea.Num() <= 0) {
+		UE_LOG(LogTemp, Warning, TEXT("Enemies not in area but still %s is still attacking?"), *GetName())
+		return;
+	}
+
 	switch (CurrentAI) {
 		case PlaceableAI::Deactivated:
-			//Nothing happens
+			UE_LOG(LogTemp, Warning, TEXT("%s is deactivated but in attack state"), *GetName())
 			break;
 		case PlaceableAI::ClosestEnemy:
-
+			AttackEnemy(EnemiesInArea[0]);
 			break;
 		case PlaceableAI::FurthestEnemy:
 
@@ -115,11 +127,46 @@ void ADDSentientPlaceable::Attack() const
 	}
 }
 
+void ADDSentientPlaceable::StartAttack()
+{
+	if (!bIsAttacking) {
+		bIsAttacking = true;
+		GetWorldTimerManager().SetTimer(AttackHandle, this, &ADDSentientPlaceable::Attack, AttackSpeed, true);
+	}
+}
+
+void ADDSentientPlaceable::StopAttack()
+{
+	if (bIsAttacking) {
+		bIsAttacking = false;
+		GetWorldTimerManager().ClearTimer(AttackHandle);
+	}
+}
+
+void ADDSentientPlaceable::AttackEnemy(AEnemy* Enemy) const
+{
+	//TODO - Account for enemy speed so the placeable can shoot the projectile without chance of missing enemy
+	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation(), GetActorRotation());
+	if (Proj) {
+		FVector EnemyLocation = Enemy->GetActorLocation();
+		FVector PlaceLocation = GetActorLocation();
+		FVector ProjDirection = EnemyLocation - PlaceLocation;
+		ProjDirection.Normalize();
+
+		Proj->SetVelocity(ProjDirection * ProjectileSpeed);
+		Proj->SetProjectileOwner(this);
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("%s failed to spawn projectile!"), *GetName())
+	}
+}
+
 void ADDSentientPlaceable::Deactive()
 {
 	//Have some things here that reset positioning of placeable
 	//or whatever other things that need resetting
-	CurrentAI = PlaceableAI::Deactivated;
+	//CurrentAI = PlaceableAI::Deactivated;
+	StopAttack();
 }
 
 void ADDSentientPlaceable::AddEnemy(AEnemy* Enemy)

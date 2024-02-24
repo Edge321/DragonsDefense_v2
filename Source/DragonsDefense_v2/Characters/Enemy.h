@@ -110,5 +110,5 @@ private:
 	ADDPlayer* Player;
 	FTimerHandle ShootHandle;
 
-	bool IsShooting = false;
+	bool bIsShooting = false;
 };

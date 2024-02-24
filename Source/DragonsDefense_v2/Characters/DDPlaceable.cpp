@@ -3,8 +3,6 @@
 
 #include "DDPlaceable.h"
 
-#define ECC_PlaceableChannel ECC_GameTraceChannel2
-
 // Sets default values
 ADDPlaceable::ADDPlaceable()
 {
