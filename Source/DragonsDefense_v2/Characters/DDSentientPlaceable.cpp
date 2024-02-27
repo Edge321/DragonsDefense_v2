@@ -15,13 +15,16 @@ ADDSentientPlaceable::ADDSentientPlaceable()
 	
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	AttackCollider = CreateDefaultSubobject<USphereComponent>("AttackCollider");
+	RadiusMesh = CreateDefaultSubobject<UStaticMeshComponent>("AttackRadius");
 
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
 	AttackCollider->SetupAttachment(Mesh);
 	Arrow->SetupAttachment(Mesh);
+	RadiusMesh->SetupAttachment(Mesh);
 
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	AttackCollider->SetCollisionObjectType(ECC_PlaceableChannel);
 
 	AttackCollider->OnComponentBeginOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapBegin);
@@ -35,6 +38,12 @@ void ADDSentientPlaceable::BeginPlay()
 	Super::BeginPlay();
 
 	AttackCollider->SetSphereRadius(AttackRadius);
+
+	float RadiusMeshDiameter = GetRadiusMeshSize().Y;
+	float CorrectedScale = AttackRadius / (RadiusMeshDiameter / 2);
+	FVector Scale(1, CorrectedScale, CorrectedScale);
+
+	RadiusMesh->SetRelativeScale3D(Scale);
 }
 
 const UStaticMeshComponent* ADDSentientPlaceable::GetMesh() const
@@ -42,11 +51,27 @@ const UStaticMeshComponent* ADDSentientPlaceable::GetMesh() const
 	return Mesh;
 }
 
+const float ADDSentientPlaceable::GetAttackRadius() const
+{
+	return AttackRadius;
+}
+
+const FVector ADDSentientPlaceable::GetRadiusMeshSize() const
+{
+	return RadiusMesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
+}
+
 void ADDSentientPlaceable::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
 	AttackCollider->SetSphereRadius(AttackRadius);
+
+	float RadiusMeshDiameter = GetRadiusMeshSize().Y;
+	float CorrectedScale = AttackRadius / (RadiusMeshDiameter / 2);
+	FVector Scale(1, CorrectedScale, CorrectedScale);
+
+	RadiusMesh->SetRelativeScale3D(Scale);
 }
 
 void ADDSentientPlaceable::SetAI(const PlaceableAI AIState)
@@ -148,13 +173,15 @@ void ADDSentientPlaceable::AttackEnemy(AEnemy* Enemy) const
 	//TODO - Account for enemy speed so the placeable can shoot the projectile without chance of missing enemy
 	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation(), GetActorRotation());
 	if (Proj) {
+		Proj->SetProjectileOwner(this);
+		Proj->SetCollisionChannelToIgnore(ECC_PlaceableChannel);
+		
 		FVector EnemyLocation = Enemy->GetActorLocation();
 		FVector PlaceLocation = GetActorLocation();
 		FVector ProjDirection = EnemyLocation - PlaceLocation;
 		ProjDirection.Normalize();
 
 		Proj->SetVelocity(ProjDirection * ProjectileSpeed);
-		Proj->SetProjectileOwner(this);
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("%s failed to spawn projectile!"), *GetName())

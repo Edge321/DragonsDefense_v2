@@ -9,6 +9,7 @@
 #include "../Game/DDPlaceablePurchaseInfo.h"
 #include "../Game/DDGameModeBase.h"
 #include "../Characters/DDPlaceable.h"
+#include "../Characters/DDSentientPlaceable.h"
 
 // Sets default values
 ADDPlaceableManager::ADDPlaceableManager()
@@ -100,13 +101,26 @@ void ADDPlaceableManager::SetCurrentPlaceable(TSubclassOf<ADDPlaceable> Placeabl
 	CurrentPlaceableClass = PlaceableClass;
 
 	//Not sure if this is the greatest way to get the scale of the actor
-	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass);
+	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, GetActorLocation(), GetActorRotation());
+	Placeable->SetActorEnableCollision(false);
 
 	if (Placeable) {
 		FVector Scale = Placeable->GetActorScale();
 		UStaticMesh* Mesh = Placeable->GetMesh()->GetStaticMesh();
 		ChangePreviewMesh(Mesh, Scale);
 		PlaceableInfo.SetPrice(Price);
+		//Sentient properties here
+		if (Placeable->IsA<ADDSentientPlaceable>()) {
+			ADDSentientPlaceable* Sentient = Cast<ADDSentientPlaceable>(Placeable);
+			float Radius = Sentient->GetAttackRadius();
+			FVector Size = Sentient->GetRadiusMeshSize();
+			//Only need Y for diameter
+			Preview->SetRadiusSize(Radius, Size.Y);
+			Preview->EnableAttackRadius();
+		}
+		else {
+			Preview->DisableAttackRadius();
+		}
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Something went wrong with setting the preview object"))

@@ -15,11 +15,14 @@ ADDPlaceablePreview::ADDPlaceablePreview()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	Collider = CreateDefaultSubobject<UBoxComponent>("BoxCollider");
+	OptionalRadiusMesh = CreateDefaultSubobject<UStaticMeshComponent>("AttackRadius");
 
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
+	OptionalRadiusMesh->SetupAttachment(Mesh);
 
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	OptionalRadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +36,7 @@ void ADDPlaceablePreview::BeginPlay()
 	Collider->OnComponentEndOverlap.AddDynamic(this, &ADDPlaceablePreview::OverlapEnd);
 
 	SetCollisionChannelToIgnore(ECollisionChannel::ECC_WorldStatic);
+	DisableAttackRadius();
 }
 
 // Called every frame
@@ -50,7 +54,6 @@ void ADDPlaceablePreview::OverlapBegin(UPrimitiveComponent* OverlappedComponent,
 {
 	//Ignore projectiles
 	if (OtherActor->IsA<ADDProjectile>()) {
-		UE_LOG(LogTemp, Log, TEXT("Projectile found, ignored..."))
 		return;
 	}
 
@@ -110,9 +113,31 @@ void ADDPlaceablePreview::SetScale(FVector Scale)
 	Mesh->SetRelativeScale3D(Scale);
 }
 
+void ADDPlaceablePreview::SetRadiusSize(const float AttackRadius, const float RadiusMeshDiameter)
+{
+	const float CorrectedRadius = AttackRadius / (RadiusMeshDiameter / 2);
+	OptionalRadiusMesh->SetWorldScale3D(FVector(1, CorrectedRadius, CorrectedRadius));
+}
+
+void ADDPlaceablePreview::EnableAttackRadius()
+{
+	OptionalRadiusMesh->SetVisibility(true);
+}
+
+void ADDPlaceablePreview::DisableAttackRadius()
+{
+	OptionalRadiusMesh->SetVisibility(false);
+}
+
 void ADDPlaceablePreview::SetMaterial(UMaterialInstance* Material)
 {
+	int Size = OptionalRadiusMesh->GetMaterials().Num();
+	
 	Mesh->SetMaterial(0, Material);
+
+	for (int i = 0; i < Size; i++) {
+		OptionalRadiusMesh->SetMaterial(i, Material);
+	}
 }
 
 void ADDPlaceablePreview::ClearActorsArray()

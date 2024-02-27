@@ -33,6 +33,8 @@ protected:
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USphereComponent* AttackCollider;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMeshComponent* RadiusMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile");
 	TSubclassOf<ADDProjectile> Projectile;
@@ -52,6 +54,8 @@ public:
 	void SetAI(const PlaceableAI AIState);
 	
 	const UStaticMeshComponent* GetMesh() const;
+	const float GetAttackRadius() const;
+	const FVector GetRadiusMeshSize() const;
 
 private:
 

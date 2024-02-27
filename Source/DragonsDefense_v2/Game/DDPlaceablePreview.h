@@ -25,6 +25,8 @@ protected:
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* Collider;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMeshComponent* OptionalRadiusMesh;
 
 public:	
 	// Called every frame
@@ -35,6 +37,9 @@ public:
 
 	void SetMesh(UStaticMesh* NewMesh);
 	void SetScale(FVector Scale);
+	void SetRadiusSize(const float AttackRadius, const float RadiusMeshDiameter);
+	void EnableAttackRadius();
+	void DisableAttackRadius();
 	void ClearActorsArray();
 
 	FOnColliding OnColliding;
