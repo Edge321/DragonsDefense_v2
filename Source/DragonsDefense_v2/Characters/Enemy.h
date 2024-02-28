@@ -54,7 +54,7 @@ protected:
 	float MovementSpeed = 1.0f;
 	UPROPERTY(EditAnywhere, Category = "Stats");
 	int32 SoulValue = 1;
-	UPROPERTY(EditAnywhere, Category = "Score");
+	UPROPERTY(EditAnywhere, Category = "Stats");
 	int32 Score = 1;
 	UPROPERTY(BlueprintReadOnly, Category = "Temp")
 	float TempHealth;
@@ -91,6 +91,8 @@ public:
 
 	UStaticMeshComponent* GetMeshComponent() const;
 	UFloatingPawnMovement* GetFloatingPawnMovement() const;
+	const float GetMovementSpeed() const;
+	const float GetDistanceFromCastle() const;
 
 	void UpdateHealth(const float HealthModifier) override;
 
@@ -111,4 +113,5 @@ private:
 	FTimerHandle ShootHandle;
 
 	bool bIsShooting = false;
+	float DistanceFromCastle;
 };

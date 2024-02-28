@@ -65,13 +65,24 @@ UFloatingPawnMovement* AEnemy::GetFloatingPawnMovement() const
 {
 	return FloatingPawnMovement;
 }
+
+const float AEnemy::GetMovementSpeed() const
+{
+	return MovementSpeed;
+}
+
+const float AEnemy::GetDistanceFromCastle() const 
+{
+	return DistanceFromCastle;
+}
+
 //Checks distance between the enemy and the castle
 void AEnemy::CheckDistance()
 {
 	//Distance formula on one dimension
-	float Distance = FMath::Abs(GetActorLocation().X - Player->GetActorLocation().X);
+	DistanceFromCastle = FMath::Abs(GetActorLocation().X - Player->GetActorLocation().X);
 
-	if (Distance < DistanceToAttack) {
+	if (DistanceFromCastle < DistanceToAttack) {
 		FloatingPawnMovement->MaxSpeed = 0;
 		StartShooting();
 	}	
@@ -115,8 +126,6 @@ void AEnemy::ApplyModifiers()
 void AEnemy::UpdateHealth(const float HealthModifier)
 {
 	TempHealth += HealthModifier;
-
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("%s's Health: %f"), *GetName(), TempHealth));
 
 	if (TempHealth <= 0) {
 		OnDeath();

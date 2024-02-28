@@ -3,10 +3,13 @@
 #include "DDPlayer.h"
 #include <cmath>
 #include "Camera/CameraComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/FloatingPawnMovement.h"
 //My classes
 #include "../Game/DDGameModeBase.h"
 #include "../Projectile/DDProjectile.h"
+
+#define ECC_PlaceableChannel ECC_GameTraceChannel2
 
 // Sets default values
 ADDPlayer::ADDPlayer()
@@ -50,6 +53,45 @@ void ADDPlayer::BeginPlay()
 	}
 	//Want to disable the input at the beginning obviously!
 	GameOverEventFunction();
+}
+
+void ADDPlayer::FindPlaceableWithCursor()
+{
+	FVector MouseLocation, MouseDirection;
+	FHitResult Hit;
+
+	APlayerController* PController = UGameplayStatics::GetPlayerController(this, 0);
+
+	if (PController) {
+		PController->DeprojectMousePositionToWorld(MouseLocation, MouseDirection);
+	}
+	else {
+		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for Player, aborting"))
+	}
+
+	FVector End = (MouseDirection * 10000) + MouseLocation;
+	
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_PlaceableChannel));
+
+	TArray<AActor*> ActorsToIgnore;
+
+	//Lots of things happening here, so
+	//Basically just returns a FHitResult on the object the line trace collides with first
+	bool bHit = UKismetSystemLibrary::LineTraceSingleForObjects(
+		this,
+		MouseLocation,
+		End,
+		ObjectTypes,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::None,
+		Hit,
+		true);
+
+	if (bHit) {
+		UE_LOG(LogTemp, Log, TEXT("%s was clicked on"), *Hit.GetActor()->GetName())
+	}
 }
 
 void ADDPlayer::Tick(float DeltaTime)

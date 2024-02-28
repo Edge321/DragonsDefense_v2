@@ -7,6 +7,8 @@
 #include "../Game/DDGameModeBase.h"
 #include "../Characters/DDPlayer.h"
 
+#define ECC_PreviewChannel ECC_GameTraceChannel3
+
 // Sets default values
 ADDPlaceablePreview::ADDPlaceablePreview()
 {
@@ -23,6 +25,8 @@ ADDPlaceablePreview::ADDPlaceablePreview()
 
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	OptionalRadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Collider->SetCollisionObjectType(ECC_PreviewChannel);
+	//Collider->SetCollisionResponseToChannel()
 }
 
 // Called when the game starts or when spawned

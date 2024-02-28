@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "../Characters/DDPlaceable.h"
+#include <functional>
 #include "DDSentientPlaceable.generated.h"
 
 class USphereComponent;
@@ -68,15 +69,17 @@ private:
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	void ValidateProjectile();
-	void Attack() const;
+	void Attack();
 	void StartAttack();
 	void StopAttack();
 	void AttackEnemy(AEnemy* Enemy) const;
 	void Deactive();
 	void AddEnemy(AEnemy* Enemy);
 	void RemoveEnemy(AEnemy* Enemy);
+	AEnemy* FindMinMaxEnemy(bool IsMax, std::function<float(AEnemy*)> ValueFunc) const;
 
 	bool bIsAttacking = false;
+	int RobinIndex = 0;
 
 	FTimerHandle AttackHandle;
 	PlaceableAI CurrentAI;

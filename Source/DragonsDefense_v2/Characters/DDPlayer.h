@@ -30,6 +30,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
 
+	UFUNCTION(BlueprintCallable)
+	void FindPlaceableWithCursor();
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
 	TSubclassOf<ADDProjectile> Projectile;
 	//Where the projectile is spawned relative to the player's center
