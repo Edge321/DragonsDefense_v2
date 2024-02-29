@@ -75,7 +75,7 @@ void ADDPlayer::FindPlaceableWithCursor()
 	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_PlaceableChannel));
 
 	TArray<AActor*> ActorsToIgnore;
-
+	
 	//Lots of things happening here, so
 	//Basically just returns a FHitResult on the object the line trace collides with first
 	bool bHit = UKismetSystemLibrary::LineTraceSingleForObjects(
