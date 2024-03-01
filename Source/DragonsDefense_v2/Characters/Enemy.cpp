@@ -13,6 +13,7 @@
 #include "../UI/DDEnemyHealthBar.h"
 
 #define ECC_EnemyChannel ECC_GameTraceChannel1
+#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
 
 // Sets default values
 AEnemy::AEnemy()
@@ -172,6 +173,7 @@ void AEnemy::Shoot()
 		FVector Velocity = Proj->GetVelocity();
 		Proj->SetVelocity(Velocity * -1);
 		Proj->SetCollisionChannelToIgnore(ECC_EnemyChannel);
+		Proj->SetCollisionChannelToIgnore(ECC_AttackRadiusChannel);
 		Proj->SetDamage(Damage);
 	}
 	else {

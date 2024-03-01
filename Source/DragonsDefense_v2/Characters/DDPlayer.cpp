@@ -58,16 +58,21 @@ void ADDPlayer::BeginPlay()
 void ADDPlayer::FindPlaceableWithCursor()
 {
 	FVector MouseLocation, MouseDirection;
+
+	FVector2D MouseScreenPosition;
 	FHitResult Hit;
 
 	APlayerController* PController = UGameplayStatics::GetPlayerController(this, 0);
 
 	if (PController) {
 		PController->DeprojectMousePositionToWorld(MouseLocation, MouseDirection);
+		PController->GetMousePosition(MouseScreenPosition.X, MouseScreenPosition.Y);
 	}
 	else {
 		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for Player, aborting"))
 	}
+	
+	UE_LOG(LogTemp, Log, TEXT("Mouse: %s"), *MouseScreenPosition.ToString())
 
 	FVector End = (MouseDirection * 10000) + MouseLocation;
 	
@@ -90,7 +95,7 @@ void ADDPlayer::FindPlaceableWithCursor()
 		true);
 
 	if (bHit) {
-		UE_LOG(LogTemp, Log, TEXT("%s was clicked on"), *Hit.GetActor()->GetName())
+		OnClickPlaceable.Broadcast(MouseScreenPosition);
 	}
 }
 

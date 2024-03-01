@@ -9,6 +9,8 @@
 class ADDPlaceable;
 class ADDSentientPlaceable;
 class ADDTrapPlaceable;
+class UCanvasPanel;
+class UCanvasPanelSlot;
 
 enum class PlaceableAI : uint8;
 
@@ -26,6 +28,8 @@ protected:
 	void SetCurrentPlaceable(ADDPlaceable* CurrentPlaceable);
 	UFUNCTION(BlueprintCallable, Category = "PlaceableAI")
 	void ChangeBehavior(const PlaceableAI AI);
+	UFUNCTION(BlueprintCallable, Category = "PlaceableAI")
+	void MoveCanvasPanel(UCanvasPanelSlot* CanvasSlot, FVector2D Position) const;
 	void GetStats();
 
 private:

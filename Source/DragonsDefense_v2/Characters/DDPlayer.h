@@ -11,6 +11,7 @@ class UFloatingPawnMovement;
 class ADDProjectile;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUpdateHealth, float, Health, float, MaxHealth);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnClickPlaceable, FVector2D, CursorScreenPosition);
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlayer : public ALivingActor
@@ -84,7 +85,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnUpdateHealth OnUpdateHealth;
-	
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnClickPlaceable OnClickPlaceable;
 
 private:
 	void ValidateProjectile();

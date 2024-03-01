@@ -2,6 +2,8 @@
 
 
 #include "DDPlaceableInfoWidget.h"
+#include "Components/CanvasPanelSlot.h"
+#include "Components/CanvasPanel.h"
 //My classes
 #include "../Characters/DDPlaceable.h"
 #include "../Characters/DDSentientPlaceable.h"
@@ -32,6 +34,12 @@ void UDDPlaceableInfoWidget::ChangeBehavior(const PlaceableAI AI)
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Attempted to modify TrapPlaceable"))
 	}
+}
+
+//TODO - Delet this
+void UDDPlaceableInfoWidget::MoveCanvasPanel(UCanvasPanelSlot* CanvasSlot, FVector2D Position) const
+{
+	CanvasSlot->SetPosition(Position);
 }
 
 void UDDPlaceableInfoWidget::GetStats()

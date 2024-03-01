@@ -3,12 +3,14 @@
 
 #include "DDSentientPlaceable.h"
 #include "Components/SphereComponent.h"
+#include "Components/Image.h"
 //My classes
 #include "../Characters/Enemy.h"
 #include "../Characters/DDPlaceableAI.h"
 #include "../Projectile/DDProjectile.h"
 
 #define ECC_PreviewChannel ECC_GameTraceChannel3
+#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
 
 ADDSentientPlaceable::ADDSentientPlaceable()
 {
@@ -27,7 +29,7 @@ ADDSentientPlaceable::ADDSentientPlaceable()
 
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	RadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	AttackCollider->SetCollisionObjectType(ECC_PlaceableChannel);
+	AttackCollider->SetCollisionObjectType(ECC_AttackRadiusChannel);
 	AttackCollider->SetCollisionResponseToChannel(ECC_PreviewChannel, ECollisionResponse::ECR_Ignore);
 
 	AttackCollider->OnComponentBeginOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapBegin);
@@ -187,6 +189,7 @@ void ADDSentientPlaceable::AttackEnemy(AEnemy* Enemy) const
 	if (Proj) {
 		Proj->SetProjectileOwner(this);
 		Proj->SetCollisionChannelToIgnore(ECC_PlaceableChannel);
+		Proj->SetCollisionChannelToIgnore(ECC_AttackRadiusChannel);
 		
 		FVector EnemyLocation = Enemy->GetActorLocation();
 		FVector PlaceLocation = GetActorLocation();
