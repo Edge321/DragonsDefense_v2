@@ -9,9 +9,11 @@
 class UCameraComponent;
 class UFloatingPawnMovement;
 class ADDProjectile;
+class ADDPlaceable;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUpdateHealth, float, Health, float, MaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnClickPlaceable, FVector2D, CursorScreenPosition);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClickPlaceable, FVector2D, CursorScreenPosition, ADDPlaceable*, Placeable);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClickOutsideOfPlaceable);
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlayer : public ALivingActor
@@ -87,6 +89,8 @@ public:
 	FOnUpdateHealth OnUpdateHealth;
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnClickPlaceable OnClickPlaceable;
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnClickOutsideOfPlaceable OnClickOutsideOfPlaceable;
 
 private:
 	void ValidateProjectile();

@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
-enum class PlaceableAI : uint8 {
+enum class EPlaceableAI : uint8 {
 	Deactivated,
 	ClosestEnemy,
 	FurthestEnemy,

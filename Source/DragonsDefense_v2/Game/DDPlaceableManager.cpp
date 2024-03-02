@@ -132,8 +132,6 @@ void ADDPlaceableManager::SetCurrentPlaceable(TSubclassOf<ADDPlaceable> Placeabl
 void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass)
 {
 	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, GetPreviewLocation(), Preview->GetActorRotation());
-	//BUG -  Placing placeable inside anything with collision will result in placeable being destroyed before being put in pool
-	// results in a memory violation error
 	if (Placeable) {
 		Placeable->SpawnDefaultController();
 		Placeable->AutoPossessAI = EAutoPossessAI::Spawned;
@@ -151,18 +149,19 @@ void ADDPlaceableManager::PurchasePlaceableAtCursor()
 		PlaceableInfo.UpdateSouls();
 
 		ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(CurrentPlaceableClass, GetPreviewLocation(), Preview->GetActorRotation());
-		//BUG -  Placing placeable inside anything with collision will result in placeable being destroyed before being put in pool
-		// results in a memory violation error
 		if (Placeable) {
 			Placeable->SpawnDefaultController();
 			Placeable->AutoPossessAI = EAutoPossessAI::Spawned;
 			Placeable->OnPlaceableDeath.BindUObject(this, &ADDPlaceableManager::RemovePlaceableFromPool);
+			Placeable->SetSellingPrice(PlaceableInfo.GetPrice());
 			AddPlaceableToPool(Placeable);
 		}
 		else {
 			UE_LOG(LogTemp, Error, TEXT("Something went wrong with spawning a placeable at the cursor!"))
 		}
 	}
+
+	SetPreviewOnSoulChange(PlaceableInfo.IsBuyable());
 }
 
 void ADDPlaceableManager::CheckPreviewValidity()

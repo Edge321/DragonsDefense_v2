@@ -4,7 +4,6 @@
 #include "DDPlaceablePreview.h"
 #include "Kismet/GameplayStatics.h"
 //My classes
-#include "../Game/DDGameModeBase.h"
 #include "../Characters/DDPlayer.h"
 
 #define ECC_PreviewChannel ECC_GameTraceChannel3
@@ -26,7 +25,6 @@ ADDPlaceablePreview::ADDPlaceablePreview()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	OptionalRadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetCollisionObjectType(ECC_PreviewChannel);
-	//Collider->SetCollisionResponseToChannel()
 }
 
 // Called when the game starts or when spawned

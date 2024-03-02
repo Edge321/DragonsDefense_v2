@@ -12,6 +12,14 @@
 void UDDPlaceableInfoWidget::SetCurrentPlaceable(ADDPlaceable* CurrentPlaceable)
 {
 	if (CurrentPlaceable) {
+		//If clicked on placeable is the same as currently stored one
+		if (CurrentPlaceable == MostRecentPlaceable) {
+			UE_LOG(LogTemp, Log, TEXT("Same thing found, skipping..."))
+			return;
+		}
+
+		MostRecentPlaceable = CurrentPlaceable;
+
 		if (CurrentPlaceable->IsA<ADDSentientPlaceable>()) {
 			bIsSentient = true;
 			Sentient = Cast<ADDSentientPlaceable>(CurrentPlaceable);
@@ -26,7 +34,7 @@ void UDDPlaceableInfoWidget::SetCurrentPlaceable(ADDPlaceable* CurrentPlaceable)
 	}
 }
 
-void UDDPlaceableInfoWidget::ChangeBehavior(const PlaceableAI AI)
+void UDDPlaceableInfoWidget::ChangeBehavior(const EPlaceableAI AI)
 {
 	if (bIsSentient) {
 		Sentient->SetAI(AI);
@@ -34,12 +42,6 @@ void UDDPlaceableInfoWidget::ChangeBehavior(const PlaceableAI AI)
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Attempted to modify TrapPlaceable"))
 	}
-}
-
-//TODO - Delet this
-void UDDPlaceableInfoWidget::MoveCanvasPanel(UCanvasPanelSlot* CanvasSlot, FVector2D Position) const
-{
-	CanvasSlot->SetPosition(Position);
 }
 
 void UDDPlaceableInfoWidget::GetStats()

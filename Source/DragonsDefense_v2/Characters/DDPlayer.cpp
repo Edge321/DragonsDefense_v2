@@ -8,6 +8,7 @@
 //My classes
 #include "../Game/DDGameModeBase.h"
 #include "../Projectile/DDProjectile.h"
+#include "../Characters/DDPlaceable.h"
 
 #define ECC_PlaceableChannel ECC_GameTraceChannel2
 
@@ -72,8 +73,6 @@ void ADDPlayer::FindPlaceableWithCursor()
 		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for Player, aborting"))
 	}
 	
-	UE_LOG(LogTemp, Log, TEXT("Mouse: %s"), *MouseScreenPosition.ToString())
-
 	FVector End = (MouseDirection * 10000) + MouseLocation;
 	
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
@@ -95,7 +94,16 @@ void ADDPlayer::FindPlaceableWithCursor()
 		true);
 
 	if (bHit) {
-		OnClickPlaceable.Broadcast(MouseScreenPosition);
+		ADDPlaceable* Placeable = Cast<ADDPlaceable>(Hit.GetActor());
+		if (Placeable) {
+			OnClickPlaceable.Broadcast(MouseScreenPosition, Placeable);
+		}
+		else {
+			UE_LOG(LogTemp, Error, TEXT("Error: Actor clicked on is NOT a placeable"))
+		}
+	}
+	else {
+		OnClickOutsideOfPlaceable.Broadcast();
 	}
 }
 

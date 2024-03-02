@@ -11,7 +11,7 @@ class USphereComponent;
 class AEnemy;
 class ADDProjectile;
 
-enum class PlaceableAI : uint8;
+enum class EPlaceableAI : uint8;
 
 /**
  * 
@@ -52,7 +52,9 @@ public:
 	void OnConstruction(const FTransform& Transform) override;
 	
 	UFUNCTION(BlueprintCallable, Category = "AI")
-	void SetAI(const PlaceableAI AIState);
+	void SetAI(const EPlaceableAI AIState);
+	UFUNCTION(BlueprintPure, Category = "AI")
+	EPlaceableAI GetAI() const;
 	
 	const UStaticMeshComponent* GetMesh() const;
 	const float GetAttackRadius() const;
@@ -79,9 +81,9 @@ private:
 	AEnemy* FindMinMaxEnemy(bool IsMax, std::function<float(AEnemy*)> ValueFunc) const;
 
 	bool bIsAttacking = false;
-	int RobinIndex = 0;
+	int32 RobinIndex = 0;
 
 	FTimerHandle AttackHandle;
-	PlaceableAI CurrentAI;
+	EPlaceableAI CurrentAI;
 	TArray<AEnemy*> EnemiesInArea;
 };

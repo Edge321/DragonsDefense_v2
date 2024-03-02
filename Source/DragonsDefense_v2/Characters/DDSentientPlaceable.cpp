@@ -35,7 +35,7 @@ ADDSentientPlaceable::ADDSentientPlaceable()
 	AttackCollider->OnComponentBeginOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapBegin);
 	AttackCollider->OnComponentEndOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapEnd);
 
-	CurrentAI = PlaceableAI::ClosestToCastle;
+	CurrentAI = EPlaceableAI::ClosestToCastle;
 }
 
 void ADDSentientPlaceable::BeginPlay()
@@ -79,9 +79,14 @@ void ADDSentientPlaceable::OnConstruction(const FTransform& Transform)
 	RadiusMesh->SetRelativeScale3D(Scale);
 }
 
-void ADDSentientPlaceable::SetAI(const PlaceableAI AIState)
+void ADDSentientPlaceable::SetAI(const EPlaceableAI AIState)
 {
 	CurrentAI = AIState;
+}
+
+EPlaceableAI ADDSentientPlaceable::GetAI() const
+{
+	return CurrentAI;
 }
 
 void ADDSentientPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -131,34 +136,34 @@ void ADDSentientPlaceable::Attack()
 	}
 
 	switch (CurrentAI) {
-		case PlaceableAI::Deactivated:
+		case EPlaceableAI::Deactivated:
 			UE_LOG(LogTemp, Warning, TEXT("%s is deactivated but in attack state"), *GetName())
 			break;
-		case PlaceableAI::ClosestEnemy:
+		case EPlaceableAI::ClosestEnemy:
 			AttackEnemy(FindMinMaxEnemy(false, [&](AEnemy* Enemy) -> float {
 				return FVector::Distance(Enemy->GetActorLocation(), GetActorLocation());
 				}));
 			break;
-		case PlaceableAI::FurthestEnemy:
+		case EPlaceableAI::FurthestEnemy:
 			AttackEnemy(FindMinMaxEnemy(true, [&](AEnemy* Enemy) -> float {
 				return FVector::Distance(Enemy->GetActorLocation(), GetActorLocation());
 				}));
 			break;
-		case PlaceableAI::ClosestToCastle:
+		case EPlaceableAI::ClosestToCastle:
 			AttackEnemy(FindMinMaxEnemy(false, [](AEnemy* Enemy) -> float {
 				return Enemy->GetDistanceFromCastle();
 				}));
 			break;
-		case PlaceableAI::FurthestFromCastle:
+		case EPlaceableAI::FurthestFromCastle:
 			AttackEnemy(FindMinMaxEnemy(true, [](AEnemy* Enemy) -> float {
 				return Enemy->GetDistanceFromCastle();
 				}));
 			break;
-		case PlaceableAI::RoundRobin:
+		case EPlaceableAI::RoundRobin:
 			AttackEnemy(EnemiesInArea[RobinIndex]);
 			RobinIndex = (RobinIndex + 1) % EnemiesInArea.Num();
 			break;
-		case PlaceableAI::CurrentAttacker:
+		case EPlaceableAI::CurrentAttacker:
 			//TODO - Gather list of Enemies attacking placeable
 			break;
 		default:

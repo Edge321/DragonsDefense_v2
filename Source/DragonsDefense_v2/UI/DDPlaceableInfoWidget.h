@@ -12,7 +12,7 @@ class ADDTrapPlaceable;
 class UCanvasPanel;
 class UCanvasPanelSlot;
 
-enum class PlaceableAI : uint8;
+enum class EPlaceableAI : uint8;
 
 /**
  * 
@@ -27,16 +27,18 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Placeable")
 	void SetCurrentPlaceable(ADDPlaceable* CurrentPlaceable);
 	UFUNCTION(BlueprintCallable, Category = "PlaceableAI")
-	void ChangeBehavior(const PlaceableAI AI);
-	UFUNCTION(BlueprintCallable, Category = "PlaceableAI")
-	void MoveCanvasPanel(UCanvasPanelSlot* CanvasSlot, FVector2D Position) const;
+	void ChangeBehavior(const EPlaceableAI AI);
 	void GetStats();
+
+	UPROPERTY(BlueprintReadOnly, Category = "Placeable")
+	ADDPlaceable* MostRecentPlaceable;
+	UPROPERTY(BlueprintReadOnly, Category = "Sentient")
+	ADDSentientPlaceable* Sentient;
+	UPROPERTY(BlueprintReadOnly, Category = "Placeable")
+	bool bIsSentient;
 
 private:
 	
-	ADDSentientPlaceable* Sentient;
 	ADDTrapPlaceable* Trap;
-
-	bool bIsSentient;
 
 };

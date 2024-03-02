@@ -31,6 +31,8 @@ protected:
 	void CanPlace(bool PlaceStatus);
 	UFUNCTION(BlueprintImplementableEvent, Category = "PlaceablePreview")
 	void SetPreviewMaterial(bool IsColliding);
+	UFUNCTION(BlueprintImplementableEvent, Category = "PlaceablePreview")
+	void SetPreviewOnSoulChange(bool IsBuyable);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* ManagerIcon;
@@ -40,6 +42,8 @@ protected:
 	ADDPlaceablePreview* Preview;
 	UPROPERTY(BlueprintReadOnly, Category = "PlaceablePreview")
 	bool bCanPlace = true;
+	UPROPERTY(BlueprintReadOnly, Category = "PlaceablePrice")
+	int32 CurrentPlaceablePrice = 0;
 
 public:
 
@@ -77,7 +81,6 @@ private:
 	
 	FDDPlaceablePurchaseInfo PlaceableInfo;
 
-	int32 CurrentPlaceablePrice = 0;
 	//TODO -  Think about what is going on here....few know this
 	int32 MaxPlaceables = 32;
 	int32 CurrentPlaceables = 0;

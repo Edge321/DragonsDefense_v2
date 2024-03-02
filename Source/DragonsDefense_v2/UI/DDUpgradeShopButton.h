@@ -36,5 +36,5 @@ private:
 	void ResetPrice();
 	FText FetchFTextPrice() override;
 
-	int PriceIndex = 0;
+	int32 PriceIndex = 0;
 };

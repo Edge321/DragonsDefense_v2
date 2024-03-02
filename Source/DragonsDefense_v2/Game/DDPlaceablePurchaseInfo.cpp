@@ -40,6 +40,11 @@ void FDDPlaceablePurchaseInfo::SetPrice(const int32 Price)
 	CurrentPrice = Price;
 }
 
+const int32 FDDPlaceablePurchaseInfo::GetPrice() const
+{
+	return CurrentPrice;
+}
+
 void FDDPlaceablePurchaseInfo::SetGameMode(ADDGameModeBase* Mode)
 {
 	GameMode = Mode;

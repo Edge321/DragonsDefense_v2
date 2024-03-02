@@ -14,6 +14,7 @@ public:
 	bool IsBuyable() const;
 	void UpdateSouls() const;
 	void SetPrice(const int32 Price);
+	const int32 GetPrice() const;
 	void SetGameMode(ADDGameModeBase* Mode);
 		
 private:

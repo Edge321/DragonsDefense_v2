@@ -22,12 +22,19 @@ class DRAGONSDEFENSE_V2_API ADDPlaceable : public ALivingActor
 public:
 	ADDPlaceable();
 
+	UFUNCTION(BlueprintCallable)
+	void Sell();
+	UFUNCTION(BlueprintPure)
+	const int32 GetSellingPrice() const;
+
 	//Pure virtuals
 	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };
 
+	void SetSellingPrice(const int32 Price);
+
+	
+
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 	void OnDeath() override;
 
@@ -35,8 +42,19 @@ protected:
 	float EasyDamageMod = 1.2f;
 	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float HardDamageMod = 0.9f;
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
+	float EasySellingPriceMod = 1.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
+	float NormalSellingPriceMod = 0.8f;
+	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
+	float HardSellingPriceMod = 0.5f;
 
 public:
 
 	FOnPlaceableDeath OnPlaceableDeath;
+
+private:
+
+	int32 SellingPrice = 1;
+
 };

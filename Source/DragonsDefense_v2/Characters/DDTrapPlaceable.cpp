@@ -6,6 +6,8 @@
 #include "../Characters/LivingActor.h"
 #include "../Projectile/DDProjectile.h"
 
+#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
+
 // Sets default values
 ADDTrapPlaceable::ADDTrapPlaceable()
 {
@@ -21,6 +23,7 @@ ADDTrapPlaceable::ADDTrapPlaceable()
 	//He was forced to use only collider box
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDTrapPlaceable::OverlapBegin);
+	Collider->SetCollisionResponseToChannel(ECC_AttackRadiusChannel, ECR_Ignore);
 }
 
 // Called when the game starts or when spawned
@@ -44,6 +47,8 @@ void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 		Destroy();
 	}
 	else {
+		//BUG - Projectile for placeables still damage the trap. Should only be enemy's projectiles
+		//Maybe add tags to the projectile?
 		ADDProjectile* Projectile = Cast<ADDProjectile>(OtherActor);
 
 		if (Projectile) {
