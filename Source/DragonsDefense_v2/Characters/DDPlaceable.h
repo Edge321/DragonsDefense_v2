@@ -7,6 +7,7 @@
 #include "DDPlaceable.generated.h"
 
 #define ECC_PlaceableChannel ECC_GameTraceChannel2
+#define Stencil_HighlightDepth 3
 
 DECLARE_DELEGATE_OneParam(FOnPlaceableDeath, ADDPlaceable*)
 
@@ -26,6 +27,10 @@ public:
 	void Sell();
 	UFUNCTION(BlueprintPure)
 	const int32 GetSellingPrice() const;
+	UFUNCTION(BlueprintCallable, Category = "Highlight")
+	virtual void EnableHighlight() {};
+	UFUNCTION(BlueprintCallable, Category = "Highlight")
+	virtual void DisableHighlight() {};
 
 	//Pure virtuals
 	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };

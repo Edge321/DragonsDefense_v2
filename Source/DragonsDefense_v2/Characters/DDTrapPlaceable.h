@@ -26,6 +26,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	const UStaticMeshComponent* GetMesh() const override;
+	void EnableHighlight() override;
+	void DisableHighlight() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;

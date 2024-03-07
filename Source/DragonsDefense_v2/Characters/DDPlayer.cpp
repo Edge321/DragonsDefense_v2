@@ -229,6 +229,7 @@ void ADDPlayer::GameStartEventFunction()
 	APlayerController* PlayController = GetController<APlayerController>();
 	EnableInput(PlayController);
 	PlayController->SetInputMode(FInputModeGameAndUI());
+	PlayController->FlushPressedKeys();
 	SetActorLocation(OriginalLocation);
 }
 

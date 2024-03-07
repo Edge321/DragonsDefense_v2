@@ -35,6 +35,8 @@ ADDSentientPlaceable::ADDSentientPlaceable()
 	AttackCollider->OnComponentBeginOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapBegin);
 	AttackCollider->OnComponentEndOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapEnd);
 
+	Mesh->bRenderCustomDepth = true;
+
 	CurrentAI = EPlaceableAI::ClosestToCastle;
 }
 
@@ -87,6 +89,16 @@ void ADDSentientPlaceable::SetAI(const EPlaceableAI AIState)
 EPlaceableAI ADDSentientPlaceable::GetAI() const
 {
 	return CurrentAI;
+}
+
+void ADDSentientPlaceable::EnableHighlight()
+{
+	Mesh->SetCustomDepthStencilValue(Stencil_HighlightDepth);
+}
+
+void ADDSentientPlaceable::DisableHighlight()
+{
+	Mesh->SetCustomDepthStencilValue(0);
 }
 
 void ADDSentientPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

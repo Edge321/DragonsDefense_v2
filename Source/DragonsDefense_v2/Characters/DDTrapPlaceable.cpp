@@ -24,6 +24,8 @@ ADDTrapPlaceable::ADDTrapPlaceable()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDTrapPlaceable::OverlapBegin);
 	Collider->SetCollisionResponseToChannel(ECC_AttackRadiusChannel, ECR_Ignore);
+
+	Mesh->bRenderCustomDepth = true;
 }
 
 // Called when the game starts or when spawned
@@ -35,6 +37,16 @@ void ADDTrapPlaceable::BeginPlay()
 const UStaticMeshComponent* ADDTrapPlaceable::GetMesh() const
 {
 	return Mesh;
+}
+
+void ADDTrapPlaceable::EnableHighlight()
+{
+	Mesh->SetCustomDepthStencilValue(Stencil_HighlightDepth);
+}
+
+void ADDTrapPlaceable::DisableHighlight()
+{
+	Mesh->SetCustomDepthStencilValue(0);
 }
 
 void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

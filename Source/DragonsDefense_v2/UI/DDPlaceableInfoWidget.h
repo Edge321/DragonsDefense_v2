@@ -32,13 +32,11 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Placeable")
 	ADDPlaceable* MostRecentPlaceable;
-	UPROPERTY(BlueprintReadOnly, Category = "Sentient")
+	UPROPERTY(BlueprintReadOnly, Category = "Placeable|Sentient")
 	ADDSentientPlaceable* Sentient;
+	UPROPERTY(BlueprintReadOnly, Category = "Placeable|Trap")
+	ADDTrapPlaceable* Trap;
 	UPROPERTY(BlueprintReadOnly, Category = "Placeable")
 	bool bIsSentient;
-
-private:
-	
-	ADDTrapPlaceable* Trap;
 
 };
