@@ -25,7 +25,7 @@ bool FDDPlaceablePurchaseInfo::IsBuyable() const
 	}
 }
 
-void FDDPlaceablePurchaseInfo::UpdateSouls() const
+void FDDPlaceablePurchaseInfo::UpdateSouls()
 {
 	if (GameMode) {
 		GameMode->UpdateSouls(-CurrentPrice);

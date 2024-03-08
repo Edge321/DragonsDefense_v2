@@ -47,6 +47,7 @@ void ADDPlaceableManager::BeginPlay()
 		GameMode->OnWaveOver.AddDynamic(this, &ADDPlaceableManager::WaveOverEventFunction);
 		GameMode->OnWaveStart.AddDynamic(this, &ADDPlaceableManager::WaveStartEventFunction);
 		GameMode->OnPlacing.AddDynamic(this, &ADDPlaceableManager::SetPreviewStatus);
+		GameMode->OnUpdateSouls.AddDynamic(this, &ADDPlaceableManager::SetPreviewOnSoulChange);
 	}
 }
 
@@ -73,6 +74,11 @@ FVector ADDPlaceableManager::GetPreviewLocation() const
 void ADDPlaceableManager::CanPlace(bool PlaceStatus)
 {
 	bCanPlace = PlaceStatus;
+}
+
+bool ADDPlaceableManager::IsBuyable()
+{
+	return PlaceableInfo.IsBuyable();
 }
 
 //TODO - might not need this tbh, we will see
@@ -127,6 +133,7 @@ void ADDPlaceableManager::SetCurrentPlaceable(TSubclassOf<ADDPlaceable> Placeabl
 	}
 
 	Placeable->Destroy();
+	SetPreviewOnSoulChange();
 }
 
 void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass)
@@ -160,8 +167,6 @@ void ADDPlaceableManager::PurchasePlaceableAtCursor()
 			UE_LOG(LogTemp, Error, TEXT("Something went wrong with spawning a placeable at the cursor!"))
 		}
 	}
-
-	SetPreviewOnSoulChange(PlaceableInfo.IsBuyable());
 }
 
 void ADDPlaceableManager::CheckPreviewValidity()

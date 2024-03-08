@@ -8,6 +8,7 @@
 //My classes
 #include "../Projectile/DDProjectile.h"
 #include "../Characters/DDPlayer.h"
+#include "../Characters/DDPlaceable.h"
 #include "../Game/DDGameModeBase.h"
 #include "../Game/DDDifficulty.h"
 #include "../UI/DDEnemyHealthBar.h"
@@ -23,15 +24,22 @@ AEnemy::AEnemy()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>("FloatingPawnMovement");
+	AttackSight = CreateDefaultSubobject<UBoxComponent>("AttackSight");
 
 	RootComponent = Mesh;
 	Collider->SetupAttachment(Mesh);
 	Arrow->SetupAttachment(Mesh);
+	AttackSight->SetupAttachment(Mesh);
 
 	//Forces only the collider to have collision. 
 	//Whether this is a good idea, I dont know
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetCollisionObjectType(ECC_EnemyChannel);
+	AttackSight->SetCollisionObjectType(ECC_AttackRadiusChannel);
+	AttackSight->SetCollisionResponseToChannel(ECC_AttackRadiusChannel, ECR_Ignore);
+
+	AttackSight->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OverlapBegin);
+	AttackSight->OnComponentEndOverlap.AddDynamic(this, &AEnemy::OverlapEnd);
 }
 
 void AEnemy::BeginPlay()
@@ -58,6 +66,14 @@ void AEnemy::Tick(float DeltaTime)
 
 	CheckDistance();
 }
+
+void AEnemy::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	AdjustAttackBox();
+}
+
 UStaticMeshComponent* AEnemy::GetMeshComponent() const
 {
 	return Mesh;
@@ -84,7 +100,7 @@ void AEnemy::CheckDistance()
 	DistanceFromCastle = FMath::Abs(GetActorLocation().X - Player->GetActorLocation().X);
 
 	if (DistanceFromCastle < DistanceToAttack) {
-		FloatingPawnMovement->MaxSpeed = 0;
+		StopMoving();
 		StartShooting();
 	}	
 }
@@ -135,6 +151,38 @@ void AEnemy::UpdateHealth(const float HealthModifier)
 	UpdateHealthBar();
 }
 
+void AEnemy::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (bEnableAttackPlaceables) {
+		if (OtherActor && OtherActor->IsA<ADDPlaceable>()) {
+			ADDPlaceable* Place = Cast<ADDPlaceable>(OtherActor);
+
+			PlaceablesInSight.Add(Place);
+
+			StartShootingPlaceable();
+			StopMoving();
+		}
+	}
+}
+
+void AEnemy::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (bEnableAttackPlaceables) {
+		if (OtherActor && OtherActor->IsA<ADDPlaceable>()) {
+			ADDPlaceable* Place = Cast<ADDPlaceable>(OtherActor);
+
+			PlaceablesInSight.Remove(Place);
+
+			if (PlaceablesInSight.Num() <= 0) {
+				StopShooting();
+				StartMoving();
+			}
+		}
+	}
+}
+
 void AEnemy::OnDeath()
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -155,7 +203,6 @@ void AEnemy::StartShooting()
 	}
 }
 
-//TODO - Utilize this somehow. Has not been used yet
 void AEnemy::StopShooting()
 {
 	if (bIsShooting) {
@@ -164,14 +211,73 @@ void AEnemy::StopShooting()
 	}
 }
 
-void AEnemy::Shoot()
+void AEnemy::StartMoving()
+{
+	FloatingPawnMovement->MaxSpeed = MovementSpeed;
+}
+
+void AEnemy::StopMoving()
+{
+	FloatingPawnMovement->MaxSpeed = 0;
+}
+
+void AEnemy::Shoot() const
 {	
 	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation() + ProjectileOffset, GetActorRotation());
 	
 	if (Proj) {
 		Proj->SetProjectileOwner(GetUniqueID());
-		FVector Velocity = Proj->GetVelocity();
-		Proj->SetVelocity(Velocity * -1);
+		//Shoot negative x axis just cus castle is that direction
+		//Honestly could use vectors to do this dynamically, maybe later
+		FVector Velocity(-ProjectileSpeed, 0, 0);
+		Proj->SetVelocity(Velocity);
+		Proj->SetCollisionChannelToIgnore(ECC_EnemyChannel);
+		Proj->SetCollisionChannelToIgnore(ECC_AttackRadiusChannel);
+		Proj->SetDamage(Damage);
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("ERROR: Enemy projectile unable to spawn"))
+	}
+}
+
+void AEnemy::StartShootingPlaceable()
+{
+	if (!bIsShooting) {
+		bIsShooting = true;
+		GetWorldTimerManager().SetTimer(ShootHandle, this, &AEnemy::ShootPlaceable, ShootCooldown, true);
+	}
+}
+
+void AEnemy::ShootPlaceable() const
+{
+	if (PlaceablesInSight.Num() <= 0) {
+		UE_LOG(LogTemp, Error, TEXT("There are no placeables in sight!"))
+		return;
+	}
+
+	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation() + ProjectileOffset, GetActorRotation());
+
+	if (Proj) {
+		Proj->SetProjectileOwner(GetUniqueID());
+
+		//Always shooting first Placeable
+		ADDPlaceable* Placeable = PlaceablesInSight[0];
+
+		if (Placeable) {
+			FVector PlaceLoc = Placeable->GetActorLocation();
+			FVector ThisLoc = GetActorLocation();
+			FVector Direction = PlaceLoc - ThisLoc;
+			Direction.Normalize();
+
+			Proj->SetVelocity(Direction * ProjectileSpeed);
+		}
+		else {
+			UE_LOG(LogTemp, Error, TEXT("Placeable fetched is not valid"))
+				//Is there a reason for doing this? Projectile already has a default velocity
+			FVector Velocity(-ProjectileSpeed, 0, 0);
+			Proj->SetVelocity(Velocity);
+		}
+		
 		Proj->SetCollisionChannelToIgnore(ECC_EnemyChannel);
 		Proj->SetCollisionChannelToIgnore(ECC_AttackRadiusChannel);
 		Proj->SetDamage(Damage);
@@ -199,4 +305,16 @@ void AEnemy::FindPlayer()
 		// purpose of GetPlayer returning only a reference. Very awesome
 		Player = &(GameMode->GetPlayer());
 	}
+}
+
+void AEnemy::AdjustAttackBox()
+{
+	FVector Origin, BoxExtent;
+	Mesh->GetLocalBounds(Origin, BoxExtent);
+	
+	FVector NewBox(AttackSightDistance, BoxExtent.Y, BoxExtent.Z);
+	AttackSight->SetBoxExtent(NewBox);
+
+	FVector NewLocation(AttackSightDistance, 0, 0);
+	AttackSight->SetRelativeLocation(-NewLocation);
 }

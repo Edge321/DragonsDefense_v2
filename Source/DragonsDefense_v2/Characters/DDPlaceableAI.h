@@ -12,5 +12,5 @@ enum class EPlaceableAI : uint8 {
 	ClosestToCastle,
 	FurthestFromCastle,
 	RoundRobin,
-	CurrentAttacker
+	Random
 };

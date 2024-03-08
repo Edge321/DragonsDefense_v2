@@ -12,7 +12,7 @@ struct FDDPlaceablePurchaseInfo
 public:
 
 	bool IsBuyable() const;
-	void UpdateSouls() const;
+	void UpdateSouls();
 	void SetPrice(const int32 Price);
 	const int32 GetPrice() const;
 	void SetGameMode(ADDGameModeBase* Mode);

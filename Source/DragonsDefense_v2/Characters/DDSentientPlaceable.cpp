@@ -44,13 +44,7 @@ void ADDSentientPlaceable::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AttackCollider->SetSphereRadius(AttackRadius);
-
-	float RadiusMeshDiameter = GetRadiusMeshSize().Y;
-	float CorrectedScale = AttackRadius / (RadiusMeshDiameter / 2);
-	FVector Scale(1, CorrectedScale, CorrectedScale);
-
-	RadiusMesh->SetRelativeScale3D(Scale);
+	HideAttackRadius();
 }
 
 const UStaticMeshComponent* ADDSentientPlaceable::GetMesh() const
@@ -72,6 +66,7 @@ void ADDSentientPlaceable::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
+	//Adjusting Attack Collider and Attack Mesh as size of AttackRadius
 	AttackCollider->SetSphereRadius(AttackRadius);
 
 	float RadiusMeshDiameter = GetRadiusMeshSize().Y;
@@ -89,6 +84,16 @@ void ADDSentientPlaceable::SetAI(const EPlaceableAI AIState)
 EPlaceableAI ADDSentientPlaceable::GetAI() const
 {
 	return CurrentAI;
+}
+
+void ADDSentientPlaceable::ShowAttackRadius()
+{
+	RadiusMesh->SetVisibility(true);
+}
+
+void ADDSentientPlaceable::HideAttackRadius()
+{
+	RadiusMesh->SetVisibility(false);
 }
 
 void ADDSentientPlaceable::EnableHighlight()
@@ -147,6 +152,8 @@ void ADDSentientPlaceable::Attack()
 		return;
 	}
 
+	int RandomIndex;
+
 	switch (CurrentAI) {
 		case EPlaceableAI::Deactivated:
 			UE_LOG(LogTemp, Warning, TEXT("%s is deactivated but in attack state"), *GetName())
@@ -172,11 +179,14 @@ void ADDSentientPlaceable::Attack()
 				}));
 			break;
 		case EPlaceableAI::RoundRobin:
+			//Make sure its still within bounds
+			RobinIndex %= EnemiesInArea.Num();
 			AttackEnemy(EnemiesInArea[RobinIndex]);
 			RobinIndex = (RobinIndex + 1) % EnemiesInArea.Num();
 			break;
-		case EPlaceableAI::CurrentAttacker:
-			//TODO - Gather list of Enemies attacking placeable
+		case EPlaceableAI::Random:
+			RandomIndex = FMath::Rand() % EnemiesInArea.Num();
+			AttackEnemy(EnemiesInArea[RandomIndex]);
 			break;
 		default:
 			UE_LOG(LogTemp, Warning, TEXT("%s does not have a valid AI set"), *GetName())
@@ -235,6 +245,7 @@ void ADDSentientPlaceable::AddEnemy(AEnemy* Enemy)
 	}
 }
 
+//TODO - Honestly this entire code isnt necessary, TArray Remove function takes care of this
 void ADDSentientPlaceable::RemoveEnemy(AEnemy* Enemy)
 {
 	if (Enemy) {

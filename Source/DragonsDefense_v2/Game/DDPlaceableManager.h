@@ -32,7 +32,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "PlaceablePreview")
 	void SetPreviewMaterial(bool IsColliding);
 	UFUNCTION(BlueprintImplementableEvent, Category = "PlaceablePreview")
-	void SetPreviewOnSoulChange(bool IsBuyable);
+	void SetPreviewOnSoulChange();
+	UFUNCTION(BlueprintCallable, Category = "PlaceableInfo")
+	bool IsBuyable();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* ManagerIcon;

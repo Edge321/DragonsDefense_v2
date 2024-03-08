@@ -28,6 +28,8 @@ protected:
 	void SetCurrentPlaceable(ADDPlaceable* CurrentPlaceable);
 	UFUNCTION(BlueprintCallable, Category = "PlaceableAI")
 	void ChangeBehavior(const EPlaceableAI AI);
+	UFUNCTION(BlueprintCallable, Category = "Widget")
+	FVector2D CheckOutOfBounds(const FVector2D PanelSize, const FVector2D CursorLocation) const;
 	void GetStats();
 
 	UPROPERTY(BlueprintReadOnly, Category = "Placeable")

@@ -14,6 +14,7 @@ class UAudioComponent;
 class ADDCastle;
 class ADDPlayer;
 class ADDProjectile;
+class ADDPlaceable;
 class UDDEnemyHealthBar;
 
 DECLARE_DELEGATE_OneParam(FOnEnemyDeath, AEnemy*)
@@ -34,6 +35,9 @@ protected:
 	//insert AI component here if needed
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh; //TODO - Replace with skeletal mesh when we get to animation
+	//Utilized for attacking sentient placeables
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent* AttackSight;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
@@ -48,10 +52,17 @@ protected:
 	//Distance from the castle to attack
 	UPROPERTY(EditAnywhere, Category = "AI");
 	float DistanceToAttack = 100.0f;
+	//Distance from placeable to attack
+	UPROPERTY(EditAnywhere, Category = "AI");
+	float AttackSightDistance = 100.0f;
+	UPROPERTY(EditAnywhere, Category = "AI");
+	bool bEnableAttackPlaceables = true;
 	UPROPERTY(EditAnywhere, Category = "Stats");
 	float ShootCooldown = 1.0f;
 	UPROPERTY(EditAnywhere, Category = "Stats");
 	float MovementSpeed = 1.0f;
+	UPROPERTY(EditAnywhere, Category = "Stats");
+	float ProjectileSpeed = 800.0f;
 	UPROPERTY(EditAnywhere, Category = "Stats");
 	int32 SoulValue = 1;
 	UPROPERTY(EditAnywhere, Category = "Stats");
@@ -89,6 +100,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void OnConstruction(const FTransform& Transform) override;
+
 	UStaticMeshComponent* GetMeshComponent() const;
 	UFloatingPawnMovement* GetFloatingPawnMovement() const;
 	const float GetMovementSpeed() const;
@@ -99,18 +112,33 @@ public:
 	FOnEnemyDeath OnEnemyDeath;
 
 private:
+
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 	void ApplyModifiers() override;
 	void StartShooting();
 	void StopShooting();
-	void Shoot();
+	void StartMoving();
+	void StopMoving();
+	void Shoot() const;
+	void StartShootingPlaceable();
+	void StopShootingPlaceable();
+	void ShootPlaceable() const;
 	// Checks if projectile was assigned to the enemy
 	void ValidateProjectile();
 	//Checks if Health Bar Billboard has a material to work with
 	void ValidateHealthBar();
 	void FindPlayer();
+	void AdjustAttackBox();
 
 	ADDPlayer* Player;
 	FTimerHandle ShootHandle;
+	TArray<ADDPlaceable*> PlaceablesInSight;
 
 	bool bIsShooting = false;
 	float DistanceFromCastle;

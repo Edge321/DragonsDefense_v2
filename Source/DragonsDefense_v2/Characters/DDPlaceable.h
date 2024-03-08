@@ -37,8 +37,6 @@ public:
 
 	void SetSellingPrice(const int32 Price);
 
-	
-
 protected:
 
 	void OnDeath() override;

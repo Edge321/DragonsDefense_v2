@@ -55,9 +55,13 @@ public:
 	void SetAI(const EPlaceableAI AIState);
 	UFUNCTION(BlueprintPure, Category = "AI")
 	EPlaceableAI GetAI() const;
+	UFUNCTION(BlueprintCallable, Category = "AttackRadius")
+	void ShowAttackRadius();
+	UFUNCTION(BlueprintCallable, Category = "AttackRadius")
+	void HideAttackRadius();
+	
 	void EnableHighlight() override;
 	void DisableHighlight() override;
-
 	const UStaticMeshComponent* GetMesh() const;
 	const float GetAttackRadius() const;
 	const FVector GetRadiusMeshSize() const;

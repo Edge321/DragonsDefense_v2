@@ -7,6 +7,7 @@
 #include "../Characters/DDPlayer.h"
 
 #define ECC_PreviewChannel ECC_GameTraceChannel3
+#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
 
 // Sets default values
 ADDPlaceablePreview::ADDPlaceablePreview()
@@ -25,6 +26,7 @@ ADDPlaceablePreview::ADDPlaceablePreview()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	OptionalRadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetCollisionObjectType(ECC_PreviewChannel);
+
 }
 
 // Called when the game starts or when spawned
@@ -38,6 +40,7 @@ void ADDPlaceablePreview::BeginPlay()
 	Collider->OnComponentEndOverlap.AddDynamic(this, &ADDPlaceablePreview::OverlapEnd);
 
 	SetCollisionChannelToIgnore(ECollisionChannel::ECC_WorldStatic);
+	SetCollisionChannelToIgnore(ECC_AttackRadiusChannel);
 	DisableAttackRadius();
 }
 

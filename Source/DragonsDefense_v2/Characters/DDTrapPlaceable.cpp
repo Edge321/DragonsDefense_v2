@@ -56,7 +56,7 @@ void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 
 	if (LivingActor) {
 		LivingActor->UpdateHealth(Damage);
-		Destroy();
+		OnDeath();
 	}
 	else {
 		//BUG - Projectile for placeables still damage the trap. Should only be enemy's projectiles
