@@ -23,7 +23,7 @@ class DRAGONSDEFENSE_V2_API UDDPlaceableInfoWidget : public UUserWidget
 	GENERATED_BODY()
 
 protected:
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Placeable")
 	void SetCurrentPlaceable(ADDPlaceable* CurrentPlaceable);
 	UFUNCTION(BlueprintCallable, Category = "PlaceableAI")

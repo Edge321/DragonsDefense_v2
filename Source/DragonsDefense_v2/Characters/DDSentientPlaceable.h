@@ -47,6 +47,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
 	float ProjectileSpeed = 500.0f;
 
+	void OnSpawnOverlap(TArray<AActor*> OverlapActors) override;
+
 public:
 
 	void OnConstruction(const FTransform& Transform) override;

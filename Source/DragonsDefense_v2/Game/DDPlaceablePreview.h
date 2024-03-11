@@ -59,7 +59,6 @@ private:
 	const FVector GetMeshSize() const;
 	void GetControllerReference();
 	void UpdatePreview();
-	void SetCollisionChannelToIgnore(const ECollisionChannel Channel);
 
 	TArray<AActor*> ActorsColliding;
 

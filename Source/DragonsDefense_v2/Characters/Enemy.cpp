@@ -12,9 +12,7 @@
 #include "../Game/DDGameModeBase.h"
 #include "../Game/DDDifficulty.h"
 #include "../UI/DDEnemyHealthBar.h"
-
-#define ECC_EnemyChannel ECC_GameTraceChannel1
-#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
+#include "../Lib/DDColliderLibrary.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -36,7 +34,7 @@ AEnemy::AEnemy()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetCollisionObjectType(ECC_EnemyChannel);
 	AttackSight->SetCollisionObjectType(ECC_AttackRadiusChannel);
-	AttackSight->SetCollisionResponseToChannel(ECC_AttackRadiusChannel, ECR_Ignore);
+	DDColliderLibrary::SetCollisionChannelToIgnore(AttackSight, ECC_AttackRadiusChannel);
 
 	AttackSight->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OverlapBegin);
 	AttackSight->OnComponentEndOverlap.AddDynamic(this, &AEnemy::OverlapEnd);

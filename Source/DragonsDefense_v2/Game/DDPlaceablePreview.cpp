@@ -5,9 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 //My classes
 #include "../Characters/DDPlayer.h"
-
-#define ECC_PreviewChannel ECC_GameTraceChannel3
-#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
+#include "../Lib/DDColliderLibrary.h"
 
 // Sets default values
 ADDPlaceablePreview::ADDPlaceablePreview()
@@ -26,7 +24,6 @@ ADDPlaceablePreview::ADDPlaceablePreview()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	OptionalRadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetCollisionObjectType(ECC_PreviewChannel);
-
 }
 
 // Called when the game starts or when spawned
@@ -39,8 +36,8 @@ void ADDPlaceablePreview::BeginPlay()
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDPlaceablePreview::OverlapBegin);
 	Collider->OnComponentEndOverlap.AddDynamic(this, &ADDPlaceablePreview::OverlapEnd);
 
-	SetCollisionChannelToIgnore(ECollisionChannel::ECC_WorldStatic);
-	SetCollisionChannelToIgnore(ECC_AttackRadiusChannel);
+	DDColliderLibrary::SetCollisionChannelToIgnore(Collider, ECC_WorldStatic);
+	DDColliderLibrary::SetCollisionChannelToIgnore(Collider, ECC_AttackRadiusChannel);
 	DisableAttackRadius();
 }
 
@@ -201,9 +198,3 @@ void ADDPlaceablePreview::UpdatePreview()
 		SetActorLocation(Hit.Location + AdjustedOffset);
 	}
 }
-
-void ADDPlaceablePreview::SetCollisionChannelToIgnore(const ECollisionChannel Channel)
-{
-	Collider->SetCollisionResponseToChannel(Channel, ECR_Ignore);
-}
-

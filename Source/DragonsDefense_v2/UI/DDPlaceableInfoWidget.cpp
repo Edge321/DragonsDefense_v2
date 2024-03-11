@@ -79,6 +79,6 @@ FVector2D UDDPlaceableInfoWidget::CheckOutOfBounds(const FVector2D PanelSize, co
 
 void UDDPlaceableInfoWidget::GetStats()
 {
-
+	//TODO - Work in progress....
 }
 

@@ -5,6 +5,7 @@
 //My classes
 #include "../Game/DDGameModeBase.h"
 #include "../Game/DDDifficulty.h"
+#include "../Lib/DDColliderLibrary.h"
 
 // Sets default values
 ADDPlaceable::ADDPlaceable()
@@ -13,6 +14,7 @@ ADDPlaceable::ADDPlaceable()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	Collider->SetCollisionObjectType(ECC_PlaceableChannel);
+	DDColliderLibrary::SetCollisionChannelToIgnore(Collider, ECC_PlaceableChannel);
 }
 
 void ADDPlaceable::SetSellingPrice(const int32 Price)

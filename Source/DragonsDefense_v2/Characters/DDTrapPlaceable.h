@@ -28,6 +28,7 @@ protected:
 	const UStaticMeshComponent* GetMesh() const override;
 	void EnableHighlight() override;
 	void DisableHighlight() override;
+	void OnSpawnOverlap(TArray<AActor*> OverlapActors) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;

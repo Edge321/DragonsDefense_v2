@@ -5,8 +5,7 @@
 //My classes
 #include "../Characters/LivingActor.h"
 #include "../Projectile/DDProjectile.h"
-
-#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
+#include "../Lib/DDColliderLibrary.h"
 
 // Sets default values
 ADDTrapPlaceable::ADDTrapPlaceable()
@@ -22,8 +21,8 @@ ADDTrapPlaceable::ADDTrapPlaceable()
 
 	//He was forced to use only collider box
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	DDColliderLibrary::SetCollisionChannelToIgnore(Collider, ECC_AttackRadiusChannel);
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDTrapPlaceable::OverlapBegin);
-	Collider->SetCollisionResponseToChannel(ECC_AttackRadiusChannel, ECR_Ignore);
 
 	Mesh->bRenderCustomDepth = true;
 }
@@ -32,6 +31,10 @@ ADDTrapPlaceable::ADDTrapPlaceable()
 void ADDTrapPlaceable::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TArray<AActor*> OverlapActors;
+	Collider->GetOverlappingActors(OverlapActors);
+	OnSpawnOverlap(OverlapActors);
 }
 
 const UStaticMeshComponent* ADDTrapPlaceable::GetMesh() const
@@ -47,6 +50,19 @@ void ADDTrapPlaceable::EnableHighlight()
 void ADDTrapPlaceable::DisableHighlight()
 {
 	Mesh->SetCustomDepthStencilValue(0);
+}
+
+void ADDTrapPlaceable::OnSpawnOverlap(TArray<AActor*> OverlapActors)
+{
+	//Just damage the first LivingActor its colliding with
+	for (AActor* Actor : OverlapActors) {
+		if (Actor && Actor->IsA<ALivingActor>()) {
+			ALivingActor* LivingActor = Cast<ALivingActor>(Actor);
+			LivingActor->UpdateHealth(Damage);
+			OnDeath();
+			break;
+		}
+	}
 }
 
 void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

@@ -8,9 +8,7 @@
 #include "../Characters/Enemy.h"
 #include "../Characters/DDPlaceableAI.h"
 #include "../Projectile/DDProjectile.h"
-
-#define ECC_PreviewChannel ECC_GameTraceChannel3
-#define ECC_AttackRadiusChannel ECC_GameTraceChannel4
+#include "../Lib/DDColliderLibrary.h"
 
 ADDSentientPlaceable::ADDSentientPlaceable()
 {
@@ -30,7 +28,7 @@ ADDSentientPlaceable::ADDSentientPlaceable()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	RadiusMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	AttackCollider->SetCollisionObjectType(ECC_AttackRadiusChannel);
-	AttackCollider->SetCollisionResponseToChannel(ECC_PreviewChannel, ECollisionResponse::ECR_Ignore);
+	DDColliderLibrary::SetCollisionChannelToIgnore(AttackCollider, ECC_PreviewChannel);
 
 	AttackCollider->OnComponentBeginOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapBegin);
 	AttackCollider->OnComponentEndOverlap.AddDynamic(this, &ADDSentientPlaceable::OverlapEnd);
@@ -38,6 +36,7 @@ ADDSentientPlaceable::ADDSentientPlaceable()
 	Mesh->bRenderCustomDepth = true;
 
 	CurrentAI = EPlaceableAI::ClosestToCastle;
+
 }
 
 void ADDSentientPlaceable::BeginPlay()
@@ -60,6 +59,11 @@ const float ADDSentientPlaceable::GetAttackRadius() const
 const FVector ADDSentientPlaceable::GetRadiusMeshSize() const
 {
 	return RadiusMesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
+}
+
+void ADDSentientPlaceable::OnSpawnOverlap(TArray<AActor*> OverlapActors)
+{
+	//TODO - this necessary for sentients?
 }
 
 void ADDSentientPlaceable::OnConstruction(const FTransform& Transform)

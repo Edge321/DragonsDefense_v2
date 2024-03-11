@@ -6,7 +6,6 @@
 #include "../Characters/LivingActor.h"
 #include "DDPlaceable.generated.h"
 
-#define ECC_PlaceableChannel ECC_GameTraceChannel2
 #define Stencil_HighlightDepth 3
 
 DECLARE_DELEGATE_OneParam(FOnPlaceableDeath, ADDPlaceable*)
@@ -27,6 +26,8 @@ public:
 	void Sell();
 	UFUNCTION(BlueprintPure)
 	const int32 GetSellingPrice() const;
+
+	//pure virtual functions
 	UFUNCTION(BlueprintCallable, Category = "Highlight")
 	virtual void EnableHighlight() {};
 	UFUNCTION(BlueprintCallable, Category = "Highlight")
@@ -51,6 +52,9 @@ protected:
 	float NormalSellingPriceMod = 0.8f;
 	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float HardSellingPriceMod = 0.5f;
+
+	//Pure virtuals
+	virtual void OnSpawnOverlap(TArray<AActor*> OverlapActors) {};
 
 public:
 

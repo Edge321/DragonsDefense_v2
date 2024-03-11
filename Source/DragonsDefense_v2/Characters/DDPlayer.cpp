@@ -9,8 +9,7 @@
 #include "../Game/DDGameModeBase.h"
 #include "../Projectile/DDProjectile.h"
 #include "../Characters/DDPlaceable.h"
-
-#define ECC_PlaceableChannel ECC_GameTraceChannel2
+#include "../Lib/DDColliderLibrary.h"
 
 // Sets default values
 ADDPlayer::ADDPlayer()
@@ -23,7 +22,7 @@ ADDPlayer::ADDPlayer()
 
 	RootComponent = Mesh;
 
-	//Forces collider to have the only collision
+	//Forces collider to be the only one with collision
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider->SetupAttachment(Mesh);
 	Arrow->SetupAttachment(Mesh);
