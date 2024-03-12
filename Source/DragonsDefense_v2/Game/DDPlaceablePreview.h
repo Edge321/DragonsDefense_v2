@@ -41,6 +41,7 @@ public:
 	void EnableAttackRadius();
 	void DisableAttackRadius();
 	void ClearActorsArray();
+	const bool GetCurrentlyColliding() const;
 
 	FOnColliding OnColliding;
 

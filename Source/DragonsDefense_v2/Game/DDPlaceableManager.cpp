@@ -109,7 +109,7 @@ void ADDPlaceableManager::SetCurrentPlaceable(TSubclassOf<ADDPlaceable> Placeabl
 	//Not sure if this is the greatest way to get the scale of the actor
 	ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, GetActorLocation(), GetActorRotation());
 	Placeable->SetActorEnableCollision(false);
-
+	
 	if (Placeable) {
 		FVector Scale = Placeable->GetActorScale();
 		UStaticMesh* Mesh = Placeable->GetMesh()->GetStaticMesh();
@@ -133,6 +133,8 @@ void ADDPlaceableManager::SetCurrentPlaceable(TSubclassOf<ADDPlaceable> Placeabl
 	}
 
 	Placeable->Destroy();
+	bool CurrentlyColliding = Preview->GetCurrentlyColliding();
+	SetPreviewMaterial(CurrentlyColliding);
 	SetPreviewOnSoulChange();
 }
 

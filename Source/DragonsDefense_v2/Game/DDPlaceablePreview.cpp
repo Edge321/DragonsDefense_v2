@@ -147,6 +147,14 @@ void ADDPlaceablePreview::ClearActorsArray()
 	ActorsColliding.Empty();
 }
 
+const bool ADDPlaceablePreview::GetCurrentlyColliding() const
+{
+	TArray<AActor*> Actors;
+	Collider->GetOverlappingActors(Actors);
+
+	return Actors.Num() > 0 ? true : false;
+}
+
 void ADDPlaceablePreview::GetControllerReference()
 {
 	Controller = UGameplayStatics::GetPlayerController(this, 0);

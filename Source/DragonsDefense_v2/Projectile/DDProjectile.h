@@ -55,6 +55,8 @@ public:
 	// Who owns the projectile
 	UFUNCTION(BlueprintCallable, Category = "Setter")
 	void SetProjectileOwner(const AActor* Actor);
+	UFUNCTION(BlueprintCallable, Category = "Setter")
+	const AActor* GetProjectileOwner() const;
 	UFUNCTION(BlueprintCallable, Category = "Collision")
 	void SetCollisionChannelToIgnore(const ECollisionChannel Channel);
 
@@ -75,4 +77,5 @@ private:
 	FTimerHandle ProjectileTimer;
 	//ID of projectile's owner
 	uint32 OwnerID;
+	const AActor* ActorOwner;
 };

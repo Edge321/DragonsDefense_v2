@@ -4,6 +4,7 @@
 #include "DDTrapPlaceable.h"
 //My classes
 #include "../Characters/LivingActor.h"
+#include "../Characters/Enemy.h"
 #include "../Projectile/DDProjectile.h"
 #include "../Lib/DDColliderLibrary.h"
 
@@ -75,12 +76,13 @@ void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 		OnDeath();
 	}
 	else {
-		//BUG - Projectile for placeables still damage the trap. Should only be enemy's projectiles
-		//Maybe add tags to the projectile?
-		ADDProjectile* Projectile = Cast<ADDProjectile>(OtherActor);
-
-		if (Projectile) {
-			UpdateHealth(Projectile->GetDamage());
+		if (OtherActor && OtherActor->IsA<ADDProjectile>()) {
+			ADDProjectile* Projectile = Cast<ADDProjectile>(OtherActor);
+			const AActor* ProjOwner = Projectile->GetProjectileOwner();
+			
+			if (ProjOwner->IsA<AEnemy>()) {
+				UpdateHealth(Projectile->GetDamage());
+			}
 		}
 	}
 }

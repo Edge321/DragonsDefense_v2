@@ -76,6 +76,12 @@ void ADDProjectile::SetProjectileOwner(const AActor* Actor)
 {
 	uint32 ActorID = Actor->GetUniqueID();
 	OwnerID = ActorID;
+	ActorOwner = Actor;
+}
+
+const AActor* ADDProjectile::GetProjectileOwner() const
+{
+	return ActorOwner;
 }
 
 void ADDProjectile::SetCollisionChannelToIgnore(const ECollisionChannel Channel)
