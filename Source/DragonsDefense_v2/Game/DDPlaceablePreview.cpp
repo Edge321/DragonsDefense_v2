@@ -60,7 +60,7 @@ void ADDPlaceablePreview::OverlapBegin(UPrimitiveComponent* OverlappedComponent,
 	}
 
 	AddActor(OtherActor);
-	OnColliding.ExecuteIfBound(true);
+	OnColliding.ExecuteIfBound();
 }
 
 void ADDPlaceablePreview::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
@@ -69,7 +69,7 @@ void ADDPlaceablePreview::OverlapEnd(UPrimitiveComponent* OverlappedComponent, A
 	RemoveActor(OtherActor);
 
 	if (ActorsColliding.Num() <= 0) {
-		OnColliding.ExecuteIfBound(false);
+		OnColliding.ExecuteIfBound();
 	}
 }
 

@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "DDPlaceablePreview.generated.h"
 
-DECLARE_DELEGATE_OneParam(FOnColliding, bool);
+DECLARE_DELEGATE(FOnColliding);
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlaceablePreview : public AActor
@@ -34,6 +34,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void SetMaterial(UMaterialInstance* Material);
+	UFUNCTION(BlueprintCallable, Category = "Material")
+	const bool GetCurrentlyColliding() const;
 
 	void SetMesh(UStaticMesh* NewMesh);
 	void SetScale(FVector Scale);
@@ -41,7 +43,7 @@ public:
 	void EnableAttackRadius();
 	void DisableAttackRadius();
 	void ClearActorsArray();
-	const bool GetCurrentlyColliding() const;
+
 
 	FOnColliding OnColliding;
 

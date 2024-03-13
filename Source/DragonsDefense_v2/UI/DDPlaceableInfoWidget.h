@@ -31,6 +31,8 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Widget")
 	FVector2D CheckOutOfBounds(const FVector2D PanelSize, const FVector2D CursorLocation) const;
 	void GetStats();
+	UFUNCTION(BlueprintImplementableEvent, Category = "Placeable")
+	void CloseMenuOnPlaceable(ADDPlaceable* Placeable);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Placeable")
 	ADDPlaceable* MostRecentPlaceable;

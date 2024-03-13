@@ -10,6 +10,8 @@
 class ADDPlaceablePreview;
 class ADDPlaceable;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnKilledPlaceable, ADDPlaceable*, Placeable);
+
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlaceableManager : public AActor
 {
@@ -29,12 +31,11 @@ protected:
 	FVector GetPreviewLocation() const;
 	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
 	void CanPlace(bool PlaceStatus);
+	//Checks if preview should be in red or green due to certain factors
 	UFUNCTION(BlueprintImplementableEvent, Category = "PlaceablePreview")
-	void SetPreviewMaterial(bool IsColliding);
-	UFUNCTION(BlueprintImplementableEvent, Category = "PlaceablePreview")
-	void SetPreviewOnSoulChange();
-	UFUNCTION(BlueprintCallable, Category = "PlaceableInfo")
-	bool IsBuyable();
+	void IsPreviewValid();
+	UFUNCTION(BlueprintPure, Category = "PlaceableInfo")
+	bool IsBuyable() const;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBillboardComponent* ManagerIcon;
@@ -57,6 +58,9 @@ public:
 	void PurchasePlaceableAtCursor();
 	UFUNCTION(BlueprintCallable, Category = "PlaceablePreview")
 	void SetCurrentPlaceable(TSubclassOf<ADDPlaceable> PlaceableClass, int32 Price);
+
+	UPROPERTY(BlueprintAssignable)
+	FOnKilledPlaceable OnKilledPlaceable;
 
 private:
 

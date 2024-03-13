@@ -31,7 +31,7 @@ void ADDPlaceableManager::BeginPlay()
 	
 	if (Preview) {
 		Preview->SetActorHiddenInGame(true);
-		Preview->OnColliding.BindUObject(this, &ADDPlaceableManager::SetPreviewMaterial);
+		Preview->OnColliding.BindUObject(this, &ADDPlaceableManager::IsPreviewValid);
 	}
 	else {
 		UE_LOG(LogTemp, Fatal, TEXT("Something went wrong with the preview!"))
@@ -47,7 +47,7 @@ void ADDPlaceableManager::BeginPlay()
 		GameMode->OnWaveOver.AddDynamic(this, &ADDPlaceableManager::WaveOverEventFunction);
 		GameMode->OnWaveStart.AddDynamic(this, &ADDPlaceableManager::WaveStartEventFunction);
 		GameMode->OnPlacing.AddDynamic(this, &ADDPlaceableManager::SetPreviewStatus);
-		GameMode->OnUpdateSouls.AddDynamic(this, &ADDPlaceableManager::SetPreviewOnSoulChange);
+		GameMode->OnUpdateSouls.AddDynamic(this, &ADDPlaceableManager::IsPreviewValid);
 	}
 }
 
@@ -76,7 +76,7 @@ void ADDPlaceableManager::CanPlace(bool PlaceStatus)
 	bCanPlace = PlaceStatus;
 }
 
-bool ADDPlaceableManager::IsBuyable()
+bool ADDPlaceableManager::IsBuyable() const
 {
 	return PlaceableInfo.IsBuyable();
 }
@@ -133,9 +133,7 @@ void ADDPlaceableManager::SetCurrentPlaceable(TSubclassOf<ADDPlaceable> Placeabl
 	}
 
 	Placeable->Destroy();
-	bool CurrentlyColliding = Preview->GetCurrentlyColliding();
-	SetPreviewMaterial(CurrentlyColliding);
-	SetPreviewOnSoulChange();
+	IsPreviewValid();
 }
 
 void ADDPlaceableManager::SpawnPlaceableAtCursor(TSubclassOf<ADDPlaceable> PlaceableClass)
@@ -185,6 +183,8 @@ void ADDPlaceableManager::RemovePlaceableFromPool(ADDPlaceable* Placeable)
 {
 	//TODO - Could possibly use maps or whatever UE uses for fast access
 	int32 UniqueID = Placeable->GetUniqueID();
+
+	OnKilledPlaceable.Broadcast(Placeable);
 
 	for (ADDPlaceable* SomePlaceable : PlaceablePool) {
 		if (SomePlaceable && SomePlaceable->GetUniqueID() == UniqueID) {
