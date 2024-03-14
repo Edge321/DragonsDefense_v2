@@ -9,7 +9,6 @@ void ADDShrewdEnemy::Tick(float DeltaTime)
 
 	float TimeSinceStart = GetWorld()->GetTimeSeconds();
 
-	//TODO - optimize it so only one place is calculating this, cus there can be huge problems with lots of shrewd enemies on the screen
 	float MovementX = DeltaTime * MovementSpeed * -1.0;
 	float MovementY = DeltaTime * (Amplitude * (FMath::Sin(Frequency * TimeSinceStart)));
 

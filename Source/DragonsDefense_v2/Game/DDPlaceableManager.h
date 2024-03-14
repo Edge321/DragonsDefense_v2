@@ -74,20 +74,12 @@ private:
 	UFUNCTION()
 	void GameOverEventFunction();
 	UFUNCTION()
-	void GameStartEventFunction();
-	UFUNCTION()
-	void WaveStartEventFunction();
-	UFUNCTION()
-	void WaveOverEventFunction();
-	UFUNCTION()
 	void SetPreviewStatus(bool IsPlacing);
 
 	TSubclassOf<ADDPlaceable> CurrentPlaceableClass;
 	TArray<ADDPlaceable*> PlaceablePool;
+	//TODO - do this :)
+	TMap<uint32, ADDPlaceable*> PlaceablePoolMap;
 	
 	FDDPlaceablePurchaseInfo PlaceableInfo;
-
-	//TODO -  Think about what is going on here....few know this
-	int32 MaxPlaceables = 32;
-	int32 CurrentPlaceables = 0;
 };

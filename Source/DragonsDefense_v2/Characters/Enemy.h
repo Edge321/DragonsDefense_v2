@@ -106,6 +106,7 @@ public:
 	UFloatingPawnMovement* GetFloatingPawnMovement() const;
 	const float GetMovementSpeed() const;
 	const float GetDistanceFromCastle() const;
+	const float GetMaxSpeed() const;
 
 	void UpdateHealth(const float HealthModifier) override;
 
@@ -127,12 +128,9 @@ private:
 	void StopMoving();
 	void Shoot() const;
 	void StartShootingPlaceable();
-	void StopShootingPlaceable();
 	void ShootPlaceable() const;
 	// Checks if projectile was assigned to the enemy
 	void ValidateProjectile();
-	//Checks if Health Bar Billboard has a material to work with
-	void ValidateHealthBar();
 	void FindPlayer();
 	void AdjustAttackBox();
 

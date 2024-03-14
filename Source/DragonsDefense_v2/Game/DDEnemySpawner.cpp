@@ -24,8 +24,6 @@ void ADDEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	OriginalSpawnInterval = SpawnInterval;
-
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		GameMode->OnGameOver.AddDynamic(this, &ADDEnemySpawner::GameOverEventFunction);
@@ -58,6 +56,7 @@ void ADDEnemySpawner::SpawnEnemy()
 		EnemyCounter++;
 	}
 
+	StartSpawn();
 	CheckEnemiesSpawned();
 }
 
@@ -101,8 +100,8 @@ void ADDEnemySpawner::SetWaveStats(const FWaveInfo Wave)
 {
 	EnemiesToSpawn = Wave.EnemiesToSpawn;
 	MaxEnemySpawn = Wave.NumberOfEnemies;
-	//TODO - Implement high and low spawn intervals
-	SpawnInterval = Wave.LowSpawnInterval;
+	LowSpawnInterval = Wave.LowSpawnInterval;
+	HighSpawnInterval = Wave.HighSpawnInterval;
 }
 
 void ADDEnemySpawner::CheckEnemiesSpawned()
@@ -125,7 +124,7 @@ void ADDEnemySpawner::CheckIfWaveOver() const
 void ADDEnemySpawner::GameOverEventFunction()
 {
 	CurrentWave = 1;
-	SpawnInterval = OriginalSpawnInterval; //Might not be necessary tbh
+	//HighSpawnInterval = OriginalSpawnInterval; //Might not be necessary tbh
 	EnemyCounter = 0;
 	StopSpawn();
 	CleanPool();
@@ -212,9 +211,20 @@ void ADDEnemySpawner::SetMaxEnemySpawn(const int32 NewMaxEnemySpawn)
 	MaxEnemySpawn = NewMaxEnemySpawn;
 }
 
-void ADDEnemySpawner::SetSpawnInterval(const float NewSpawnInterval)
+void ADDEnemySpawner::SetSpawnIntervals(const float NewLowSpawnInterval, const float NewHighSpawnInterval)
 {
-	SpawnInterval = NewSpawnInterval;
+	LowSpawnInterval = NewLowSpawnInterval;
+	HighSpawnInterval = NewHighSpawnInterval;
+}
+
+void ADDEnemySpawner::SetLowSpawnInterval(const float NewLowSpawnInterval)
+{
+	LowSpawnInterval = NewLowSpawnInterval;
+}
+
+void ADDEnemySpawner::SetHighSpawnInterval(const float NewHighSpawnInterval)
+{
+	HighSpawnInterval = NewHighSpawnInterval;
 }
 
 TArray<TSubclassOf<AEnemy>> ADDEnemySpawner::GetEnemiesToSpawn() const
@@ -227,14 +237,20 @@ int32 ADDEnemySpawner::GetMaxEnemySpawn() const
 	return MaxEnemySpawn;
 }
 
-float ADDEnemySpawner::GetSpawnInterval() const
+float ADDEnemySpawner::GetLowSpawnInterval() const
 {
-	return SpawnInterval;
+	return LowSpawnInterval;
+}
+
+float ADDEnemySpawner::GetHighSpawnInterval() const
+{
+	return HighSpawnInterval;
 }
 
 void ADDEnemySpawner::StartSpawn()
 {
-	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &ADDEnemySpawner::SpawnEnemy, SpawnInterval, true);
+	float RandomInterval = FMath::RandRange(LowSpawnInterval, HighSpawnInterval);
+	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &ADDEnemySpawner::SpawnEnemy, RandomInterval, true);
 }
 
 void ADDEnemySpawner::StopSpawn()

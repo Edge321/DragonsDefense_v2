@@ -12,7 +12,6 @@ void UDDInfiniteUpgradeButton::Upgrade(EPlayerStats Stat)
 		Player = &(GameMode->GetPlayer());
 	}
 
-	//TODO - Add limitation on if health is full, prevent health upgrade being bought
 	switch (Stat) {
 	case EPlayerStats::Health:
 		Player->UpdateHealth(UpgradeAmount);

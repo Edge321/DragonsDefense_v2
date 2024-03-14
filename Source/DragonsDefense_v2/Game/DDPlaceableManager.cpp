@@ -43,9 +43,6 @@ void ADDPlaceableManager::BeginPlay()
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		GameMode->OnGameOver.AddDynamic(this, &ADDPlaceableManager::GameOverEventFunction);
-		GameMode->OnGameStart.AddDynamic(this, &ADDPlaceableManager::GameStartEventFunction);
-		GameMode->OnWaveOver.AddDynamic(this, &ADDPlaceableManager::WaveOverEventFunction);
-		GameMode->OnWaveStart.AddDynamic(this, &ADDPlaceableManager::WaveStartEventFunction);
 		GameMode->OnPlacing.AddDynamic(this, &ADDPlaceableManager::SetPreviewStatus);
 		GameMode->OnUpdateSouls.AddDynamic(this, &ADDPlaceableManager::IsPreviewValid);
 	}
@@ -55,6 +52,7 @@ void ADDPlaceableManager::ChangePreviewMesh(UStaticMesh* Mesh, const FVector Sca
 {
 	Preview->SetMesh(Mesh);
 	Preview->SetScale(Scale);
+	Preview->CalculateOffset();
 }
 
 void ADDPlaceableManager::SetPreviewStatus(bool IsPlacing) {
@@ -81,7 +79,7 @@ bool ADDPlaceableManager::IsBuyable() const
 	return PlaceableInfo.IsBuyable();
 }
 
-//TODO - might not need this tbh, we will see
+//Not currently used...
 void ADDPlaceableManager::SpawnPlaceable(TSubclassOf<ADDPlaceable> PlaceableClass, const FVector Location, const FRotator Rotation)
 {
 	 ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, Location, Rotation);
@@ -220,19 +218,4 @@ void ADDPlaceableManager::InitializePurchaseInfo()
 void ADDPlaceableManager::GameOverEventFunction()
 {
 	ClearPool();
-}
-
-void ADDPlaceableManager::GameStartEventFunction()
-{
-	//TODO - think about how necessary this is
-}
-
-void ADDPlaceableManager::WaveStartEventFunction()
-{
-	//TODO - think about how necessary this is
-}
-
-void ADDPlaceableManager::WaveOverEventFunction()
-{
-	//TODO - think about how necessary this is
 }

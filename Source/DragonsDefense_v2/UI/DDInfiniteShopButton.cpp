@@ -34,7 +34,7 @@ void UDDInfiniteShopButton::IsBuyable()
 		return;
 	}
 
-	if (Souls >= Price) {
+	if (Souls >= Price && bIsAuthorized) {
 		bIsBuyable = true;
 		SetBackgroundColor(BuyableColor);
 	}
@@ -42,6 +42,18 @@ void UDDInfiniteShopButton::IsBuyable()
 		bIsBuyable = false;
 		SetBackgroundColor(UnBuyableColor);
 	}
+}
+
+void UDDInfiniteShopButton::EnableButton()
+{
+	bIsAuthorized = true;
+	IsBuyable();
+}
+
+void UDDInfiniteShopButton::DisableButton()
+{
+	SetBackgroundColor(UnBuyableColor);
+	bIsAuthorized = false;
 }
 
 FText UDDInfiniteShopButton::FetchFTextPrice()

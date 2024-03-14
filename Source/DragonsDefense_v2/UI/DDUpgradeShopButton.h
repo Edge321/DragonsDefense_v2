@@ -26,6 +26,7 @@ protected:
 	void Upgrade(EPlayerStats Stat) const;
 	UFUNCTION(BlueprintCallable)
 	void IncreasePrice();
+
 	void UpdateSouls() override;
 	void GameOverEventFunction() override;
 

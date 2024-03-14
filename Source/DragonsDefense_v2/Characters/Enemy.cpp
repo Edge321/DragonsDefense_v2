@@ -49,7 +49,6 @@ void AEnemy::BeginPlay()
 	TempHealth = Health;
 
 	ValidateProjectile();
-	ValidateHealthBar();
 	FindPlayer();
 	ApplyModifiers();
 }
@@ -89,6 +88,11 @@ const float AEnemy::GetMovementSpeed() const
 const float AEnemy::GetDistanceFromCastle() const 
 {
 	return DistanceFromCastle;
+}
+
+const float AEnemy::GetMaxSpeed() const
+{
+	return FloatingPawnMovement->GetMaxSpeed();
 }
 
 //Checks distance between the enemy and the castle
@@ -288,11 +292,6 @@ void AEnemy::ShootPlaceable() const
 void AEnemy::ValidateProjectile()
 {
 	check(Projectile != nullptr);
-}
-
-void AEnemy::ValidateHealthBar()
-{
-	//TODO - Do we even need this?
 }
 
 void AEnemy::FindPlayer()

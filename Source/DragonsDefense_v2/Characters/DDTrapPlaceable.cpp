@@ -36,6 +36,11 @@ void ADDTrapPlaceable::BeginPlay()
 	TArray<AActor*> OverlapActors;
 	Collider->GetOverlappingActors(OverlapActors);
 	OnSpawnOverlap(OverlapActors);
+
+	if (bIgnoreProjectiles) {
+		//Ignore projectiles. It looks like only projectiles are in ECC_WorldDynamic
+		DDColliderLibrary::SetCollisionChannelToIgnore(Collider, ECC_WorldDynamic);
+	}
 }
 
 const UStaticMeshComponent* ADDTrapPlaceable::GetMesh() const
@@ -77,7 +82,7 @@ void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 
 	if (LivingActor) {
 		LivingActor->UpdateHealth(Damage);
-		OnDeath();
+		OnDeath(); //TODO - Will be changed later to some general function for future trap classes to use
 	}
 	else {
 		if (OtherActor && OtherActor->IsA<ADDProjectile>()) {

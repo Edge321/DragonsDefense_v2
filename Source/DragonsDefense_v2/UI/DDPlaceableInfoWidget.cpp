@@ -8,6 +8,8 @@
 #include "../Characters/DDPlaceable.h"
 #include "../Characters/DDSentientPlaceable.h"
 #include "../Characters/DDTrapPlaceable.h"
+#include "../Characters/DDPlayer.h"
+#include "../Game/DDGameModeBase.h"
 
 void UDDPlaceableInfoWidget::SetCurrentPlaceable(ADDPlaceable* CurrentPlaceable)
 {
@@ -79,6 +81,14 @@ FVector2D UDDPlaceableInfoWidget::CheckOutOfBounds(const FVector2D PanelSize, co
 
 void UDDPlaceableInfoWidget::GetStats()
 {
-	//TODO - Work in progress....
+	float Damage;
+
+	switch (bIsSentient) {
+		case true:
+			Damage = MostRecentPlaceable->GetDamage();
+			//TODO - Address this later tbh
+		case false:
+			break;
+	}
 }
 

@@ -21,8 +21,6 @@ public:
 
 protected:
 
-	//TODO - Make a function for optionally ignoring enemy bullets. Maybe have to go into projectiles
-
 	virtual void BeginPlay() override;
 
 	const UStaticMeshComponent* GetMesh() const override;
@@ -32,12 +30,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectiles")
+	bool bIgnoreProjectiles = false;
 
 private:
 
 	UFUNCTION()
 	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 
 };

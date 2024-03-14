@@ -38,7 +38,6 @@ void ADDProjectile::BeginPlay()
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ADDProjectile::OverlapBegin);
 
 	//Prevents collider from colliding if spawned inside its owner (heehee)
-	//TODO - Dont think we need this code anymore
 	Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());

@@ -71,12 +71,14 @@ public:
 
 	void SetEnemiesToSpawn(const TArray<TSubclassOf<AEnemy>> NewEnemiesToSpawn);
 	void SetMaxEnemySpawn(const int32 NewMaxEnemySpawn);
-	void SetSpawnInterval(const float NewSpawnInterval);
-	//TODO -  Add low and high spawn intervals
+	void SetSpawnIntervals(const float NewLowSpawnInterval, const float NewHighSpawnInterval);
+	void SetLowSpawnInterval(const float NewLowSpawnInterval);
+	void SetHighSpawnInterval(const float NewHighSpawnInterval);
 
 	TArray<TSubclassOf<AEnemy>> GetEnemiesToSpawn() const;
 	int32 GetMaxEnemySpawn() const;
-	float GetSpawnInterval() const;
+	float GetLowSpawnInterval() const;
+	float GetHighSpawnInterval() const;
 
 private:
 	void StartSpawn();
@@ -101,7 +103,8 @@ private:
 	void WaveOverEventFunction();
 
 	TArray<TSubclassOf<AEnemy>> EnemiesToSpawn;
-	float SpawnInterval = 3.0f;
+	float LowSpawnInterval = 1.0f;
+	float HighSpawnInterval = 3.0f;
 
 	float OriginalSpawnInterval;
 	FTimerHandle SpawnTimerHandle;

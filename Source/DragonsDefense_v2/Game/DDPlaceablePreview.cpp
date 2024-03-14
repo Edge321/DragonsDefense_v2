@@ -147,6 +147,26 @@ void ADDPlaceablePreview::ClearActorsArray()
 	ActorsColliding.Empty();
 }
 
+void ADDPlaceablePreview::CalculateOffset()
+{
+	FVector MouseLocation, MouseDirection;
+
+	if (Controller) {
+		Controller->DeprojectMousePositionToWorld(MouseLocation, MouseDirection);
+	}
+	else {
+		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceablePreview, aborting"))
+	}
+	//Math for adjusting the mesh to be on top of the floor instead of in it
+	//Takes origin at the middle of the shape
+	FVector Size = GetMeshSize();
+	FVector Scale = Mesh->GetComponentScale();
+	float DeltaZ = (Size.Z / 2) * Scale.Z;
+	float DeltaX = (DeltaZ * (MouseDirection.X / MouseDirection.Z)) * Scale.X;
+
+	AdjustedOffset = FVector(DeltaX, 0, DeltaZ);
+}
+
 const bool ADDPlaceablePreview::GetCurrentlyColliding() const
 {
 	TArray<AActor*> Actors;
@@ -171,15 +191,6 @@ void ADDPlaceablePreview::UpdatePreview()
 	else {
 		UE_LOG(LogTemp, Fatal, TEXT("Player controller is null for PlaceablePreview, aborting"))
 	}
-	
-	//TODO - Could do a bit of optimization by doing this math once in some function
-	//Math for adjusting the mesh to be on top of the floor instead of in it
-	FVector Size = GetMeshSize();
-	FVector Scale = Mesh->GetComponentScale();
-	float DeltaZ = (Size.Z / 2) * Scale.Z;
-	float DeltaX = (DeltaZ * (MouseDirection.X / MouseDirection.Z)) * Scale.X;
-
-	FVector AdjustedOffset(DeltaX, 0, DeltaZ);
 
 	//The big multiplication is to make sure to go far out to almost guarantee a hit from LineTrace
 	FVector End = (MouseDirection * 10000) + MouseLocation;

@@ -18,14 +18,14 @@ void ADDJumboEnemy::OnDeath()
 	OnEnemyDeath.ExecuteIfBound(this);
 }
 
-void ADDJumboEnemy::Explode()
+void ADDJumboEnemy::Explode() const
 {
 	ADDEnemySpawner* Spawner;
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
 		Spawner = &(GameMode->GetEnemySpawner());
-		//TODO - Change hardcoded value to prob a random number
-		Spawner->SpawnEnemies(EnemyExplodies, 5, GetActorLocation());
+		int RandomSpawn = FMath::RandRange(LowEnemySpawn, HighEnemySpawn);
+		Spawner->SpawnEnemies(EnemyExplodies, RandomSpawn, GetActorLocation());
 	}
 	else {
 		UE_LOG(LogTemp, Fatal, TEXT("How did we get here?"))

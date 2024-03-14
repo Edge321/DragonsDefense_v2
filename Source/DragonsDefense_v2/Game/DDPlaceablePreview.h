@@ -43,6 +43,7 @@ public:
 	void EnableAttackRadius();
 	void DisableAttackRadius();
 	void ClearActorsArray();
+	void CalculateOffset();
 
 
 	FOnColliding OnColliding;
@@ -64,6 +65,7 @@ private:
 	void UpdatePreview();
 
 	TArray<AActor*> ActorsColliding;
+	FVector AdjustedOffset = FVector::Zero();
 
 	APlayerController* Controller;
 };

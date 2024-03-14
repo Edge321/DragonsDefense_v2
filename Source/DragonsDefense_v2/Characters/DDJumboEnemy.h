@@ -18,10 +18,15 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "EnemiesToSpawn")
 	TArray<TSubclassOf<AEnemy>> EnemyExplodies;
+	UPROPERTY(EditDefaultsOnly, Category = "EnemiesToSpawn")
+	int32 LowEnemySpawn = 3;
+	UPROPERTY(EditDefaultsOnly, Category = "EnemiesToSpawn")
+	int32 HighEnemySpawn = 5;
 
 	void OnDeath() override;
 
+
 private:
 	
-	void Explode();
+	void Explode() const;
 };

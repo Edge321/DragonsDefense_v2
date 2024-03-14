@@ -61,11 +61,6 @@ const FVector ADDSentientPlaceable::GetRadiusMeshSize() const
 	return RadiusMesh->GetStaticMesh()->GetBounds().GetBox().GetSize();
 }
 
-void ADDSentientPlaceable::OnSpawnOverlap(TArray<AActor*> OverlapActors)
-{
-	//TODO - this necessary for sentients?
-}
-
 void ADDSentientPlaceable::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
@@ -215,7 +210,6 @@ void ADDSentientPlaceable::StopAttack()
 
 void ADDSentientPlaceable::AttackEnemy(AEnemy* Enemy) const
 {
-	//TODO - Account for enemy speed so the placeable can shoot the projectile without chance of missing enemy
 	ADDProjectile* Proj = GetWorld()->SpawnActor<ADDProjectile>(Projectile, GetActorLocation(), GetActorRotation());
 	if (Proj) {
 		Proj->SetProjectileOwner(this);
@@ -223,8 +217,10 @@ void ADDSentientPlaceable::AttackEnemy(AEnemy* Enemy) const
 		Proj->SetCollisionChannelToIgnore(ECC_AttackRadiusChannel);
 		
 		FVector EnemyLocation = Enemy->GetActorLocation();
+		float EnemySpeed = Enemy->GetMaxSpeed();
+		FVector PredictedEnemyLocation = FVector(EnemyLocation.X - EnemySpeed, EnemyLocation.Y, EnemyLocation.Z);
 		FVector PlaceLocation = GetActorLocation();
-		FVector ProjDirection = EnemyLocation - PlaceLocation;
+		FVector ProjDirection = PredictedEnemyLocation - PlaceLocation;
 		ProjDirection.Normalize();
 
 		Proj->SetVelocity(ProjDirection * ProjectileSpeed);
@@ -238,7 +234,6 @@ void ADDSentientPlaceable::Deactive()
 {
 	//Have some things here that reset positioning of placeable
 	//or whatever other things that need resetting
-	//CurrentAI = PlaceableAI::Deactivated;
 	StopAttack();
 }
 
