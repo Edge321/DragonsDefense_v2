@@ -78,8 +78,6 @@ private:
 
 	TSubclassOf<ADDPlaceable> CurrentPlaceableClass;
 	TArray<ADDPlaceable*> PlaceablePool;
-	//TODO - do this :)
-	TMap<uint32, ADDPlaceable*> PlaceablePoolMap;
 	
 	FDDPlaceablePurchaseInfo PlaceableInfo;
 };

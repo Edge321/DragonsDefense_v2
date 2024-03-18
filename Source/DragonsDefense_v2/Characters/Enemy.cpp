@@ -175,7 +175,7 @@ void AEnemy::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 		if (OtherActor && OtherActor->IsA<ADDPlaceable>()) {
 			ADDPlaceable* Place = Cast<ADDPlaceable>(OtherActor);
 
-			PlaceablesInSight.Remove(Place);
+			PlaceablesInSight.RemoveSwap(Place);
 
 			if (PlaceablesInSight.Num() <= 0) {
 				StopShooting();

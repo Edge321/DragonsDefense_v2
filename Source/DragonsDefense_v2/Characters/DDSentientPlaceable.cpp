@@ -244,17 +244,10 @@ void ADDSentientPlaceable::AddEnemy(AEnemy* Enemy)
 	}
 }
 
-//TODO - Honestly this entire code isnt necessary, TArray Remove function takes care of this
 void ADDSentientPlaceable::RemoveEnemy(AEnemy* Enemy)
 {
 	if (Enemy) {
-		uint32 ID = Enemy->GetUniqueID();
-		for (AEnemy* SomeEnemy : EnemiesInArea) {
-			if (SomeEnemy && SomeEnemy->GetUniqueID() == ID) {
-				EnemiesInArea.Remove(SomeEnemy);
-				break;
-			}
-		}
+		EnemiesInArea.RemoveSwap(Enemy);
 	}
 }
 

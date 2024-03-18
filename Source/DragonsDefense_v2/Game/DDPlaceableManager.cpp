@@ -179,17 +179,23 @@ void ADDPlaceableManager::AddPlaceableToPool(ADDPlaceable* Placeable)
 
 void ADDPlaceableManager::RemovePlaceableFromPool(ADDPlaceable* Placeable)
 {
-	//TODO - Could possibly use maps or whatever UE uses for fast access
-	int32 UniqueID = Placeable->GetUniqueID();
-
 	OnKilledPlaceable.Broadcast(Placeable);
 
+	ADDPlaceable* ToRemove = nullptr;
+
 	for (ADDPlaceable* SomePlaceable : PlaceablePool) {
-		if (SomePlaceable && SomePlaceable->GetUniqueID() == UniqueID) {
-			SomePlaceable->Destroy();
-			PlaceablePool.Remove(SomePlaceable);
+		if (SomePlaceable && SomePlaceable == Placeable) {
+			ToRemove = SomePlaceable;
 			break;
 		}
+	}
+
+	if (ToRemove) {
+		ToRemove->Destroy();
+		PlaceablePool.RemoveSwap(ToRemove);
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Placeable in pool was not found."))
 	}
 }
 
