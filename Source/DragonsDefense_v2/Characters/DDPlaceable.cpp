@@ -42,6 +42,16 @@ const int32 ADDPlaceable::GetSellingPrice() const
 	return SellingPrice;
 }
 
+const FString ADDPlaceable::GetPlaceableName() const
+{
+	return PlaceableName;
+}
+
+const FString ADDPlaceable::GetDescription() const
+{
+	return PlaceableDescription;
+}
+
 void ADDPlaceable::Sell()
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());

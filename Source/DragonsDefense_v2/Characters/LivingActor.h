@@ -49,8 +49,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintPure)
 	virtual const float GetHealth() const;
+	UFUNCTION(BlueprintPure)
 	virtual const float GetDamage() const;
+
 	void SetDamage(const float NewDamage);
 
 	virtual void UpdateHealth(const float HealthModifier);

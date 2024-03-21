@@ -65,16 +65,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetHealth() const override;
+	const float GetDamage() const override;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetMaxHealth() const;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetMovementSpeed() const;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const float GetShootSpeed() const;
-	UFUNCTION(BlueprintPure, Category = "Getters")
-	const float GetDamage() const override;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const bool IsPlacingState() const;
 

@@ -20,23 +20,8 @@ class DRAGONSDEFENSE_V2_API ADDPlaceable : public ALivingActor
 	
 
 public:
+
 	ADDPlaceable();
-
-	UFUNCTION(BlueprintCallable)
-	void Sell();
-	UFUNCTION(BlueprintPure)
-	const int32 GetSellingPrice() const;
-
-	//pure virtual functions
-	UFUNCTION(BlueprintCallable, Category = "Highlight")
-	virtual void EnableHighlight() {};
-	UFUNCTION(BlueprintCallable, Category = "Highlight")
-	virtual void DisableHighlight() {};
-
-	//Pure virtuals
-	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };
-
-	void SetSellingPrice(const int32 Price);
 
 protected:
 
@@ -52,11 +37,34 @@ protected:
 	float NormalSellingPriceMod = 0.8f;
 	UPROPERTY(EditDefaultsOnly, Category = "Modifiers");
 	float HardSellingPriceMod = 0.5f;
+	UPROPERTY(EditDefaultsOnly, Category = "Stats");
+	FString PlaceableName = "Placeable";
+	UPROPERTY(EditDefaultsOnly, Category = "Stats");
+	FString PlaceableDescription = "Description";
 
 	//Pure virtuals
 	virtual void OnSpawnOverlap(TArray<AActor*> OverlapActors) {};
 
 public:
+	UFUNCTION(BlueprintCallable)
+	void Sell();
+	UFUNCTION(BlueprintPure)
+	const int32 GetSellingPrice() const;
+	UFUNCTION(BlueprintPure)
+	const FString GetPlaceableName() const;
+	UFUNCTION(BlueprintPure)
+	const FString GetDescription() const;
+
+	//pure virtual functions
+	UFUNCTION(BlueprintCallable, Category = "Highlight")
+	virtual void EnableHighlight() {};
+	UFUNCTION(BlueprintCallable, Category = "Highlight")
+	virtual void DisableHighlight() {};
+
+	//Pure virtuals
+	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };
+
+	void SetSellingPrice(const int32 Price);
 
 	FOnPlaceableDeath OnPlaceableDeath;
 

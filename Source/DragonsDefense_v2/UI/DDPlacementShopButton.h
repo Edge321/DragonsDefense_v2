@@ -21,7 +21,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void SetPreviewAndPrice() const;
 
-	UPROPERTY(EditAnywhere, Category = "Placeable")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Placeable")
 	TSubclassOf<ADDPlaceable> PlaceableClass;
 
 public:
