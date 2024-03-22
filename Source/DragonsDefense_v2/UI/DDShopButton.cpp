@@ -16,6 +16,11 @@ void UDDShopButton::InitializeButton()
 	SetBackgroundColor(UnBuyableColor);
 }
 
+const FString UDDShopButton::GetDescription() const
+{
+	return ButtonDescription;
+}
+
 const bool UDDShopButton::GetBuyableStatus() const
 {
 	return bIsBuyable;

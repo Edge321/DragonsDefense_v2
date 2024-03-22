@@ -52,6 +52,16 @@ const FString ADDPlaceable::GetDescription() const
 	return PlaceableDescription;
 }
 
+void ADDPlaceable::OnConstruction(const FTransform& Transform)
+{
+	if (PlaceableData) {
+		PlaceableData->PlaceableName = PlaceableName;
+		PlaceableData->PlaceableDescription = PlaceableDescription;
+		PlaceableData->Damage = -Damage;
+		PlaceableData->Health = Health;
+	}
+}
+
 void ADDPlaceable::Sell()
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());

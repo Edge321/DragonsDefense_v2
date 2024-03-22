@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "../Characters/LivingActor.h"
+#include "../Characters/DDPlaceableDataAsset.h"
 #include "DDPlaceable.generated.h"
 
 #define Stencil_HighlightDepth 3
+
+class UDDPlaceableDataAsset;
 
 DECLARE_DELEGATE_OneParam(FOnPlaceableDeath, ADDPlaceable*)
 
@@ -46,6 +49,9 @@ protected:
 	virtual void OnSpawnOverlap(TArray<AActor*> OverlapActors) {};
 
 public:
+
+	virtual void OnConstruction(const FTransform& Transform) override;
+
 	UFUNCTION(BlueprintCallable)
 	void Sell();
 	UFUNCTION(BlueprintPure)
@@ -61,6 +67,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Highlight")
 	virtual void DisableHighlight() {};
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
+	UDDPlaceableDataAsset* PlaceableData;
+	
 	//Pure virtuals
 	virtual const UStaticMeshComponent* GetMesh() const { return nullptr; };
 

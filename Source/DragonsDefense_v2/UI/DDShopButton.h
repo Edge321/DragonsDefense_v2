@@ -27,6 +27,8 @@ protected:
 	FLinearColor BuyableColor = FLinearColor::Blue;
 	UPROPERTY(EditAnywhere, Category = "ButtonColor")
 	FLinearColor UnBuyableColor = FLinearColor::Red;
+	UPROPERTY(EditAnywhere, Category = "Description")
+	FString ButtonDescription = "Insert Description";
 
 	bool bIsBuyable = false;
 
@@ -37,6 +39,8 @@ public:
 	void ValidatePriceText();
 	UFUNCTION(BlueprintCallable)
 	void InitializeButton();
+	UFUNCTION(BlueprintPure)
+	const FString GetDescription() const;
 	UFUNCTION(BlueprintCallable)
 	virtual void IsBuyable() {}; //pure virtual
 	UFUNCTION(BlueprintCallable)

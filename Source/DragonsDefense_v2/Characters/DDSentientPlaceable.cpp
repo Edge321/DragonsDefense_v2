@@ -65,6 +65,11 @@ void ADDSentientPlaceable::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
+	if (PlaceableData) {
+		PlaceableData->AttackSpeed = AttackSpeed;
+		PlaceableData->AttackRadius = AttackRadius;
+	}
+
 	//Adjusting Attack Collider and Attack Mesh as size of AttackRadius
 	AttackCollider->SetSphereRadius(AttackRadius);
 

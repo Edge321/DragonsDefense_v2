@@ -53,6 +53,7 @@ void UDDCollapsibleCanvas::SetCanvasPosition()
 	FAnchors Anchors;
 	CanvasCollapseSlot = Cast<UCanvasPanelSlot>(Slot);
 
+	//TODO - Have anchors be more customizable. Big soul shop doesnt like this
 	switch (Position) {
 	case EPosition::Top:
 		Anchors.Maximum = FVector2D(0.5, 0);
