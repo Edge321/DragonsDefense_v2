@@ -93,6 +93,25 @@ void UDDCollapsibleCanvas::SetCanvasPosition()
 	}
 }
 
+void UDDCollapsibleCanvas::SetOwnCanvasPosition(const FVector2D AnchorsMin, const FVector2D AnchorsMax, const FVector2D CanvasAlignment)
+{
+	FAnchors Anchors;
+	Anchors.Minimum = AnchorsMin;
+	Anchors.Maximum = AnchorsMax;
+
+	CanvasCollapseSlot = Cast<UCanvasPanelSlot>(Slot);
+
+	if (CanvasCollapseSlot) {
+		CanvasCollapseSlot->SetPosition(FVector2D(0, 0));
+		CanvasCollapseSlot->SetAlignment(CanvasAlignment);
+		CanvasCollapseSlot->SetAnchors(Anchors);
+		OriginalAlignment = CanvasAlignment;
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("CanvasSlot is nullptr"))
+	}
+}
+
 void UDDCollapsibleCanvas::CollapseButtonClickEventFunction()
 {
 	FVector2D CanvasAlignment;

@@ -32,6 +32,8 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Canvas")
 	void SetCanvasPosition();
 	UFUNCTION(BlueprintCallable, Category = "Canvas")
+	void SetOwnCanvasPosition(const FVector2D AnchorsMin, const FVector2D AnchorsMax, const FVector2D CanvasAlignment);
+	UFUNCTION(BlueprintCallable, Category = "Canvas")
 	void CollapseButtonClickEventFunction();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CollapseButton")
