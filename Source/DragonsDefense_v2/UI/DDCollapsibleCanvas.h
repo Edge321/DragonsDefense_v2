@@ -41,6 +41,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Position")
 	EPosition Position = EPosition::Top;
 
+public:
+
+	UFUNCTION(BlueprintPure, Category = "Canvas")
+	const bool IsCollapsed() const;
+
+
 private:
 
 	UFUNCTION(BlueprintCallable, Category = "CollapseButton")

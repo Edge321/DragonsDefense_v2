@@ -143,6 +143,11 @@ void UDDCollapsibleCanvas::CollapseButtonClickEventFunction()
 	}
 }
 
+const bool UDDCollapsibleCanvas::IsCollapsed() const
+{
+	return bIsCollapsed;
+}
+
 void UDDCollapsibleCanvas::ValidateButton()
 {
 	check(CollapseButton);

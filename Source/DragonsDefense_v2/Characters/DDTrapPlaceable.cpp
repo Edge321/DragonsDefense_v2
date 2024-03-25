@@ -78,9 +78,8 @@ void ADDTrapPlaceable::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 		return;
 	}
 
-	ALivingActor* LivingActor = Cast<ALivingActor>(OtherActor);
-
-	if (LivingActor) {
+	if (OtherActor->IsA<ALivingActor>()) {
+		ALivingActor* LivingActor = Cast<ALivingActor>(OtherActor);
 		LivingActor->UpdateHealth(Damage);
 		OnDeath(); //TODO - Will be changed later to some general function for future trap classes to use
 	}

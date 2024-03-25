@@ -9,7 +9,7 @@ void UDDShopButton::ValidatePriceText()
 		UE_LOG(LogTemp, Fatal, TEXT("Error: %s does not have a price text reference"), *GetName())
 	}
 }
-
+//TODO - consider using OnHovered and all those binding in the code instead of blueprints
 void UDDShopButton::InitializeButton()
 {	
 	UpdateText();
