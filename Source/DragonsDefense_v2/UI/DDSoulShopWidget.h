@@ -7,7 +7,9 @@
 #include "DDSoulShopWidget.generated.h"
 
 class UDDShopButton;
+class UDDUpgradeShopButton;
 class UCanvasPanel;
+enum class EPlayerStats : uint8;
 
 /**
  * 
@@ -19,8 +21,11 @@ class DRAGONSDEFENSE_V2_API UDDSoulShopWidget : public UUserWidget
 
 protected:
 
+
 	UFUNCTION(BlueprintCallable)
 	TArray<UDDShopButton*> FindAllShopButtons(UCanvasPanel* Canvas);
+	UFUNCTION(BlueprintCallable)
+	void UpdateButtonsOfSameCategory(UDDUpgradeShopButton* Button);
 
 public:
 
@@ -29,6 +34,9 @@ public:
 
 private:
 
+	void AddToButtonMap(UDDUpgradeShopButton* Button);
 	void RecursiveFindButtons(UWidget* Widget, TArray<UDDShopButton*>& ButtonArray);
+	
+	TMap<EPlayerStats, TArray<UDDUpgradeShopButton*>> UpgradeButtonsByCategory;
 
 };

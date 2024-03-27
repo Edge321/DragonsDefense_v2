@@ -16,10 +16,13 @@ class DRAGONSDEFENSE_V2_API UDDInfiniteUpgradeButton : public UDDInfiniteShopBut
 	
 protected:
 
-	UPROPERTY(EditAnywhere, Category = "UpgradeAmount")
+	UPROPERTY(EditAnywhere, Category = "Upgrade|UpgradeAmount")
 	float UpgradeAmount = 1;
+	UPROPERTY(EditAnywhere, Category = "Upgrade")
+	EPlayerStats UpgradeStat = EPlayerStats::Health;
 
-	UFUNCTION(BlueprintCallable)
 	void Upgrade(EPlayerStats Stat);
+	void OnHoveredEventFunction() override;
+	void OnClickEventFunction() override;
 
 };

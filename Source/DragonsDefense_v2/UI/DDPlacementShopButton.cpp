@@ -15,6 +15,19 @@ void UDDPlacementShopButton::PlacementMode(bool IsPlacing) const
 	}
 }
 
+void UDDPlacementShopButton::OnClickEventFunction()
+{
+	if (GetBuyableStatus()) {
+		PlacementMode(true);
+		SetPreviewAndPrice();
+	}
+}
+
+void UDDPlacementShopButton::OnHoveredEventFunction()
+{
+	OnPlaceableHovered.Broadcast(this, PlaceableClass);
+}
+
 void UDDPlacementShopButton::SetPreviewAndPrice() const
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());

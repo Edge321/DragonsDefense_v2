@@ -18,17 +18,13 @@ class DRAGONSDEFENSE_V2_API UDDPlacementShopButton : public UDDInfiniteShopButto
 	
 protected:
 
-	UFUNCTION(BlueprintCallable)
-	void SetPreviewAndPrice() const;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Placeable")
 	TSubclassOf<ADDPlaceable> PlaceableClass;
 
-public:
-
-	//Switches placement mode from false to true and vice versa
-	UFUNCTION(BlueprintCallable)
+	void SetPreviewAndPrice() const;
+	void OnClickEventFunction() override;
+	void OnHoveredEventFunction() override;
+	//Set placement mode
 	void PlacementMode(bool IsPlacing) const;
 
-	
 };

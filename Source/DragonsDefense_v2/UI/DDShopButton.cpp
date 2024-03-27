@@ -14,11 +14,19 @@ void UDDShopButton::InitializeButton()
 {	
 	UpdateText();
 	SetBackgroundColor(UnBuyableColor);
+	OnClicked.AddDynamic(this, &UDDShopButton::OnClickEventFunction);
+	OnHovered.AddDynamic(this, &UDDShopButton::OnHoveredEventFunction);
+	OnUnhovered.AddDynamic(this, &UDDShopButton::OnUnhoveredEventFunction);
 }
 
 const FString UDDShopButton::GetDescription() const
 {
 	return ButtonDescription;
+}
+
+void UDDShopButton::OnUnhoveredEventFunction()
+{
+	OnCustomUnhovered.Broadcast();
 }
 
 const bool UDDShopButton::GetBuyableStatus() const

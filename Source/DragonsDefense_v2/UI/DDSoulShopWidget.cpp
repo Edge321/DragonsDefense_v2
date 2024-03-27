@@ -6,6 +6,7 @@
 #include "Components/CanvasPanel.h"
 //My classes
 #include "../UI/DDShopButton.h"
+#include "../UI/DDUpgradeShopButton.h"
 
 TArray<UDDShopButton*> UDDSoulShopWidget::FindAllShopButtons(UCanvasPanel* Canvas)
 {
@@ -15,13 +16,49 @@ TArray<UDDShopButton*> UDDSoulShopWidget::FindAllShopButtons(UCanvasPanel* Canva
     return ButtonArray;
 }
 
+void UDDSoulShopWidget::UpdateButtonsOfSameCategory(UDDUpgradeShopButton* Button)
+{
+    EPlayerStats Stat = Button->GetStatUpgrade();
+    if (UpgradeButtonsByCategory.Find(Stat) != nullptr) {
+        TArray<UDDUpgradeShopButton*> ButtonArray = UpgradeButtonsByCategory[Stat];
+        for (UDDUpgradeShopButton* TempButton : ButtonArray) {
+            if (Button == TempButton) {
+                continue;
+            }
+
+            TempButton->IncreasePrice();
+        }
+    }
+    else {
+        UE_LOG(LogTemp, Warning, TEXT("Stat not found in button map. Was the map initialized correctly?"))
+    }
+}
+
+void UDDSoulShopWidget::AddToButtonMap(UDDUpgradeShopButton* Button)
+{
+    EPlayerStats Stat = Button->GetStatUpgrade();
+    if (UpgradeButtonsByCategory.Find(Stat) == nullptr) {
+        UpgradeButtonsByCategory.Add(Stat);
+        UpgradeButtonsByCategory[Stat].Add(Button);
+    }
+    else {
+        UpgradeButtonsByCategory[Stat].Add(Button);
+    }
+}
+
+//chatgpt the goat for this one ngl
 void UDDSoulShopWidget::RecursiveFindButtons(UWidget* Widget, TArray<UDDShopButton*>& ButtonArray)
 {    
-    UDDShopButton* Button = Cast<UDDShopButton>(Widget);
-    if (Button) {
+    if (Widget->IsA<UDDShopButton>()) {
+        UDDShopButton* Button = Cast<UDDShopButton>(Widget);
         ButtonArray.Add(Button);
+        if (Button->IsA<UDDUpgradeShopButton>()) {
+            UDDUpgradeShopButton* UpButton = Cast<UDDUpgradeShopButton>(Button);
+            AddToButtonMap(UpButton);
+        }
     }
-    else if (UPanelWidget* Panel = Cast<UPanelWidget>(Widget)) {
+    else if (Widget->IsA<UPanelWidget>()) {
+        UPanelWidget* Panel = Cast<UPanelWidget>(Widget);
         TArray<UWidget*> ChildWidgets = Panel->GetAllChildren();
         for (UWidget* ChildWidget : ChildWidgets) {
             //Recursion in this day and age? How shocking!

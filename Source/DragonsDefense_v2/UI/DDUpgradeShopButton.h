@@ -6,6 +6,8 @@
 #include "../UI/DDShopButton.h"
 #include "DDUpgradeShopButton.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUpgrade, UDDUpgradeShopButton*, Button);
+
 /**
  * 
  */
@@ -18,17 +20,27 @@ protected:
 	//An array of increasing prices for when the player purchases whatever the button sells
 	UPROPERTY(EditAnywhere, Category = "Prices")
 	TArray<int32> Prices;
-	UPROPERTY(EditAnywhere, Category = "UpgradeAmount")
+	UPROPERTY(EditAnywhere, Category = "Upgrade|UpgradeAmount")
 	float UpgradeAmount = 1;
+	UPROPERTY(EditAnywhere, Category = "Upgrade")
+	EPlayerStats StatUpgrade = EPlayerStats::Damage;
 
 	void IsBuyable() override;
-	UFUNCTION(BlueprintCallable)
 	void Upgrade(EPlayerStats Stat) const;
+	void UpdateSouls() override;
+	void GameOverEventFunction() override;
+	void OnClickEventFunction() override;
+	void OnHoveredEventFunction() override;
+
+public:
+
+	UFUNCTION(BlueprintPure)
+	const EPlayerStats GetStatUpgrade() const;
 	UFUNCTION(BlueprintCallable)
 	void IncreasePrice();
 
-	void UpdateSouls() override;
-	void GameOverEventFunction() override;
+	UPROPERTY(BlueprintAssignable)
+	FOnUpgrade OnUpgrade;
 
 private:
 	void UpdateText() override;

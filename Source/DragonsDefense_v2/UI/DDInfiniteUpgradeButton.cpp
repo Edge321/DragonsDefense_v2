@@ -21,3 +21,16 @@ void UDDInfiniteUpgradeButton::Upgrade(EPlayerStats Stat)
 			break;
 	}
 }
+
+void UDDInfiniteUpgradeButton::OnHoveredEventFunction()
+{
+	OnUpgradeHovered.Broadcast(this);
+}
+
+void UDDInfiniteUpgradeButton::OnClickEventFunction()
+{
+	if (GetBuyableStatus()) {
+		Upgrade(UpgradeStat);
+		UpdateSouls();
+	}
+}

@@ -10,6 +10,12 @@
 #include "../Game/DDGameModeBase.h"
 #include "DDShopButton.generated.h"
 
+class ADDPlaceable;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlaceableHovered, UDDShopButton*, Button, TSubclassOf<ADDPlaceable>, PlaceableClass);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUpgradeHovered, UDDShopButton*, Button);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCustomUnhovered);
+
 /**
  * 
  */
@@ -41,17 +47,34 @@ public:
 	void InitializeButton();
 	UFUNCTION(BlueprintPure)
 	const FString GetDescription() const;
-	UFUNCTION(BlueprintCallable)
-	virtual void IsBuyable() {}; //pure virtual
-	UFUNCTION(BlueprintCallable)
-	virtual void UpdateSouls() {}; //pure virtual
 	UFUNCTION(BlueprintPure)
 	const bool GetBuyableStatus() const;
 	UFUNCTION(BlueprintCallable)
 	virtual void GameOverEventFunction();
+	UFUNCTION(BlueprintCallable)
+	virtual void IsBuyable() {}; //pure virtual
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPlaceableHovered OnPlaceableHovered;
+	UPROPERTY(BlueprintAssignable)
+	FOnUpgradeHovered OnUpgradeHovered;
+	UPROPERTY(BlueprintAssignable)
+	FOnCustomUnhovered OnCustomUnhovered;
 
 protected:
 
+	UFUNCTION()
+	virtual void OnClickEventFunction() {}; //pure virtual
+	UFUNCTION()
+	virtual void OnHoveredEventFunction() {}; //pure virtual
+	
+	virtual void UpdateSouls() {}; //pure virtual
 	virtual void UpdateText() {}; //pure virtual
 	virtual FText FetchFTextPrice() { return FText(); }; //pure virtual
+
+private:
+
+	UFUNCTION()
+	void OnUnhoveredEventFunction();
+
 };

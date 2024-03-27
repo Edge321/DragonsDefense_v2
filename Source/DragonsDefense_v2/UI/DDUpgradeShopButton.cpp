@@ -2,6 +2,26 @@
 
 #include "DDUpgradeShopButton.h"
 
+void UDDUpgradeShopButton::OnClickEventFunction()
+{
+	if (GetBuyableStatus()) {
+		Upgrade(StatUpgrade);
+		IncreasePrice();
+		UpdateSouls();
+		OnUpgrade.Broadcast(this);
+	}
+}
+
+void UDDUpgradeShopButton::OnHoveredEventFunction()
+{
+	OnUpgradeHovered.Broadcast(this);
+}
+
+const EPlayerStats UDDUpgradeShopButton::GetStatUpgrade() const
+{
+	return StatUpgrade;
+}
+
 void UDDUpgradeShopButton::UpdateText()
 {
 	PriceText->SetText(FetchFTextPrice());
@@ -95,7 +115,7 @@ void UDDUpgradeShopButton::UpdateSouls()
 {
 	ADDGameModeBase* GameMode = Cast<ADDGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (GameMode) {
-		IncreasePrice();
+		/*IncreasePrice();*/
 		GameMode->UpdateSouls(-Prices[PriceIndex - 1]);
 	}
 	else {
