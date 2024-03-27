@@ -46,6 +46,11 @@ void ADDPlaceableManager::BeginPlay()
 		GameMode->OnPlacing.AddDynamic(this, &ADDPlaceableManager::SetPreviewStatus);
 		GameMode->OnUpdateSouls.AddDynamic(this, &ADDPlaceableManager::IsPreviewValid);
 	}
+
+	//Needed for placeable info to fetch data properly
+	for (TSubclassOf<ADDPlaceable> Place : PlaceablesToSpawn) {
+		SpawnPlaceable(Place, FVector(10000, 10000, 0), FRotator::ZeroRotator);
+	}
 }
 
 void ADDPlaceableManager::ChangePreviewMesh(UStaticMesh* Mesh, const FVector Scale)
@@ -79,7 +84,6 @@ bool ADDPlaceableManager::IsBuyable() const
 	return PlaceableInfo.IsBuyable();
 }
 
-//Not currently used...
 void ADDPlaceableManager::SpawnPlaceable(TSubclassOf<ADDPlaceable> PlaceableClass, const FVector Location, const FRotator Rotation)
 {
 	 ADDPlaceable* Placeable = GetWorld()->SpawnActor<ADDPlaceable>(PlaceableClass, Location, Rotation);
@@ -195,7 +199,7 @@ void ADDPlaceableManager::RemovePlaceableFromPool(ADDPlaceable* Placeable)
 		PlaceablePool.RemoveSwap(ToRemove);
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Placeable in pool was not found."))
+		UE_LOG(LogTemp, Error, TEXT("Placeable in pool was not found."))
 	}
 }
 

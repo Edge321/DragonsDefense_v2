@@ -53,7 +53,6 @@ void UDDCollapsibleCanvas::SetCanvasPosition()
 	FAnchors Anchors;
 	CanvasCollapseSlot = Cast<UCanvasPanelSlot>(Slot);
 
-	//TODO - Have anchors be more customizable. Big soul shop doesnt like this
 	switch (Position) {
 	case EPosition::Top:
 		Anchors.Maximum = FVector2D(0.5, 0);
@@ -138,9 +137,9 @@ void UDDCollapsibleCanvas::CollapseButtonClickEventFunction()
 			default:
 				UE_LOG(LogTemp, Fatal, TEXT("How did we get here?"));
 		}
-
 		CanvasCollapseSlot->SetAlignment(CanvasAlignment);
 	}
+	UE_LOG(LogTemp, Warning, TEXT("Canvas is being collapsed: %s"), bIsCollapsed ? TEXT("Yes") : TEXT("No"));
 }
 
 const bool UDDCollapsibleCanvas::IsCollapsed() const

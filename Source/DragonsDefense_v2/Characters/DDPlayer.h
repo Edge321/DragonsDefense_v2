@@ -14,6 +14,7 @@ class ADDPlaceable;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUpdateHealth, float, Health, float, MaxHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClickPlaceable, FVector2D, CursorScreenPosition, ADDPlaceable*, Placeable);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClickOutsideOfPlaceable);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRightClick);
 
 UCLASS()
 class DRAGONSDEFENSE_V2_API ADDPlayer : public ALivingActor
@@ -35,6 +36,8 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void FindPlaceableWithCursor();
+	UFUNCTION(BlueprintCallable)
+	void BroadcastRightClick() const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
 	TSubclassOf<ADDProjectile> Projectile;
@@ -75,6 +78,8 @@ public:
 	const float GetShootSpeed() const;
 	UFUNCTION(BlueprintPure, Category = "Getters")
 	const bool IsPlacingState() const;
+	UFUNCTION(BlueprintPure, Category = "Getters")
+	const bool IsWaveOver() const;
 
 	void UpdateHealth(const float HealthModifier) override;
 	void UpdateMaxHealth(const float MaxHealthModifier);
@@ -88,6 +93,8 @@ public:
 	FOnClickPlaceable OnClickPlaceable;
 	UPROPERTY(BlueprintAssignable, Category = "Delegate")
 	FOnClickOutsideOfPlaceable OnClickOutsideOfPlaceable;
+	UPROPERTY(BlueprintAssignable, Category = "Delegate")
+	FOnRightClick OnRightClick;
 
 private:
 	void ValidateProjectile();
@@ -111,6 +118,7 @@ private:
 	void PlacementEventFunction(bool IsPlacing);
 
 	bool bIsPlacing = false;
+	bool bIsWaveOver = false;
 	float MaxHealth;
 	float TempHealth;
 	FVector OriginalLocation;

@@ -43,6 +43,10 @@ protected:
 	TSubclassOf<ADDPlaceablePreview> PreviewClass;
 	UPROPERTY(BlueprintReadOnly, Category = "PlaceablePreview")
 	ADDPlaceablePreview* Preview;
+	//Array for placeables that will be spawned at the beginning of the game
+	//Needed for placeable info to fetch placeables' data properly
+	UPROPERTY(EditDefaultsOnly, Category = "Placeable")
+	TArray<TSubclassOf<ADDPlaceable>> PlaceablesToSpawn;
 	UPROPERTY(BlueprintReadOnly, Category = "PlaceablePreview")
 	bool bCanPlace = true;
 	UPROPERTY(BlueprintReadOnly, Category = "PlaceablePrice")

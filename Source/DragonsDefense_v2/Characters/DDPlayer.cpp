@@ -106,6 +106,11 @@ void ADDPlayer::FindPlaceableWithCursor()
 	}
 }
 
+void ADDPlayer::BroadcastRightClick() const
+{
+	OnRightClick.Broadcast();
+}
+
 void ADDPlayer::Tick(float DeltaTime)
 {
 	LimitArea();
@@ -146,6 +151,11 @@ const float ADDPlayer::GetDamage() const
 const bool ADDPlayer::IsPlacingState() const
 {
 	return bIsPlacing;
+}
+
+const bool ADDPlayer::IsWaveOver() const
+{
+	return bIsWaveOver;
 }
 
 void ADDPlayer::UpdateHealth(const float HealthModifier)
@@ -235,14 +245,14 @@ void ADDPlayer::GameStartEventFunction()
 void ADDPlayer::WaveOverEventFunction()
 {
 	APlayerController* PlayController = GetController<APlayerController>();
-	DisableInput(PlayController);
-	PlayController->bShowMouseCursor = true;
-	PlayController->SetInputMode(FInputModeUIOnly());
+	PlayController->FlushPressedKeys();
+	bIsWaveOver = true;
 }
 
 void ADDPlayer::WaveStartEventFunction()
 {
-	GameStartEventFunction();
+	SetActorLocation(OriginalLocation);
+	bIsWaveOver = false;
 }
 
 void ADDPlayer::PlacementEventFunction(bool IsPlacing)
